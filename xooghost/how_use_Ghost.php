@@ -18,15 +18,9 @@
  */
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+
 //Votre code php si vous devez en intégrer
 //Your php code if you must integrate
-?>
 
-<!--
-Votre texte et/ou code html sans les balises html, head, title et body celles ci &eacute;tant d&eacute;ja g&eacute;n&eacute;r&eacute;es elles se retrouveraient en double.
-Your text and/or html code without html tags, head, body and title
--->
-
-<?php
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
 ?>
