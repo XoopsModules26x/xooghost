@@ -1,0 +1,15 @@
+<{if $header}>
+    <div class="xooghostMsg">
+        <{$header}>
+    </div>
+<{/if}>
+
+<{if $template == 'news'}>
+    <{includeq file='db:xooghost_index_news.html'}>
+<{elseif $template == 'list'}>
+    <{includeq file='db:xooghost_index_list.html'}>
+<{elseif $template == 'table'}>
+    <{includeq file='db:xooghost_index_table.html'}>
+<{elseif $template == 'select'}>
+    <{includeq file='db:xooghost_index_select.html'}>
+<{/if}>
