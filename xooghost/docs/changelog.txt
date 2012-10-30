@@ -1,0 +1,3 @@
+<br />
+<strong>2012-10</strong>
+Module creation for xoops 2.6.0

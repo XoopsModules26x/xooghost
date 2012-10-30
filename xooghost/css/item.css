@@ -1,0 +1,22 @@
+.item {    border:                1px solid #666;
+}
+.itemHead {    padding:               3px;
+    background-color:      #049CD9;
+    color:                 #F1F1F1;
+}
+.itemTitle {    font-size:             2em;
+    font-weight:           bold;
+    font-variant:          small-caps;
+    background-color:      transparent;
+}
+.itemTitle a {
+    color:                 #F1F1F1;
+    background-color:      transparent;
+}
+.itemBody {    margin:                5px;
+}
+.itemText {    line-height:           1.5em;
+}
+.itemText:first-letter {    font-size:             1.3em;
+    font-weight:           bold;
+}

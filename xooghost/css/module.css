@@ -1,0 +1,23 @@
+@import url(item.css);
+@import url(table.css);
+
+.xooghostMsg {    padding:               1em;
+    margin-bottom:         1em;
+    text-align:            center;    background-color:      #f1f1f1;
+    color:                 #049cd9;
+    border:                2px solid #049cd9;
+}
+
+
+blockquote {
+    display:                block;
+    width:                  auto;
+    margin:                 1em;
+    padding:                .5em;
+    background-color:       #f1f1f1;
+    color:                  #049cd9;
+    font-style:             normal;
+    border-color:           #049cd9;
+    border-style:           solid;
+    border-width:           1px 1px 1px 6px;
+}

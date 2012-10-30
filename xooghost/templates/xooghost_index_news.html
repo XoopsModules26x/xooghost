@@ -1,0 +1,15 @@
+<{foreachq from=$pages item=page}>
+    <div class="item">
+        <div class="itemHead">
+            <div class="txtcenter itemTitle">
+                <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>" alo="<{$page.xooghost_title}>"><{$page.xooghost_title}></a>
+            </div>
+        </div>
+
+        <div class="itemBody">
+            <div class="itemText">
+                <{$page.xooghost_content}>
+            </div>
+        </div>
+    </div>
+<{/foreach}>

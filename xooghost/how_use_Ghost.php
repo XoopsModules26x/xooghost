@@ -1,0 +1,32 @@
+<?php
+/**
+ * Xooghost module
+ *
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package         Xooghost
+ * @since           2.6.0
+ * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
+ */
+
+include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+//Votre code php si vous devez en intégrer
+//Your php code if you must integrate
+?>
+
+<!--
+Votre texte et/ou code html sans les balises html, head, title et body celles ci &eacute;tant d&eacute;ja g&eacute;n&eacute;r&eacute;es elles se retrouveraient en double.
+Your text and/or html code without html tags, head, body and title
+-->
+
+<?php
+include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+?>
