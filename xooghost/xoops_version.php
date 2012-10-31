@@ -78,16 +78,19 @@ $modversion['tables'][1] = 'xooghost';
 $i = 0;
 $modversion['hasMain'] = 1;
 
-include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
-$object = new XooPreferences();
-$xooGhost_config = $object->config;
+global $xoops;
+if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' ) {    include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
+    $object = new XooPreferences();
+    $xooGhost_config = $object->config;
 
-if ( $xooGhost_config['xooghost_main'] ) {    $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
-    $pages = $xooghost_handler->getPublished();
-    foreach ($pages as $page) {
-        $modversion["sub"][$i]["name"]  = $page['xooghost_title'];
-        $modversion["sub"][$i]["url"]   = $page['xooghost_url'];
-        $i++;
+    if ( $xooGhost_config['xooghost_main'] ) {
+        $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
+        $pages = $xooghost_handler->getPublished();
+        foreach ($pages as $page) {
+            $modversion["sub"][$i]["name"]  = $page['xooghost_title'];
+            $modversion["sub"][$i]["url"]   = $page['xooghost_url'];
+            $i++;
+        }
     }
 }
 
