@@ -120,32 +120,6 @@ $modversion['templates'][$i]['file']        = 'xooghost_page.html';
 $modversion['templates'][$i]['description'] = '';
 
 
-// Admin Templates
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_index.html';
-$modversion['templates'][$i]['description'] = '';
-$modversion['templates'][$i]['type']        = 'admin';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_pages_list.html';
-$modversion['templates'][$i]['description'] = '';
-$modversion['templates'][$i]['type']        = 'admin';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_pages.html';
-$modversion['templates'][$i]['description'] = '';
-$modversion['templates'][$i]['type']        = 'admin';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_preferences.html';
-$modversion['templates'][$i]['description'] = '';
-$modversion['templates'][$i]['type']        = 'admin';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_model_page.html';
-$modversion['templates'][$i]['description'] = '';
-$modversion['templates'][$i]['type']        = 'admin';
-
 // blocks
 $i = 0;
 
