@@ -31,4 +31,9 @@ if ( $xooghost_url = basename($_SERVER['SCRIPT_NAME']) == 'index.php') {    $xo
     $xoops->theme->addMeta($type = 'meta', 'keywords', $page['xooghost_keywords']);
 }
 $xoops->theme->addStylesheet('modules/xooghost/css/module.css');
+
+
+include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
+$object = new XooPreferences();
+$xooGhost_config = $object->config;
 ?>

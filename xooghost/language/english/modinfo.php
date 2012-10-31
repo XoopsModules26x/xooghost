@@ -24,9 +24,10 @@ define("_MI_XOO_GHOST_DESC",                 "XooFoo - Ghost Module module for X
 define("_MI_XOO_GHOST_INDEX",                "Index");
 define("_MI_XOO_GHOST_ABOUT",                "About");
 define("_MI_XOO_GHOST_PAGES",                "Manage pages");
+define("_MI_XOO_GHOST_PREFERENCES",          "Preferences");
 
 //Configs
-define("_MI_XOO_GHOST_CONFIG_MAIN",                 "Pisplay pages in main menu");
+define("_MI_XOO_GHOST_CONFIG_MAIN",                 "Display pages in main menu");
 define("_MI_XOO_GHOST_CONFIG_MAIN_DESC",            "");
 
 define("_MI_XOO_GHOST_CONFIG_WELCOME",              "Text to display in index page");

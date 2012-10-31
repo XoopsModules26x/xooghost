@@ -28,6 +28,11 @@ $adminmenu[$i]['link']  = 'admin/pages.php';
 $adminmenu[$i]['icon']  = 'content.png';
 
 $i++;
+$adminmenu[$i]['title'] = _MI_XOO_GHOST_PREFERENCES;
+$adminmenu[$i]['link']  = 'admin/preferences.php';
+$adminmenu[$i]['icon']  = 'administration.png';
+
+$i++;
 $adminmenu[$i]['title'] = _MI_XOO_GHOST_ABOUT;
 $adminmenu[$i]['link']  = 'admin/about.php';
 $adminmenu[$i]['icon']  = 'about.png';

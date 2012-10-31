@@ -17,5 +17,5 @@
  * @version         $Id$
  */
 
-define("_XOO_GHOST_CHOOSE",                     "Choos a page");
+define("_XOO_GHOST_CHOOSE",                     "Choose a page");
 ?>
