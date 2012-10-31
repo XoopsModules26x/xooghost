@@ -78,7 +78,11 @@ $modversion['tables'][1] = 'xooghost';
 $i = 0;
 $modversion['hasMain'] = 1;
 
-if ($xoops->getModuleConfig('xooghost_main', 'xooghost') ) {    $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
+include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
+$object = new XooPreferences();
+$xooGhost_config = $object->config;
+
+if ( $xooGhost_config['xooghost_main'] ) {    $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
     $pages = $xooghost_handler->getPublished();
     foreach ($pages as $page) {
         $modversion["sub"][$i]["name"]  = $page['xooghost_title'];
@@ -115,12 +119,22 @@ $modversion['templates'][$i]['description'] = '';
 
 // Admin Templates
 $i++;
+$modversion['templates'][$i]['file']        = 'xooghost_index.html';
+$modversion['templates'][$i]['description'] = '';
+$modversion['templates'][$i]['type']        = 'admin';
+
+$i++;
 $modversion['templates'][$i]['file']        = 'xooghost_pages_list.html';
 $modversion['templates'][$i]['description'] = '';
 $modversion['templates'][$i]['type']        = 'admin';
 
 $i++;
 $modversion['templates'][$i]['file']        = 'xooghost_pages.html';
+$modversion['templates'][$i]['description'] = '';
+$modversion['templates'][$i]['type']        = 'admin';
+
+$i++;
+$modversion['templates'][$i]['file']        = 'xooghost_preferences.html';
 $modversion['templates'][$i]['description'] = '';
 $modversion['templates'][$i]['type']        = 'admin';
 
@@ -134,33 +148,4 @@ $i = 0;
 
 // Preferences
 $i = 0;
-$modversion["config"][$i]["name"]           = "xooghost_main";
-$modversion["config"][$i]["title"]          = "_MI_XOO_GHOST_CONFIG_MAIN";
-$modversion["config"][$i]["description"]    = "_MI_XOO_GHOST_CONFIG_MAIN_DESC";
-$modversion["config"][$i]["formtype"]       = "yesno";
-$modversion["config"][$i]["valuetype"]      = "int";
-$modversion["config"][$i]["default"]        = 0;
-
-$i++;
-$modversion["config"][$i]["name"]           = "xooghost_welcome";
-$modversion["config"][$i]["title"]          = "_MI_XOO_GHOST_CONFIG_WELCOME";
-$modversion["config"][$i]["description"]    = "_MI_XOO_GHOST_CONFIG_WELCOME_DESC";
-$modversion["config"][$i]["formtype"]       = "textarea";
-$modversion["config"][$i]["valuetype"]      = "text";
-$modversion["config"][$i]["default"]        = "";
-
-$i++;
-$modversion["config"][$i]["name"]           = "xooghost_main_mode";
-$modversion["config"][$i]["title"]          = "_MI_XOO_GHOST_CONFIG_MAIN_MODE";
-$modversion["config"][$i]["description"]    = "";
-$modversion["config"][$i]["formtype"]       = "select";
-$modversion["config"][$i]["valuetype"]      = "text";
-$modversion["config"][$i]["default"]        = "news";
-$modversion["config"][$i]["options"]        = array(
-                                                    "_MI_XOO_GHOST_CONFIG_MAIN_MODE_LIST"    => "list",
-                                                    "_MI_XOO_GHOST_CONFIG_MAIN_MODE_TABLE"   => "table",
-                                                    "_MI_XOO_GHOST_CONFIG_MAIN_MODE_SELECT"  => "select",
-                                                    "_MI_XOO_GHOST_CONFIG_MAIN_MODE_NEWS"    => "news",
-                                            );
-
 ?>

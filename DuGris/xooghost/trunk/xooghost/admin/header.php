@@ -31,15 +31,17 @@ if ( isset( $_GET ) ){
     }
 }
 
-XoopsLoad::load('system', 'system');
+$script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 
+XoopsLoad::load('system', 'system');
 $system = System::getInstance();
+
 $xoops = Xoops::getInstance();
-$xoops->header('xooghost_pages.html');
+$xoops->header('xooghost_' . $script_name . '.html');
 $xoops->loadLanguage('common', 'xooghost');
 
 $admin_page = new XoopsModuleAdmin();
-$admin_page->renderNavigation('pages.php');
+$admin_page->renderNavigation( basename($_SERVER['SCRIPT_NAME']) );
 
 $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 ?>

@@ -22,8 +22,8 @@ include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 $pages = $xooghost_handler->getPublished();
 
 $xoops->tpl->assign('form', $xooghost_handler->SelectPage() );
-$xoops->tpl->assign('template', $xoops->getModuleConfig('xooghost_main_mode', 'xooghost') );
-$xoops->tpl->assign('header', $xoops->getModuleConfig('xooghost_welcome', 'xooghost') );
+$xoops->tpl->assign('template', $xooGhost_config['xooghost_main_mode'] );
+$xoops->tpl->assign('header', $xooGhost_config['xooghost_welcome'] );
 $xoops->tpl->assign('pages', $pages);
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
