@@ -1,6 +1,12 @@
-<{if $header}>
+<{if $moduletitle != ''}>
+    <fieldset>
+        <legend><{$moduletitle}></legend>
+    </fieldset>
+<{/if}>
+
+<{if $welcome}>
     <div class="xooghostMsg">
-        <{$header}>
+        <{$welcome}>
     </div>
 <{/if}>
 
