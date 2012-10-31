@@ -29,4 +29,9 @@ define("_XOO_GHOST_DISPLAY",                   "Display").
 define("_XOO_GHOST_HITS",                      "Hit");
 
 define("_XOO_GHOST_VIEW_HIDE",                 "View / Hide");
+
+// images
+define("_XOO_GHOST_CONFIG_IMAGE_SIZE",         "Maximum size of image files (K0)");
+define("_XOO_GHOST_CONFIG_IMAGE_WIDTH",        "Maximum width of images (px)");
+define("_XOO_GHOST_CONFIG_IMAGE_HEIGHT",       "Maximum height of images (px)");
 ?>

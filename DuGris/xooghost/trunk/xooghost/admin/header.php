@@ -38,6 +38,7 @@ $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
 $xoops->header('xooghost_' . $script_name . '.html');
+$xoops->theme->addStylesheet('modules/xooghost/css/moduladmin.css');
 $xoops->loadLanguage('common', 'xooghost');
 
 $admin_page = new XoopsModuleAdmin();
