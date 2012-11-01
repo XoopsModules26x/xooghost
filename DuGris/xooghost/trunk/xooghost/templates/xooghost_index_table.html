@@ -1,8 +1,7 @@
 <table class="outer">
     <tr class="<{cycle values="even,odd"}>">
         <{foreachq from=$pages item=page}>
-            <td class="itemIcon"><img class="itemIcon" src="<{$page.xooghost_image_link}>" alt="<{$page.xooghost_title}>"></td>
-            <td><a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{$page.xooghost_title}></a></td>
+            <td><a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><i class="xooghost-ico-item<{$smarty.foreach.foo.iteration}>"></i><{$page.xooghost_title}></a></td>
         <{/foreach}>
     </tr>
 </table>

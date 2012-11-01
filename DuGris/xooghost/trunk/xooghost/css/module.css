@@ -21,3 +21,24 @@ blockquote {
     border-style:           solid;
     border-width:           1px 1px 1px 6px;
 }
+
+.ul-xooghost {    list-style-type:        none;}
+
+[class^="xooghost-ico-"], [class*=" xooghost-ico-"] {
+    background-position:    0 0;
+    background-repeat:      no-repeat;
+    background-size:        20px 20px;
+    display:                inline-block;
+    margin-right:           0.5em;
+    vertical-align:         text-top;
+    line-height:            20px;
+    height:                 20px;
+    width:                  20px;
+}
+
+[class^="xooghost-image-"], [class*=" xooghost-image-"] {
+    background-position:    0 0;
+    background-repeat:      no-repeat;
+    display:                block;
+    vertical-align:         text-top;
+}

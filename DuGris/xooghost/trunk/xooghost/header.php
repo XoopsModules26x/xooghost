@@ -23,6 +23,10 @@ $xoops->loadLanguage('common', 'xooghost');
 
 $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
+include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
+$config = new XooPreferences();
+$xooGhost_config = $config->config;
+
 if ( $xooghost_url = basename($_SERVER['SCRIPT_NAME']) == 'index.php') {    $xoops->header('xooghost_index.html');
 } else {    $xoops->header('xooghost_page.html');
     $page = $xooghost_handler->getByURL($xooghost_url);
@@ -32,8 +36,8 @@ if ( $xooghost_url = basename($_SERVER['SCRIPT_NAME']) == 'index.php') {    $xo
 }
 $xoops->theme->addStylesheet('modules/xooghost/css/module.css');
 
-
-include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
-$object = new XooPreferences();
-$xooGhost_config = $object->config;
+$xoops->tpl->assign('template', $xooGhost_config['xooghost_main_mode'] );
+$xoops->tpl->assign('welcome', $xooGhost_config['xooghost_welcome'] );
+$xoops->tpl->assign('width', $xooGhost_config['xooghost_image_width'] );
+$xoops->tpl->assign('height', $xooGhost_config['xooghost_image_height'] );
 ?>
