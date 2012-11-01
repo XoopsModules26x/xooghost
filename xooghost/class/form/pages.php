@@ -130,4 +130,3 @@ class XooghostPagesForm extends XoopsThemeForm
     }
 }
 ?>
-
