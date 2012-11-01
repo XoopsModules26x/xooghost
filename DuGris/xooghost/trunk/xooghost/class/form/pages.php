@@ -33,11 +33,15 @@ class XooghostPagesForm extends XoopsThemeForm
      * @return void
      */
     public function PageForm()
-    {        global $xooghost_handler;
+    {        global $xoops, $xooghost_handler;
+
+        include_once dirname(dirname ( __FILE__ )) . '/xoopreferences.php';
+        $config = new XooPreferences();
+        $xooGhost_config = $config->config;
 
         if ($this->xoopsObject->isNew() ) {
-            parent::__construct(_AM_XOO_GHOST_ADD, "form_pages", "pages.php", 'post', true);
-        } else {            parent::__construct(_AM_XOO_GHOST_EDIT . ' : ' . $this->xoopsObject->getVar('xooghost_title'), "form_pages", "pages.php", 'post', true);
+            parent::__construct(_AM_XOO_GHOST_ADD, 'form_pages', 'pages.php', 'post', true);
+        } else {            parent::__construct(_AM_XOO_GHOST_EDIT . ' : ' . $this->xoopsObject->getVar('xooghost_title'), 'form_pages', 'pages.php', 'post', true);
         }
         $this->setExtra('enctype="multipart/form-data"');
 
@@ -62,6 +66,25 @@ class XooghostPagesForm extends XoopsThemeForm
 
         // Content
         $this->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
+
+        // image
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_SIZE . ' : ' . $xooGhost_config['xooghost_image_size'];
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_WIDTH . ' : ' . $xooGhost_config['xooghost_image_width'];
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_HEIGHT . ' : ' . $xooGhost_config['xooghost_image_height'];
+
+        $image_tray = new XoopsFormElementTray(_XOO_GHOST_IMAGE, '' );
+        $image_tray->setDescription( $this->message($upload_msg) );
+        $image_box = new XoopsFormFile('', 'xooghost_image', 5000000);
+        $image_box->setExtra( "size ='70%'") ;
+        $image_tray->addElement( $image_box );
+
+        $image_array = XoopsLists :: getImgListAsArray( $xoops->path('uploads') . '/xooghost/images' );
+        $image_select = new XoopsFormSelect( '<br />', 'image_list', $this->xoopsObject->getVar('xooghost_image') );
+        $image_select->addOptionArray( $image_array );
+        $image_select->setExtra( "onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xooghost/images/' . "\", \"\", \"" . $xoops->url('uploads') . "\")'" );
+        $image_tray->addElement( $image_select );
+        $image_tray->addElement( new XoopsFormLabel( '', "<br /><img src='" . $xoops->url('uploads') . '/xooghost/images/' . $this->xoopsObject->getVar('xooghost_image') . "' name='select_image' id='select_image' alt='' />" ) );
+        $this->addElement( $image_tray );
 
         // Meta description
         $this->addElement( new XoopsFormTextArea(_XOO_GHOST_DESCRIPTION, 'xooghost_description', $this->xoopsObject->getVar('xooghost_description'), 7, 50), true );
@@ -90,5 +113,21 @@ class XooghostPagesForm extends XoopsThemeForm
         $button_tray->addElement($cancel_send);
         $this->addElement($button_tray);
     }
+
+    function message($msg, $title = '', $class='errorMsg' )
+    {
+        $ret = "<div class='" . $class . "'>";
+        if ( $title != '' ) {
+            $ret .= "<strong>" . $title . "</strong>";
+        }
+        if ( is_array( $msg ) || is_object( $msg ) ) {
+            $ret .= implode('<br />', $msg);
+        } else {
+            $ret .= $msg;
+        }
+        $ret .= "</div>";
+        return $ret;
+    }
 }
 ?>
+

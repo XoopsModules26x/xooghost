@@ -28,10 +28,10 @@ define("_MI_XOO_GHOST_PREFERENCES",          "Preferences");
 
 //Configs
 define("_MI_XOO_GHOST_CONFIG_MAINPAGE",             "Main page");
+define("_MI_XOO_GHOST_CONFIG_IMAGE",                "Image");
+
 define("_MI_XOO_GHOST_CONFIG_MAIN",                 "Display pages in main menu");
-
 define("_MI_XOO_GHOST_CONFIG_WELCOME",              "Text to display in index page");
-
 define("_MI_XOO_GHOST_CONFIG_MAIN_MODE",            "Display mode of the main page");
 define("_MI_XOO_GHOST_CONFIG_MAIN_MODE_DESC",       "");
 define("_MI_XOO_GHOST_CONFIG_MAIN_MODE_NEWS",       "News");
