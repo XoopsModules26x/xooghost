@@ -17,9 +17,9 @@
  * @version         $Id$
  */
 
-define("_MB_GHOST_ITEM_PER_BLOCK",              "Item per block : ");
+define("_MB_GHOST_ITEM_PER_BLOCK",              "Item per block: ");
 
-define("_MB_GHOST_SORT_ORDER",                  "How to display items : ");
+define("_MB_GHOST_SORT_ORDER",                  "How to display items: ");
 define("_MB_GHOST_PUBLISHED_ASC",               "Date (Old Files Listed First)");
 define("_MB_GHOST_PUBLISHED_DESC",              "Date (New Files Listed First)");
 define("_MB_GHOST_TITLE_ASC",                   "Title (A to Z)");
@@ -29,7 +29,7 @@ define("_MB_GHOST_RATING_DESC",                 "Rating (Highest Score to Lowest
 define("_MB_GHOST_HITS_ASC",                    "Popularity (Least to Most Read)");
 define("_MB_GHOST_HITS_DESC",                   "Popularity (Most to Least Read)");
 
-define("_MB_GHOST_MODE",                        "Display mode : ");
+define("_MB_GHOST_MODE",                        "Display mode: ");
 define("_MB_GHOST_MODE_NEWS",                   "news");
 define("_MB_GHOST_MODE_LIST",                   "List");
 define("_MB_GHOST_MODE_TABLE",                  "Table");

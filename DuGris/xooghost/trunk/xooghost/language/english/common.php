@@ -28,7 +28,7 @@ define("_XOO_GHOST_PUBLISHED",                 "Publication date");
 define("_XOO_GHOST_DISPLAY",                   "Display").
 define("_XOO_GHOST_HITS",                      "Hit");
 
-define("_XOO_GHOST_VIEW_HIDE",                 "View / Hide");
+define("_XOO_GHOST_VIEW_HIDE",                 "Show / Hide");
 
 // images
 define("_XOO_GHOST_CONFIG_IMAGE_SIZE",         "Maximum size of image files (K0)");
