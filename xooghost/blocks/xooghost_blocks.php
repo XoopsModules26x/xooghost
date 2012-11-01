@@ -17,10 +17,23 @@
  * @version         $Id$
  */
 
-define("_MB_XOO_GHOST_MODE",                       "Display mode: ");
-define("_MB_XOO_GHOST_MODE_LIST",                  "List");
-define("_MB_XOO_GHOST_MODE_TABLE",                 "Table");
-define("_MB_XOO_GHOST_MODE_SELECT",                "Select");
+function xooghost_show($options)
+{    global $xoops;    $xoops->theme->addStylesheet('modules/xooghost/css/module.css');
+    $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
-if ( !defined("_XOO_GHOST_CHOOSE") ) {    define("_XOO_GHOST_CHOOSE",                    "Choose a page");}
+    $block['template'] = $options[0];
+    $block['pages'] = $xooghost_handler->getPublished();
+	return $block;
+}
+
+function xooghost_edit($options)
+{    $block_form = new XoopsFormElementTray('&nbsp;', '<br />');
+
+    $tmp = new XoopsFormSelect(_MB_XOO_GHOST_MODE . ' : ', 'options[0]', $options[0]);
+    $tmp->addOption('list', _MB_XOO_GHOST_MODE_LIST);
+    $tmp->addOption('table', _MB_XOO_GHOST_MODE_TABLE);
+    $tmp->addOption('select', _MB_XOO_GHOST_MODE_SELECT);
+    $block_form->addElement($tmp);
+	return $block_form->render();
+}
 ?>

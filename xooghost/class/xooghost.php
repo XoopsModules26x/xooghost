@@ -62,7 +62,11 @@ class Xooghost extends XoopsObject
         $ret = $this->getValues();
         $ret['xooghost_published'] = date(_SHORTDATESTRING, $ret['xooghost_published']);
         $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $ret['xooghost_url'];
-        $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $ret['xooghost_image'];
+
+        if ($ret['xooghost_image'] != 'blank.gif') {
+            $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $ret['xooghost_image'];
+        }
+
         $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
         return $ret;
     }

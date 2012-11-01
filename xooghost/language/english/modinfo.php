@@ -44,4 +44,6 @@ define("_MI_XOO_GHOST_CONFIG_PAGE_LIMIT_DESC",      "Number of items to display 
 
 define("_MI_XOO_GHOST_CONFIG_DATEFORMAT",           "Date&#39;s format");
 
+// Blocks
+define("_MI_XOO_GHOST_BLOCK_NAME",                  "Block : XooFoo - Ghost Module");
 ?>

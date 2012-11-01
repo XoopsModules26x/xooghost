@@ -1,16 +1,21 @@
+<{includeq file='db:xooghost_css.html'}>
+
 <div class="item">
     <div class="itemHead">
         <div class="txtcenter itemTitle">
-            <{$page.xooghost_title}>
+            <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{$page.xooghost_title}></a>
         </div>
     </div>
 
     <div class="itemBody">
-        <div class="itemImage">
-            <img src="<{$page.xooghost_image_link}>" alt="<{$page.xooghost_title}>">
-        </div>
+        <{if $page.xooghost_image_link}>
+            <i class="xooghost-image-item<{$page.xooghost_id}>">
+        <{/if}>
         <div class="itemText">
             <{$page.xooghost_content}>
         </div>
+        <{if $page.xooghost_image_link}>
+            </i>
+        <{/if}>
     </div>
 </div>
