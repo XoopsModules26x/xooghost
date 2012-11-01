@@ -24,8 +24,7 @@ function xoops_module_install_xooghost()
     $folders[]  = $xoops->path('uploads') . '/xooghost/images';
     $images     = array('index.html', 'blank.gif');
 
-    foreach ( $folders as $folder ) {
-        if ( !xooghost_mkdirs($folder) ) {
+    foreach ( $folders as $folder ) {        if ( !xooghost_mkdirs($folder) ) {
             return false;
         } else {
             foreach ( $images as $image ) {                if ( !xooghost_copyfile($xoops->path('uploads'), $image, $folder) ) {
