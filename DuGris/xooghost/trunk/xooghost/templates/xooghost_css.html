@@ -1,16 +1,23 @@
 <style>
+[class^="xooghost-image-"], [class*=" xooghost-image-"] {
+    background-size: <{$width}>px <{$height}>px;
+}
+
 <{if count($pages) != 0}>
     <{foreachq from=$pages item=page name=foo}>
-        .xooghost-ico-item<{$smarty.foreach.foo.iteration}> {
+        .xooghost-ico-item<{$page.xooghost_id}> {
             background-image: url('<{$page.xooghost_image_link}>');
+        }
+
+        .xooghost-image-item<{$page.xooghost_id}> {
+            background-image: url('<{$page.xooghost_image_link}>');
+        }
+
+        .item<{$page.xooghost_id}> {
+            padding-left: <{$width}>px;
         }
     <{/foreach}>
 <{else}>
-    [class^="xooghost-image-"], [class*=" xooghost-image-"] {
-        background-size: <{$width}>px <{$height}>px;
-        line-height: <{$height}>px;
-    }
-
     .xooghost-ico-item<{$page.xooghost_id}> {
         background-image: url('<{$page.xooghost_image_link}>');
     }
@@ -18,6 +25,7 @@
     .xooghost-image-item<{$page.xooghost_id}> {
         background-image: url('<{$page.xooghost_image_link}>');
     }
+
     .item<{$page.xooghost_id}> {
         padding-left: <{$width}>px;
     }
