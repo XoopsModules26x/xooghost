@@ -21,7 +21,7 @@ include dirname(__FILE__) . '/header.php';
 
 switch ($op) {    case 'save':
     if ( !$GLOBALS['xoopsSecurity']->check() ) {
-        $xoops->redirect('index.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+        $xoops->redirect('pages.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
     }
 
     $xooghost_id = $system->CleanVars($_POST, 'xooghost_id', 0, 'int');
@@ -33,8 +33,21 @@ switch ($op) {    case 'save':
 
     $page->CleanVarsForDB();
 
-    if ($xooghost_handler->insert($page)) {
-        $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_SAVED);
+    // uploads images
+    $myts = MyTextSanitizer::getInstance();
+    $upload_images = $xooghost_handler->upload_images();
+
+    if ( is_array( $upload_images ) && count( $upload_images) != 0 ) {        foreach ($upload_images as $k => $reponse ) {            if ( $reponse['error'] == true ) {                $errors[] = $reponse['message'];
+            } else {                $page->setVar( $k, $reponse['filename'] );
+            }
+        }
+    } else {        $page->setVar('xooghost_image', $myts->htmlspecialchars( $_POST['image_list'] ) );
+    }
+
+
+    if ($xooghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
+        if ( count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
+        $xoops->redirect('pages.php', 5, $msg);
     }
     break;
 

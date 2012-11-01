@@ -10,13 +10,15 @@
     background-color:      transparent;
 }
 .itemTitle a {
-    color:                 #F1F1F1;
+    color:                 #f1f1f1;
     background-color:      transparent;
 }
 .itemBody {    margin:                5px;
 }
-.itemText {    line-height:           1.5em;
+.itemText {    clear:                 both;    line-height:           1.5em;
 }
 .itemText:first-letter {    font-size:             1.3em;
     font-weight:           bold;
 }
+.itemImage {    float:                 left;}
+.itemIcon {    width:                 32px;}

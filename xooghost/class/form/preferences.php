@@ -54,6 +54,16 @@ class XooghostPreferencesForm extends XoopsThemeForm
         $main_mode->addOption('news',   _MI_XOO_GHOST_CONFIG_MAIN_MODE_NEWS);
         $this->addElement( $main_mode );
 
+        $this->insertBreak(_MI_XOO_GHOST_CONFIG_IMAGE,'preferenceTitle');
+        // xooghost_image_size
+        $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_SIZE, 'xooghost_image_size', 1, 10, $xooghost_image_size) );
+
+        // xooghost_image_width
+        $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_WIDTH, 'xooghost_image_width', 1, 10, $xooghost_image_width) );
+
+        // xooghost_image_height
+        $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_HEIGHT, 'xooghost_image_height', 1, 10, $xooghost_image_height) );
+
         // button
         $button_tray = new XoopsFormElementTray('', '');
         $button_tray->addElement(new XoopsFormHidden('op', 'save'));

@@ -62,9 +62,9 @@ class Xooghost extends XoopsObject
         $ret = $this->getValues();
         $ret['xooghost_published'] = date(_SHORTDATESTRING, $ret['xooghost_published']);
         $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $ret['xooghost_url'];
+        $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $ret['xooghost_image'];
         $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
         return $ret;
-
     }
 
     public function create_page() {
@@ -116,7 +116,7 @@ class Xooghost extends XoopsObject
         $string = preg_replace('~\&[^;]+\;~', '', $string); // supprime les autres caractères
 
         $string = str_replace('xooghost', '_' , $string);
-        return $string . ".php";
+        return $string . '.php';
     }
 }
 
@@ -184,6 +184,55 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
             return true;
         }
         return false;
+    }
+
+    public function upload_images()
+    {
+        global $xoops;
+        $autoload = XoopsLoad::loadConfig( 'xooghost' );
+
+        include_once dirname ( __FILE__ ) . '/xoopreferences.php';
+        $config = new XooPreferences();
+        $xooGhost_config = $config->config;
+
+        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $config->config['xooghost_image_size'], $config->config['xooghost_image_width'], $config->config['xooghost_image_height']);
+
+        $ret = array();
+        foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {
+            if ( $_FILES[$input_image]['tmp_name'] != '' || is_readable( $_FILES[$input_image]['tmp_name'] ) ) {
+                $uploader->setTargetFileName( $this->CleanImage($_FILES[$input_image]['name']) );
+                if ( $uploader->fetchMedia( $_POST['xoops_upload_file'][$k] ) ) {
+                    if ( $uploader->upload() ) {
+                        $ret[$input_image] = array( 'filename' => $uploader->getSavedFileName(), 'error' => false, 'message' => '');
+                    } else {
+                        $ret[$input_image] = array( 'filename' => $_FILES[$input_image]['name'], 'error' => true , 'message' => $uploader->getErrors() );
+                    }
+                } else {
+                    $ret[$input_image] = array( 'filename' => $_FILES[$input_image]['name'], 'error' => true , 'message' => $uploader->getErrors() );
+                }
+            }
+        }
+        return $ret;
+    }
+
+    function CleanImage( $filename )
+    {
+        $path_parts = pathinfo( $filename );
+        $string = $path_parts['filename'];
+
+        $string = str_replace('_', md5('xooghost'), $string);
+        $string = str_replace('-', md5('xooghost'), $string);
+        $string = str_replace(' ', md5('xooghost'), $string);
+
+        $string = preg_replace('~\p{P}~','', $string);
+        $string = htmlentities($string, ENT_NOQUOTES, _CHARSET);
+        $string = preg_replace("~\&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring)\;~", "$1", $string);
+        $string = preg_replace("~\&([A-za-z]{2})(?:lig)\;~", "$1", $string); // pour les ligatures e.g. "&oelig;"
+        $string = preg_replace("~\&[^;]+\;~", "", $string); // supprime les autres caractères
+
+        $string = str_replace(md5('xooghost'), '_' , $string);
+        return $string . '.' . $path_parts['extension'];
+
     }
 
     public function getPhpListAsArray()
