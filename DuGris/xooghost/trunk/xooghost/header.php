@@ -27,8 +27,10 @@ include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
 $config = new XooPreferences();
 $xooGhost_config = $config->config;
 
-if ( $xooghost_url = basename($_SERVER['SCRIPT_NAME']) == 'index.php') {    $xoops->header('xooghost_index.html');
-} else {    $xoops->header('xooghost_page.html');
+$xooghost_url = basename($_SERVER['SCRIPT_NAME']);
+
+if ( $xooghost_url == 'index.php') {    $xoops->header('xooghost_index.html');
+} else {    echo $xooghost_url . "<br>";    $xoops->header('xooghost_page.html');
     $page = $xooghost_handler->getByURL($xooghost_url);
     $xoops->tpl->assign('page', $page);
     $xoops->theme->addMeta($type = 'meta', 'description', $page['xooghost_description']);
