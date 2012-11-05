@@ -59,6 +59,7 @@ switch ($op) {    case 'save':
     break;
 
     case 'edit':
+    $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
     $page = $xooghost_handler->get($xooghost_id);
     $form = $xoops->getModuleForm($page, 'pages', 'xooghost');
     $form->PageForm();
@@ -66,6 +67,26 @@ switch ($op) {    case 'save':
     break;
 
     case 'del':
+    $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+    if( isset($xooghost_id) && $xooghost_id > 0 ){
+        if ($page = $xooghost_handler->get($xooghost_id) ) {
+            $delete = $system->CleanVars( $_POST, 'ok', 0, 'int' );
+            if ($delete == 1) {
+                if ( !$GLOBALS['xoopsSecurity']->check() ) {
+                    $xoops->redirect('pages.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+                }
+                $xooghost_handler->delete($page);
+                $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_DELETED);
+            } else {
+                $xoops->confirm(array('ok' => 1, 'xooghost_id' => $xooghost_id, 'op' => 'del'), $_SERVER['REQUEST_URI'], sprintf(_AM_XOO_GHOST_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $page->getVar('xooghost_title')));
+                $confirm = '<div class="confirm">' . ob_get_contents() . '</div>';
+            }
+        } else {
+            $xoops->redirect('pages.php', 5);
+        }
+    } else {
+        $xoops->redirect('pages.php', 5);
+    }
     break;
 
     case 'view':

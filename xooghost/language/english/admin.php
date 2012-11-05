@@ -30,4 +30,7 @@ define("_AM_XOO_GHOST_SAVED",           "Data was saved");
 
 define("_AM_XOO_GHOST_PHPCODE",         "Your php code if you must integrate");
 define("_AM_XOO_GHOST_HTMLCODE",        "Your text and/or html code without html tags, head, body and title");
+
+define("_AM_XOO_GHOST_DELETE_CFM",      "Are you sure to delete this page ?");
+define("_AM_XOO_GHOST_DELETED",         "The page has been deleted");
 ?>
