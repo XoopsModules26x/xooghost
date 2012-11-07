@@ -27,7 +27,7 @@ class XooghostPreferencesForm extends XoopsThemeForm
      */
     public function __construct()
     {        include_once dirname( dirname ( __FILE__ ) ) . '/xoopreferences.php';
-        $object = new XooPreferences();
+        $object = new XooGhostPreferences();
         $this->_config = $object->config;
     }
 

@@ -80,7 +80,7 @@ $modversion['hasMain'] = 1;
 
 global $xoops;
 if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' ) {    include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
-    $object = new XooPreferences();
+    $object = new XooGhostPreferences();
     $xooGhost_config = $object->config;
 
     if ( $xooGhost_config['xooghost_main'] ) {

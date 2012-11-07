@@ -36,7 +36,7 @@ class XooghostPagesForm extends XoopsThemeForm
     {        global $xoops, $xooghost_handler;
 
         include_once dirname(dirname ( __FILE__ )) . '/xoopreferences.php';
-        $config = new XooPreferences();
+        $config = new XooGhostPreferences();
         $xooGhost_config = $config->config;
 
         if ($this->xoopsObject->isNew() ) {

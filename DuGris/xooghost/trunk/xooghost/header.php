@@ -24,7 +24,7 @@ $xoops->loadLanguage('common', 'xooghost');
 $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
 include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
-$config = new XooPreferences();
+$config = new XooGhostPreferences();
 $xooGhost_config = $config->config;
 
 $xooghost_url = basename($_SERVER['SCRIPT_NAME']);

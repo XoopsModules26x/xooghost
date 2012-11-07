@@ -196,7 +196,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         $autoload = XoopsLoad::loadConfig( 'xooghost' );
 
         include_once dirname ( __FILE__ ) . '/xoopreferences.php';
-        $config = new XooPreferences();
+        $config = new XooGhostPreferences();
         $xooGhost_config = $config->config;
 
         $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $config->config['xooghost_image_size'], $config->config['xooghost_image_width'], $config->config['xooghost_image_height']);
