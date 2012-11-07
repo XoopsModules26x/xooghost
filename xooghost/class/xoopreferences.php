@@ -19,7 +19,7 @@
 
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
-class XooPreferences
+class XooGhostPreferences
 {
     public $config = array();
     public $basicConfig = array();
@@ -39,11 +39,11 @@ class XooPreferences
         }
     }
 
-    public function XooPreferences()
+    public function XooGhostPreferences()
     {        $this->__construct();    }
 
     /**
-     * XooPreferences::loadConfig()
+     * XooGhostPreferences::loadConfig()
      *
      * @return array
      */
@@ -57,7 +57,7 @@ class XooPreferences
 
 
     /**
-     * XooPreferences::loadBasicConfig()
+     * XooGhostPreferences::loadBasicConfig()
      *
      * @return array
      */
@@ -70,7 +70,7 @@ class XooPreferences
     }
 
     /**
-     * XooPreferences::readConfig()
+     * XooGhostPreferences::readConfig()
      *
      * @return array
      */
@@ -83,7 +83,7 @@ class XooPreferences
     }
 
     /**
-     * XooPreferences::writeConfig()
+     * XooGhostPreferences::writeConfig()
      *
      * @param string $filename
      * @param array $config
