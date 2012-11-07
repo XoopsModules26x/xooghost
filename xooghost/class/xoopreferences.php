@@ -25,10 +25,11 @@ class XooGhostPreferences
     public $basicConfig = array();
     public $configPath;
     public $configFile;
+    private $module_dirname = 'xooghost';
 
     public function __construct()
     {        global $xoops;
-        $this->configFile = 'config.' . $xoops->module->dirname() . '.php';
+        $this->configFile = 'config.' . $this->module_dirname . '.php';
 
         $this->configPath = XOOPS_VAR_PATH . '/configs/';
 
