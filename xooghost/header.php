@@ -30,9 +30,10 @@ $xooGhost_config = $config->config;
 $xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 
 if ( $xooghost_url == 'index.php') {    $xoops->header('xooghost_index.html');
-} else {    echo $xooghost_url . "<br>";    $xoops->header('xooghost_page.html');
+} else {    $xoops->header('xooghost_page.html');
     $page = $xooghost_handler->getByURL($xooghost_url);
     $xoops->tpl->assign('page', $page);
+    $xoops->tpl->assign('xoops_pagetitle' , $page['xooghost_title'] . ' - ' . $xoops->module->getVar('name') );
     $xoops->theme->addMeta($type = 'meta', 'description', $page['xooghost_description']);
     $xoops->theme->addMeta($type = 'meta', 'keywords', $page['xooghost_keywords']);
 }
