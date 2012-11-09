@@ -20,7 +20,6 @@
 function xoops_module_install_xooghost()
 {    global $xoops;
     $folders    = array();
-    $folders[]  = $xoops->path('uploads') . '/xooghost';
     $folders[]  = $xoops->path('uploads') . '/xooghost/images';
     $images     = array('index.html', 'blank.gif');
 
@@ -50,6 +49,8 @@ function xooghost_mkdirs( $pathname, $pathout = XOOPS_ROOT_PATH )
             if ( !is_dir( $dest ) ) {
                 if ( !mkdir( $dest , 0755 ) ) {
                     return false;
+                } else {
+                    xooghost_copyfile($xoops->path('uploads'), 'index.html', $dest);
                 }
             }
         }
