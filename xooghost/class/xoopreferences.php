@@ -98,5 +98,24 @@ class XooGhostPreferences
         return $file->write( 'return ' . var_export($config, true) . ';');
     }
 
+    function Prepare2Save( $data = null, $module = true)
+    {
+        global $xoops;
+        if ( !isset($data) ) {
+            $data = $_POST;
+        }
+
+        $config = array();
+        foreach ( array_keys($data) as $k) {
+            if ( is_array($data[$k]) ) {
+                $config[$k] = $this->Prepare2Save( $data[$k], false );
+            } else {
+                if ( strstr($k, $xoops->module->dirname() . '_') || !$module ) {
+                    $config[$k] = $data[$k];
+                }
+            }
+        }
+        return $config;
+    }
 }
 ?>

@@ -27,5 +27,5 @@ define("_MI_XOO_GHOST_PAGES",                "Manage pages");
 define("_MI_XOO_GHOST_PREFERENCES",          "Preferences");
 
 // Blocks
-define("_MI_XOO_GHOST_BLOCK_NAME",                  "Block : XooFoo - Ghost Module");
+define("_MI_XOO_GHOST_BLOCK_NAME",           "Block : XooFoo - Ghost Module");
 ?>
