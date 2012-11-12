@@ -33,8 +33,7 @@ switch ($op) {    case 'save':
     // Write configuration file
     include_once dirname( dirname ( __FILE__ ) ) . '/class/xoopreferences.php';
     $object = new XooGhostPreferences();
-    foreach ( array_keys($_POST) as $k) {        if ( strstr($k, $xoops->module->dirname() . '_') ) {            $config[$k] = $_POST[$k];        }    }
-    $object->writeConfig( $config );
+    $object->writeConfig( $object->Prepare2Save() );
     $xoops->redirect("preferences.php", 3, _AM_XOO_GHOST_SAVED);
     break;
     default:
