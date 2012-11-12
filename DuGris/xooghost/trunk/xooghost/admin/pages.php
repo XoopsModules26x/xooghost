@@ -79,7 +79,6 @@ switch ($op) {    case 'save':
                 $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_DELETED);
             } else {
                 $xoops->confirm(array('ok' => 1, 'xooghost_id' => $xooghost_id, 'op' => 'del'), $_SERVER['REQUEST_URI'], sprintf(_AM_XOO_GHOST_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $page->getVar('xooghost_title')));
-                $confirm = '<div class="confirm">' . ob_get_contents() . '</div>';
             }
         } else {
             $xoops->redirect('pages.php', 5);
@@ -104,11 +103,10 @@ switch ($op) {    case 'save':
     break;
 
     default:
-    $admin_page->addItemButton(_AM_XOO_GHOST_ADD, 'pages.php?op=add', $icon = 'add', $extra = '');
+    $admin_page->addItemButton(_AM_XOO_GHOST_ADD, 'pages.php?op=add', 'add');
     $admin_page->renderButton();
 
     $xoops->tpl->assign('pages', $xooghost_handler->renderAdminList() );
-
     break;
 }
 
