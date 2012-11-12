@@ -26,24 +26,6 @@ define("_MI_XOO_GHOST_ABOUT",                "About");
 define("_MI_XOO_GHOST_PAGES",                "Manage pages");
 define("_MI_XOO_GHOST_PREFERENCES",          "Preferences");
 
-//Configs
-define("_MI_XOO_GHOST_CONFIG_MAINPAGE",             "Main page");
-define("_MI_XOO_GHOST_CONFIG_IMAGE",                "Image");
-
-define("_MI_XOO_GHOST_CONFIG_MAIN",                 "Display pages in main menu");
-define("_MI_XOO_GHOST_CONFIG_WELCOME",              "Text to display in index page");
-define("_MI_XOO_GHOST_CONFIG_MAIN_MODE",            "Display mode of the main page");
-define("_MI_XOO_GHOST_CONFIG_MAIN_MODE_DESC",       "");
-define("_MI_XOO_GHOST_CONFIG_MAIN_MODE_NEWS",       "News");
-define("_MI_XOO_GHOST_CONFIG_MAIN_MODE_LIST",       "List");
-define("_MI_XOO_GHOST_CONFIG_MAIN_MODE_TABLE",      "Table");
-define("_MI_XOO_GHOST_CONFIG_MAIN_MODE_SELECT",     "Select");
-
-define("_MI_XOO_GHOST_CONFIG_PAGE_LIMIT",           "Limit");
-define("_MI_XOO_GHOST_CONFIG_PAGE_LIMIT_DESC",      "Number of items to display on the main page (0 = no limit)");
-
-define("_MI_XOO_GHOST_CONFIG_DATEFORMAT",           "Date&#39;s format");
-
 // Blocks
 define("_MI_XOO_GHOST_BLOCK_NAME",                  "Block : XooFoo - Ghost Module");
 ?>
