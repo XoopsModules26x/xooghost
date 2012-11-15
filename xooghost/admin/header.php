@@ -33,11 +33,14 @@ if ( isset( $_GET ) ){
 
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 
+XoopsLoad::load('xoopreferences', 'xooghost');
+
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
-$xoops->header('xooghost_' . $script_name . '.html');
+if ($script_name != 'about') {    $xoops->header('xooghost_' . $script_name . '.html');} else {    $xoops->header();}
+
 $xoops->theme->addStylesheet('modules/xooghost/css/moduladmin.css');
 $xoops->loadLanguage('common', 'xooghost');
 

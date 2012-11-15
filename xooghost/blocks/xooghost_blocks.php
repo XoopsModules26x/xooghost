@@ -18,7 +18,7 @@
  */
 
 function xooghost_show($options)
-{    global $xoops;    $xoops->theme->addStylesheet('modules/xooghost/css/module.css');
+{    $xoops = Xoops::getInstance();    $xoops->theme->addStylesheet('modules/xooghost/css/module.css');
     $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
     $block['template'] = $options[0];

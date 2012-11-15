@@ -17,8 +17,10 @@
  * @version         $Id$
  */
 
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
+
 function xoops_module_install_xooghost()
-{    global $xoops;
+{    $xoops = Xoops::getInstance();
     $folders    = array();
     $folders[]  = $xoops->path('uploads') . '/xooghost/images';
     $images     = array('index.html', 'blank.gif');
@@ -32,11 +34,13 @@ function xoops_module_install_xooghost()
             }
         }
     }
+    xooghost_mkdirs($xoops->path(XOOPS_VAR_PATH) . '/configs/xooghost');
     return true;
 }
 
 function xooghost_mkdirs( $pathname, $pathout = XOOPS_ROOT_PATH )
 {
+    $xoops = Xoops::getInstance();
     $pathname = substr( $pathname, strlen(XOOPS_ROOT_PATH) );
     $pathname = str_replace( DIRECTORY_SEPARATOR, '/', $pathname );
 

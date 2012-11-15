@@ -33,11 +33,10 @@ class XooghostPagesForm extends XoopsThemeForm
      * @return void
      */
     public function PageForm()
-    {        global $xoops, $xooghost_handler;
+    {        $xoops = Xoops::getInstance();
+        global $xooghost_handler;
 
-        include_once dirname(dirname ( __FILE__ )) . '/xoopreferences.php';
-        $config = new XooGhostPreferences();
-        $xooGhost_config = $config->config;
+        $xooGhost_config = XooGhostPreferences::getInstance()->loadConfig();
 
         if ($this->xoopsObject->isNew() ) {
             parent::__construct(_AM_XOO_GHOST_ADD, 'form_pages', 'pages.php', 'post', true);
@@ -114,7 +113,7 @@ class XooghostPagesForm extends XoopsThemeForm
         $this->addElement($button_tray);
     }
 
-    function message($msg, $title = '', $class='errorMsg' )
+    public function message($msg, $title = '', $class='errorMsg' )
     {
         $ret = "<div class='" . $class . "'>";
         if ( $title != '' ) {

@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
+
 include_once XOOPS_ROOT_PATH . "/modules/xooghost/install/install.php";
 
 function xoops_module_update_xooghost()

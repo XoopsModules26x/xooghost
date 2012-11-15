@@ -46,7 +46,7 @@ switch ($op) {    case 'save':
 
 
     if ($xooghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
-        if ( count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
+        if ( isset($errors) && count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
         $xoops->redirect('pages.php', 5, $msg);
     }
     break;
