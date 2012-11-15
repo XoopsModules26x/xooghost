@@ -1,12 +1,11 @@
 <{assign var=pages value=$block.pages}>
 
-<{includeq file='db:xooghost_css.html'}>
-
+<{includeq file='module:xooghost|xooghost_css.html'}>
 
 <{if $block.template == 'list'}>
-    <{includeq file='db:xooghost_index_list.html'}>
+    <{includeq file="module:xooghost|xooghost_index_list.html"}>
 <{elseif $block.template == 'table'}>
-    <{includeq file='db:xooghost_index_table.html'}>
+    <{includeq file="module:xooghost|xooghost_index_table.html"}>
 <{elseif $block.template == 'select'}>
-    <{includeq file='db:xooghost_index_select.html'}>
+    <{includeq file="module:xooghost|xooghost_index_select.html"}>
 <{/if}>

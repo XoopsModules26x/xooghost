@@ -23,10 +23,8 @@ $xoops->loadLanguage('common', 'xooghost');
 
 $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
-include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
-$config = new XooGhostPreferences();
-$xooGhost_config = $config->config;
-
+XoopsLoad::load('xoopreferences', 'xooghost');
+$xooGhost_config = XooGhostPreferences::getInstance()->getConfig();
 $xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 
 if ( $xooghost_url == 'index.php') {    $xoops->header('xooghost_index.html');

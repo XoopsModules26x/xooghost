@@ -31,8 +31,7 @@ switch ($op) {    case 'save':
     $xooghost_main_mode = $system->CleanVars($_POST, 'xooghost_main_mode', 'list', 'string');
 
     // Write configuration file
-    include_once dirname( dirname ( __FILE__ ) ) . '/class/xoopreferences.php';
-    $object = new XooGhostPreferences();
+    $object = XooGhostPreferences::getInstance();
     $object->writeConfig( $object->Prepare2Save() );
     $xoops->redirect("preferences.php", 3, _AM_XOO_GHOST_SAVED);
     break;

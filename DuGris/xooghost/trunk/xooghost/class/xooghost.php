@@ -80,7 +80,7 @@ class Xooghost extends XoopsObject
         return true;
     }
 
-    function CleanVarsForDB()
+    public function CleanVarsForDB()
     {
         $system = System::getInstance();
         foreach ( $this->getValues() as $k => $v ) {
@@ -105,7 +105,7 @@ class Xooghost extends XoopsObject
         }
     }
 
-    function CleanURL( $string )
+    public function CleanURL( $string )
     {
         $string = basename( $string, '.php' );
 
@@ -192,14 +192,12 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
 
     public function upload_images()
     {
-        global $xoops;
+        $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xooghost' );
 
-        include_once dirname ( __FILE__ ) . '/xoopreferences.php';
-        $config = new XooGhostPreferences();
-        $xooGhost_config = $config->config;
+        $xooGhost_config = XooGhostPreferences::getInstance()->getConfig();
 
-        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $config->config['xooghost_image_size'], $config->config['xooghost_image_width'], $config->config['xooghost_image_height']);
+        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $xooGhost_config['xooghost_image_size'], $xooGhost_config['xooghost_image_width'], $xooGhost_config['xooghost_image_height']);
 
         $ret = array();
         foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {
@@ -219,7 +217,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         return $ret;
     }
 
-    function CleanImage( $filename )
+    public function CleanImage( $filename )
     {
         $path_parts = pathinfo( $filename );
         $string = $path_parts['filename'];
@@ -236,7 +234,6 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
 
         $string = str_replace(md5('xooghost'), '_' , $string);
         return $string . '.' . $path_parts['extension'];
-
     }
 
     public function getPhpListAsArray()

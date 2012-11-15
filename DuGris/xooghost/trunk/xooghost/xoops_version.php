@@ -75,15 +75,14 @@ $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 $modversion['tables'][1] = 'xooghost';
 
 // Menu
-$i = 0;
 $modversion['hasMain'] = 1;
 
-global $xoops;
-if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' ) {    include_once dirname ( __FILE__ ) . '/class/xoopreferences.php';
-    $object = new XooGhostPreferences();
-    $xooGhost_config = $object->config;
+$xoops = Xoops::getInstance();
+if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' ) {    XoopsLoad::load('xoopreferences', 'xooghost');
+    $xooGhost_config = XooGhostPreferences::getInstance()->getConfig();
 
     if ( $xooGhost_config['xooghost_main'] ) {
+        $i = 0;
         $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
         $pages = $xooghost_handler->getPublished();
         foreach ($pages as $page) {
@@ -96,26 +95,6 @@ if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' ) {  
 
 // Templates
 $i = 1;
-$modversion['templates'][$i]['file']        = 'xooghost_index_news.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_index_list.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_index_table.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_index_select.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'xooghost_css.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
 $modversion['templates'][$i]['file']        = 'xooghost_index.html';
 $modversion['templates'][$i]['description'] = '';
 

@@ -1,4 +1,6 @@
 <?php
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
+
 return $config = array(
     'xooghost_main'         => 1,
     'xooghost_welcome'      => '',
