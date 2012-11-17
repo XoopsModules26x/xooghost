@@ -65,6 +65,8 @@ class Xooghost extends XoopsObject
 
         if ($ret['xooghost_image'] != 'blank.gif') {
             $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $ret['xooghost_image'];
+        } else {
+            $ret['xooghost_image_link'] = XOOPS_URL . '/modules/xooghost/images/default.png';
         }
 
         $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);

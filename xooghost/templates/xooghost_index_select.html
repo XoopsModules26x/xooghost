@@ -3,7 +3,7 @@
     <option value="index.php"><{$smarty.const._XOO_GHOST_CHOOSE}></option>
 
     <{foreachq from=$pages item=page name=foo}>
-        <option value="<{$page.xooghost_link}>"><i class="xooghost-ico-item<{$smarty.foreach.foo.iteration}>"></i><{$page.xooghost_title}></option>
+        <option value="<{$page.xooghost_link}>"><i class="xooghost-ico-item<{$page.xooghost_id}>"></i><{$page.xooghost_title}></option>
     <{/foreach}>
     </select>
 </div>
