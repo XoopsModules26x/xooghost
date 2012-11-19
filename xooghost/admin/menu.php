@@ -22,15 +22,18 @@ $adminmenu[$i]['title'] = _MI_XOO_GHOST_INDEX;
 $adminmenu[$i]['link']  = 'admin/index.php';
 $adminmenu[$i]['icon']  = 'home.png';
 
+$xoops = Xoops::getInstance();
+if ($xoops->isadmin()) {
+    $i++;
+    $adminmenu[$i]['title'] = _MI_XOO_GHOST_PREFERENCES;
+    $adminmenu[$i]['link']  = 'admin/preferences.php';
+    $adminmenu[$i]['icon']  = 'administration.png';
+}
+
 $i++;
 $adminmenu[$i]['title'] = _MI_XOO_GHOST_PAGES;
 $adminmenu[$i]['link']  = 'admin/pages.php';
 $adminmenu[$i]['icon']  = 'content.png';
-
-$i++;
-$adminmenu[$i]['title'] = _MI_XOO_GHOST_PREFERENCES;
-$adminmenu[$i]['link']  = 'admin/preferences.php';
-$adminmenu[$i]['icon']  = 'administration.png';
 
 $i++;
 $adminmenu[$i]['title'] = _MI_XOO_GHOST_ABOUT;
