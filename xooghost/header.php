@@ -18,6 +18,10 @@
  */
 
 include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
+
+XoopsLoad::load('system', 'system');
+$system = System::getInstance();
+
 $xoops = Xoops::getInstance();
 $xoops->loadLanguage('common', 'xooghost');
 
@@ -27,18 +31,30 @@ XoopsLoad::load('xoopreferences', 'xooghost');
 $xooGhost_config = XooGhostPreferences::getInstance()->getConfig();
 $xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 
-if ( $xooghost_url == 'index.php') {    $xoops->header('xooghost_index.html');
+if ( $xooghost_url == 'index.php' || $xooghost_url == 'qrcode.php' ) {    $xoops->header('xooghost_index.html');
 } else {    $xoops->header('xooghost_page.html');
     $page = $xooghost_handler->getByURL($xooghost_url);
-    $xoops->tpl->assign('page', $page);
-    $xoops->tpl->assign('xoops_pagetitle' , $page['xooghost_title'] . ' - ' . $xoops->module->getVar('name') );
-    $xoops->theme->addMeta($type = 'meta', 'description', $page['xooghost_description']);
-    $xoops->theme->addMeta($type = 'meta', 'keywords', $page['xooghost_keywords']);
+    if ( is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') && $page->getVar('xooghost_online') ) {        $time = time();
+        $xooghost_id = $page->getVar('xooghost_id');
+        if ( !isset($_SESSION['xooghost_view' . $xooghost_id]) || $_SESSION['xooghost_view' . $xooghost_id] < $time ) {
+            $_SESSION['xooghost_view' . $xooghost_id] = $time + 3600;
+            $xooghost_handler->SetRead( $page );
+        }
+        $xoops->tpl->assign('page', $page->toArray() );
+        $xoops->tpl->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
+        $xoops->theme->addMeta($type = 'meta', 'description', $page->getVar('xooghost_description'));
+        $xoops->theme->addMeta($type = 'meta', 'keywords', $page->getVar('xooghost_keywords'));
+    } else {        $xoops->tpl->assign('not_found', true);
+    }
 }
 $xoops->theme->addStylesheet('modules/xooghost/css/module.css');
+
+$xoops->tpl->assign('moduletitle', $xoops->module->name() );
 
 $xoops->tpl->assign('template', $xooGhost_config['xooghost_main_mode'] );
 $xoops->tpl->assign('welcome', $xooGhost_config['xooghost_welcome'] );
 $xoops->tpl->assign('width', $xooGhost_config['xooghost_image_width'] );
 $xoops->tpl->assign('height', $xooGhost_config['xooghost_image_height'] );
+$xoops->tpl->assign('xooghost_qrcode', $xooGhost_config['xooghost_qrcode'] );
+
 ?>

@@ -36,23 +36,23 @@ class XooghostPreferencesForm extends XoopsThemeForm
     public function PreferencesForm()
     {        extract( $this->_config );        parent::__construct('', "form_preferences", "preferences.php", 'post', true);
         $this->setExtra('enctype="multipart/form-data"');
-        $this->insertBreak(_MI_XOO_GHOST_CONFIG_MAINPAGE,'preferenceTitle');
+        $this->insertBreak(_MI_XOO_CONFIG_MAINPAGE,'preferenceTitle');
 
         //xooghost_main
-        $this->addElement( new XoopsFormRadioYN(_MI_XOO_GHOST_CONFIG_MAIN, 'xooghost_main', $xooghost_main) );
+        $this->addElement( new XoopsFormRadioYN(_MI_XOO_CONFIG_MAIN, 'xooghost_main', $xooghost_main) );
 
         //xooghost_welcome
-        $this->addElement( new XoopsFormTextArea(_MI_XOO_GHOST_CONFIG_WELCOME, 'xooghost_welcome', $xooghost_welcome, 12, 12) );
+        $this->addElement( new XoopsFormTextArea(_MI_XOO_CONFIG_WELCOME, 'xooghost_welcome', $xooghost_welcome, 12, 12) );
 
         //xooghost_main_mode
-        $main_mode = new XoopsFormSelect(_MI_XOO_GHOST_CONFIG_MAIN_MODE, 'xooghost_main_mode', $xooghost_main_mode, $size = 1);
-        $main_mode->addOption('list',   _MI_XOO_GHOST_CONFIG_MAIN_MODE_LIST);
-        $main_mode->addOption('table',  _MI_XOO_GHOST_CONFIG_MAIN_MODE_TABLE);
-        $main_mode->addOption('select', _MI_XOO_GHOST_CONFIG_MAIN_MODE_SELECT);
-        $main_mode->addOption('news',   _MI_XOO_GHOST_CONFIG_MAIN_MODE_NEWS);
+        $main_mode = new XoopsFormSelect(_MI_XOO_CONFIG_MAIN_MODE, 'xooghost_main_mode', $xooghost_main_mode, $size = 1);
+        $main_mode->addOption('list',   _MI_XOO_CONFIG_MAIN_MODE_LIST);
+        $main_mode->addOption('table',  _MI_XOO_CONFIG_MAIN_MODE_TABLE);
+        $main_mode->addOption('select', _MI_XOO_CONFIG_MAIN_MODE_SELECT);
+        $main_mode->addOption('news',   _MI_XOO_CONFIG_MAIN_MODE_NEWS);
         $this->addElement( $main_mode );
 
-        $this->insertBreak(_MI_XOO_GHOST_CONFIG_IMAGE,'preferenceTitle');
+        $this->insertBreak(_MI_XOO_CONFIG_IMAGE,'preferenceTitle');
         // xooghost_image_size
         $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_SIZE, 'xooghost_image_size', 1, 10, $xooghost_image_size) );
 
@@ -61,6 +61,9 @@ class XooghostPreferencesForm extends XoopsThemeForm
 
         // xooghost_image_height
         $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_HEIGHT, 'xooghost_image_height', 1, 10, $xooghost_image_height) );
+
+        // QrCode
+        $this->QRcodeForm();
 
         // button
         $button_tray = new XoopsFormElementTray('', '');
@@ -71,6 +74,45 @@ class XooghostPreferencesForm extends XoopsThemeForm
         $cancel_send->setExtra("onclick='javascript:history.go(-1);'");
         $button_tray->addElement($cancel_send);
         $this->addElement($button_tray);
+    }
+
+    private function QRcodeForm()
+    {
+        if ( file_exists(XOOPS_PATH . '/phpqrcode/qrlib.php') ) {
+            extract( $this->_config );
+            $this->insertBreak(_MI_XOO_CONFIG_QRCODE,'preferenceTitle');
+
+            // use QR code
+            $this->addElement( new XoopsFormRadioYN(_MI_XOO_CONFIG_QRCODE_USE, 'xooghost_qrcode[use_qrcode]', $xooghost_qrcode['use_qrcode']) );
+
+            // Error Correction Level
+            $ecl_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_ECL, 'xooghost_qrcode[CorrectionLevel]', $xooghost_qrcode['CorrectionLevel']);
+            $ecl_mode->addOption('L',   _MI_XOO_CONFIG_QRCODE_ECL_L);
+            $ecl_mode->addOption('M',   _MI_XOO_CONFIG_QRCODE_ECL_M);
+            $ecl_mode->addOption('Q',   _MI_XOO_CONFIG_QRCODE_ECL_Q);
+            $ecl_mode->addOption('H',   _MI_XOO_CONFIG_QRCODE_ECL_H);
+            $this->addElement( $ecl_mode );
+
+            // Matrix Point Size
+            $this->addElement( new XoopsFormHidden('xooghost_qrcode[matrixPointSize]', 2) );
+/*
+            $matrix_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_MATRIX, 'xooghost_qrcode[matrixPointSize]', $xooghost_qrcode['matrixPointSize']);
+            for ($i = 1; $i <= 5; $i++) {
+                $matrix_mode->addOption($i, $i * 37 . ' px');
+            }
+            $this->addElement( $matrix_mode );
+*/
+
+            // Margin
+            $margin_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_MARGIN, 'xooghost_qrcode[whiteMargin]', $xooghost_qrcode['whiteMargin']);
+            for ($i = 0; $i <= 20; $i++) {
+                $margin_mode->addOption($i,   $i);
+            }
+            $this->addElement( $margin_mode );
+        } else {
+            $this->addElement( new XoopsFormHidden('xooghost_qrcode[use_qrcode]', 0) );
+            $this->addElement( new XoopsFormHidden('xooghost_qrcode[matrixPointSize]', 2) );
+        }
     }
 }
 ?>

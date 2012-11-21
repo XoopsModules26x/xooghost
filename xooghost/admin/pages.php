@@ -89,16 +89,9 @@ switch ($op) {    case 'save':
     break;
 
     case 'view':
-    $page = $xooghost_handler->get($xooghost_id);
-    $page->setView();
-    $xooghost_handler->insert($page);
-    $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_SAVED);
-    break;
-
     case 'hide':
-    $page = $xooghost_handler->get($xooghost_id);
-    $page->setHide();
-    $xooghost_handler->insert($page);
+    $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+    $xooghost_handler->SetOnline($xooghost_id);
     $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_SAVED);
     break;
 
@@ -109,6 +102,5 @@ switch ($op) {    case 'save':
     $xoops->tpl->assign('pages', $xooghost_handler->renderAdminList() );
     break;
 }
-
 include dirname(__FILE__) . '/footer.php';
 ?>
