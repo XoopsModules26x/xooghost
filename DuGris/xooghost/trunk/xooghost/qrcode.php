@@ -18,8 +18,9 @@
  */
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+$url = $system->CleanVars($_REQUEST, 'url', '', 'string');
+extract($xooGhost_config['xooghost_qrcode']);
 
-$xoops->tpl->assign('pages', $xooghost_handler->getPublished());
-
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+if ( $url != '' ) {    include XOOPS_PATH . '/phpqrcode/qrlib.php';
+    QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );}
 ?>

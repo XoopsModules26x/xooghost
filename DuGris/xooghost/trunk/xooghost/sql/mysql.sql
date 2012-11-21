@@ -7,11 +7,10 @@ CREATE TABLE `xooghost` (
   `xooghost_keywords` text NOT NULL,
   `xooghost_image` varchar(100) NOT NULL DEFAULT 'blank.png',
   `xooghost_published` int(10) NOT NULL DEFAULT '0',
-  `xooghost_display` tinyint(1) NOT NULL DEFAULT '0',
+  `xooghost_online` tinyint(1) NOT NULL DEFAULT '0',
   `xooghost_hits` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`xooghost_id`),
-  UNIQUE KEY `url` (`xooghost_url`),
-  UNIQUE KEY `title` (`xooghost_title`),
-  KEY `display` (`xooghost_display`),
-  KEY `hits` (`xooghost_hits`)
+  `xooghost_rates` float NOT NULL DEFAULT '0',
+  `xooghost_like` int(11) NOT NULL DEFAULT '0',
+  `xooghost_dislike` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`xooghost_id`)
 ) ENGINE=MyISAM;

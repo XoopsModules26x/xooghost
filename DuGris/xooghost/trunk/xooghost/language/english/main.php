@@ -17,5 +17,7 @@
  * @version         $Id$
  */
 
+define("_XOO_GHOST_NOTFOUND",                   "Page not found");
 define("_XOO_GHOST_CHOOSE",                     "Choose a page");
+define("_XOO_GHOST_READS",                      "Read(s)");
 ?>

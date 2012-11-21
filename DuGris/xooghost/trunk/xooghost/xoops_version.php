@@ -78,7 +78,7 @@ $modversion['tables'][1] = 'xooghost';
 $modversion['hasMain'] = 1;
 
 $xoops = Xoops::getInstance();
-if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' ) {    XoopsLoad::load('xoopreferences', 'xooghost');
+if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' && !$xoops->isAdminSide ) {    XoopsLoad::load('xoopreferences', 'xooghost');
     $xooGhost_config = XooGhostPreferences::getInstance()->getConfig();
 
     if ( $xooGhost_config['xooghost_main'] ) {

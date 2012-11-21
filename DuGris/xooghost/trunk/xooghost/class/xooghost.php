@@ -32,8 +32,11 @@ class Xooghost extends XoopsObject
         $this->initVar('xooghost_keywords',      XOBJ_DTYPE_TXTAREA,          '', true);
         $this->initVar('xooghost_image',         XOBJ_DTYPE_TXTBOX,  'blank.gif', false,    100);
         $this->initVar('xooghost_published',     XOBJ_DTYPE_STIME,             0, false,     10);
-        $this->initVar('xooghost_display',       XOBJ_DTYPE_INT,               1, false,      1);
+        $this->initVar('xooghost_online',        XOBJ_DTYPE_INT,               1, false,      1);
         $this->initVar('xooghost_hits',          XOBJ_DTYPE_INT,               0, false,     10);
+        $this->initVar('xooghost_rates',         XOBJ_DTYPE_INT,               0, false,     10);
+        $this->initVar('xooghost_like',          XOBJ_DTYPE_INT,               0, false,     10);
+        $this->initVar('xooghost_dislike',       XOBJ_DTYPE_INT,               0, false,     10);
 
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
@@ -44,24 +47,17 @@ class Xooghost extends XoopsObject
         $this->__construct();
     }
 
-    public function setView()
-    {
-        $this->setVar('xooghost_display', 1);
-        return true;
-    }
-
-    public function setHide()
-    {
-        $this->setVar('xooghost_display', 0);
-        return true;
-    }
-
     public function toArray()
     {
         $xoops = Xoops::getInstance();
         $myts = MyTextSanitizer::getInstance();
         $ret = $this->getValues();
+
+        $ret['xooghost_date_day'] = date('d', $ret['xooghost_published'] );
+        $ret['xooghost_date_month'] = date('m', $ret['xooghost_published'] );
+        $ret['xooghost_date_year'] = date('Y', $ret['xooghost_published'] );
         $ret['xooghost_published'] = date(_SHORTDATESTRING, $ret['xooghost_published']);
+
         $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $ret['xooghost_url'];
 
         if ($ret['xooghost_image'] != 'blank.gif') {
@@ -130,10 +126,12 @@ class Xooghost extends XoopsObject
 class XooghostXooghostHandler extends XoopsPersistableObjectHandler
 {
     private $exclude = array(
-                 'comment_delete.php', 'comment_edit.php', 'comment_new.php',
-                 'comment_post.php', 'comment_reply.php',
-                 'footer.php', 'header.php', 'index.php', 'list.tag.php', 'rss.php', 'rate.php',
-                 'view.tag.php', 'xoops_version.php'
+                 'view.tag.php',
+                 'footer.php',
+                 'header.php',
+                 'index.php',
+                 'qrcode.php',
+                 'xoops_version.php',
     );
 
     private $_published = null;
@@ -146,7 +144,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
     public function getByURL( $xooghost_url )
     {
         $criteria = new Criteria('xooghost_url', $xooghost_url);
-        $page = $this->getObjects($criteria, null, false);
+        $page = $this->getObjects($criteria, null, true);
         return $page[0];
     }
 
@@ -154,13 +152,36 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
     {
         if ( !isset($this->_published) ) {
             $criteria = new CriteriaCompo();
-            $criteria->add( new Criteria('xooghost_display', 1) ) ;
+            $criteria->add( new Criteria('xooghost_online', 1) ) ;
             $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
             $criteria->setSort( 'xooghost_published' );
             $criteria->setOrder( 'asc' );
             $this->_published = $this->getObjects($criteria, null, false);
         }
         return $this->_published;
+    }
+
+    public function SetOnline( $xooghost_id )
+    {
+        if ($xooghost_id != 0){
+            $page = $this->get( $xooghost_id );
+            if ( $page->getVar('xooghost_online') == 1 ) {
+                $page->setVar('xooghost_online', 0);
+            } else {
+                $page->setVar('xooghost_online', 1);
+            }
+            $this->insert( $page );
+            return true;
+        }
+        return false;
+    }
+
+    public function SetRead( $pageObj )
+    {
+        $read = $pageObj->getVar('xooghost_hits') + 1;
+        $pageObj->setVar('xooghost_hits', $read );
+        $this->insert( $pageObj );
+        return true;
     }
 
     public function SelectPage()

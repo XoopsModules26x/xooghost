@@ -96,11 +96,14 @@ class XooghostPagesForm extends XoopsThemeForm
         $this->addElement( new XoopsFormDateTime(_XOO_GHOST_PUBLISHED, 'xooghost_published', 15, $published, false) );
 
         // display
-        $this->addElement( new XoopsFormRadioYN(_XOO_GHOST_DISPLAY, 'xooghost_display',  $this->xoopsObject->getVar('xooghost_display')) );
+        $this->addElement( new XoopsFormRadioYN(_XOO_GHOST_DISPLAY, 'xooghost_online',  $this->xoopsObject->getVar('xooghost_online')) );
 
         // hidden
-        $this->addElement( new XoopsFormHidden('xooghost_hits', $this->xoopsObject->getVar('xooghost_hits')) );
         $this->addElement( new XoopsFormHidden('xooghost_id', $this->xoopsObject->getVar('xooghost_id')) );
+        $this->addElement( new XoopsFormHidden('xooghost_hits', $this->xoopsObject->getVar('xooghost_hits')) );
+        $this->addElement( new XoopsFormHidden('xooghost_rates', $this->xoopsObject->getVar('xooghost_rates')) );
+        $this->addElement( new XoopsFormHidden('xooghost_like', $this->xoopsObject->getVar('xooghost_like')) );
+        $this->addElement( new XoopsFormHidden('xooghost_dislike', $this->xoopsObject->getVar('xooghost_dislike')) );
 
         // button
         $button_tray = new XoopsFormElementTray('', '');

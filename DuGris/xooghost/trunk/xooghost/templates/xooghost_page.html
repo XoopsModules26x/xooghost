@@ -1,21 +1,51 @@
 <{includeq file='module:xooghost|xooghost_css.html'}>
 
-<div class="item">
-    <div class="itemHead">
-        <div class="txtcenter itemTitle">
-            <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{$page.xooghost_title}></a>
-        </div>
-    </div>
+<{if $moduletitle != '' && !$pages}>
+    <fieldset>
+        <legend><{$moduletitle}></legend>
+    </fieldset>
+<{/if}>
 
-    <div class="itemBody">
-        <{if $page.xooghost_image != "blank.gif"}>
-            <i class="xooghost-image-item<{$page.xooghost_id}>">
-        <{/if}>
-        <div class="itemText item<{$page.xooghost_id}>">
-            <{$page.xooghost_content}>
+<{if !$not_found}>
+    <div class="item">
+        <div class="itemHead">
+            <{if $xooghost_qrcode.use_qrcode}>
+                <div class="itemQRcode">
+                    <a href="<{$page.xooghost_link}>" title="<{$partner.xooghost_title}>"><img src="<{xoAppUrl modules/xooghost/qrcode.php}>?url=<{$page.xooghost_link}>" alt="<{$page.xooghost_link}>"></a>
+                </div>
+            <{/if}>
+            <{if $page.xooghost_image != "blank.gif"}>
+                <div class="itemImage">
+                    <img src="<{$page.xooghost_image_link}>">
+                </div>
+            <{/if}>
+
+            <div class="itemTitle">
+                <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{$page.xooghost_title}></a>
+            </div>
+            <div class="itemInfo">
+                <{$page.xooghost_published}>
+            </div>
         </div>
-        <{if $page.xooghost_image_link}>
-            </i>
+
+        <div class="itemBody">
+            <div class="itemText">
+                <{$page.xooghost_content}>
+            </div>
+        </div>
+
+        <{if !$pages}>
+            <div class="itemFoot">
+                <div class="floatleft">
+                    <{$smarty.const._XOO_GHOST_READS}> : <{$page.xooghost_hits}>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <{includeq file='module:xoosocialnetwork|xoosocialnetwork.html'}>
         <{/if}>
     </div>
-</div>
+<{else}>
+    <div class="errorMsg">
+        <{$smarty.const._XOO_GHOST_NOTFOUND}>
+    </div>
+<{/if}>
