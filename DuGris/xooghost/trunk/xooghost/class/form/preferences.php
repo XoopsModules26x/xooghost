@@ -62,7 +62,7 @@ class XooghostPreferencesForm extends XoopsThemeForm
         // xooghost_image_height
         $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_HEIGHT, 'xooghost_image_height', 1, 10, $xooghost_image_height) );
 
-        // QrCode
+        $this->rldForm();
         $this->QRcodeForm();
 
         // button
@@ -74,6 +74,24 @@ class XooghostPreferencesForm extends XoopsThemeForm
         $cancel_send->setExtra("onclick='javascript:history.go(-1);'");
         $button_tray->addElement($cancel_send);
         $this->addElement($button_tray);
+    }
+
+    private function rldForm()
+    {
+        extract( $this->_config );
+        $this->insertBreak(_MI_XOO_CONFIG_RLD,'preferenceTitle');
+        // Rate / Like / Dislike Mode
+        $rld_mode = new XoopsFormSelect(_MI_XOO_CONFIG_RLD_MODE, 'xooghost_rld[rld_mode]', $xooghost_rld['rld_mode']);
+        $rld_mode->addOption('',            _MI_XOO_CONFIG_RLD_NONE);
+        $rld_mode->addOption('rate',        _MI_XOO_CONFIG_RLD_RATE);
+        $rld_mode->addOption('likedislike', _MI_XOO_CONFIG_RLD_LIKEDISLIKE);
+        $this->addElement( $rld_mode );
+
+        $rate_scale = new XoopsFormSelect(_MI_XOO_CONFIG_RATE_SCALE, 'xooghost_rld[rate_scale]', $xooghost_rld['rate_scale']);
+        for ($i=4; $i <= 10; $i++) {
+            $rate_scale->addOption($i, $i);
+        }
+        $this->addElement( $rate_scale );
     }
 
     private function QRcodeForm()

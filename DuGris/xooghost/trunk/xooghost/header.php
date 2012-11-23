@@ -28,18 +28,31 @@ $xoops->loadLanguage('common', 'xooghost');
 $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
 XoopsLoad::load('xoopreferences', 'xooghost');
-$xooGhost_config = XooGhostPreferences::getInstance()->getConfig();
-$xooghost_url = basename($_SERVER['SCRIPT_NAME']);
+$Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
+$Xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 
-if ( $xooghost_url == 'index.php' || $xooghost_url == 'qrcode.php' ) {    $xoops->header('xooghost_index.html');
+
+$exclude = array(
+    'footer.php',
+    'header.php',
+    'index.php',
+    'page_like_dislike.php',
+    'page_rate.php',
+    'qrcode.php',
+    'xoops_version.php',
+);
+
+
+if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.html');
 } else {    $xoops->header('xooghost_page.html');
-    $page = $xooghost_handler->getByURL($xooghost_url);
+    $page = $xooghost_handler->getByURL($Xooghost_url);
     if ( is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') && $page->getVar('xooghost_online') ) {        $time = time();
-        $xooghost_id = $page->getVar('xooghost_id');
-        if ( !isset($_SESSION['xooghost_view' . $xooghost_id]) || $_SESSION['xooghost_view' . $xooghost_id] < $time ) {
-            $_SESSION['xooghost_view' . $xooghost_id] = $time + 3600;
+        $Xooghost_id = $page->getVar('xooghost_id');
+        if ( !isset($_SESSION['xooghost_view' . $Xooghost_id]) || $_SESSION['xooghost_view' . $Xooghost_id] < $time ) {
+            $_SESSION['xooghost_view' . $Xooghost_id] = $time + 3600;
             $xooghost_handler->SetRead( $page );
         }
+        $xoops->tpl->assign('security', $xoops->security->createToken() );
         $xoops->tpl->assign('page', $page->toArray() );
         $xoops->tpl->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
         $xoops->theme->addMeta($type = 'meta', 'description', $page->getVar('xooghost_description'));
@@ -51,10 +64,11 @@ $xoops->theme->addStylesheet('modules/xooghost/css/module.css');
 
 $xoops->tpl->assign('moduletitle', $xoops->module->name() );
 
-$xoops->tpl->assign('template', $xooGhost_config['xooghost_main_mode'] );
-$xoops->tpl->assign('welcome', $xooGhost_config['xooghost_welcome'] );
-$xoops->tpl->assign('width', $xooGhost_config['xooghost_image_width'] );
-$xoops->tpl->assign('height', $xooGhost_config['xooghost_image_height'] );
-$xoops->tpl->assign('xooghost_qrcode', $xooGhost_config['xooghost_qrcode'] );
+$xoops->tpl->assign('template', $Xooghost_config['xooghost_main_mode'] );
+$xoops->tpl->assign('welcome', $Xooghost_config['xooghost_welcome'] );
+$xoops->tpl->assign('width', $Xooghost_config['xooghost_image_width'] );
+$xoops->tpl->assign('height', $Xooghost_config['xooghost_image_height'] );
+$xoops->tpl->assign('xooghost_qrcode', $Xooghost_config['xooghost_qrcode'] );
+$xoops->tpl->assign('xooghost_rld', $Xooghost_config['xooghost_rld'] );
 
 ?>

@@ -1,5 +1,7 @@
 @import url(item.css);
 @import url(table.css);
+@import url(like_dislike.css);
+@import url(rate.css);
 
 .xooghostMsg {    padding:               1em;
     margin-bottom:         1em;
@@ -62,4 +64,16 @@ blockquote {
     background-color:      #e6efc2;
     color:                 #529214;
     border-color:          #c6d880;
+}
+.floatleft {
+    float:                 left;
+    margin:                0;
+    padding-left:          0;
+    border:                0;
+}
+.floatright {
+    float:                 right;
+    margin:                0;
+    padding:               0;
+    border:                0;
 }

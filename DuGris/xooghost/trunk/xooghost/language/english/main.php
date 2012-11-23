@@ -17,7 +17,17 @@
  * @version         $Id$
  */
 
-define("_XOO_GHOST_NOTFOUND",                   "Page not found");
-define("_XOO_GHOST_CHOOSE",                     "Choose a page");
-define("_XOO_GHOST_READS",                      "Read(s)");
+define("_XOO_GHOST_NOTFOUND",               "Page not found");
+define("_XOO_GHOST_CHOOSE",                 "Choose a page");
+define("_XOO_GHOST_READS",                  "Read(s)");
+
+// Rates
+define("_XOO_GHOST_RATE_VOTES",             "Votes");
+define("_XOO_GHOST_RATE_COUNT",             "Number of votes: ");
+define("_XOO_GHOST_RATE_AVERAGE",           "Average: ");
+define("_XOO_GHOST_RATE_YOURVOTE",          "Your vote: ");
+
+// Like / Dislike
+define("_XOO_GHOST_LIKE",                   "Like");
+define("_XOO_GHOST_DISLIKE",                "Dislike");
 ?>

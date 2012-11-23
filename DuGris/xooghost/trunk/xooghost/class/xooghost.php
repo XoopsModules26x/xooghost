@@ -67,6 +67,10 @@ class Xooghost extends XoopsObject
         }
 
         $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
+
+        $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');
+        $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
+        $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
         return $ret;
     }
 
@@ -126,12 +130,13 @@ class Xooghost extends XoopsObject
 class XooghostXooghostHandler extends XoopsPersistableObjectHandler
 {
     private $exclude = array(
-                 'view.tag.php',
-                 'footer.php',
-                 'header.php',
-                 'index.php',
-                 'qrcode.php',
-                 'xoops_version.php',
+        'footer.php',
+        'header.php',
+        'index.php',
+        'page_like_dislike.php',
+        'page_rate.php',
+        'qrcode.php',
+        'xoops_version.php',
     );
 
     private $_published = null;
@@ -141,9 +146,9 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         parent::__construct($db, 'xooghost', 'xooghost', 'xooghost_id', 'xooghost_title');
     }
 
-    public function getByURL( $xooghost_url )
+    public function getByURL( $Xooghost_url )
     {
-        $criteria = new Criteria('xooghost_url', $xooghost_url);
+        $criteria = new Criteria('xooghost_url', $Xooghost_url);
         $page = $this->getObjects($criteria, null, true);
         return $page[0];
     }
@@ -161,10 +166,10 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         return $this->_published;
     }
 
-    public function SetOnline( $xooghost_id )
+    public function SetOnline( $Xooghost_id )
     {
-        if ($xooghost_id != 0){
-            $page = $this->get( $xooghost_id );
+        if ($Xooghost_id != 0){
+            $page = $this->get( $Xooghost_id );
             if ( $page->getVar('xooghost_online') == 1 ) {
                 $page->setVar('xooghost_online', 0);
             } else {
@@ -182,6 +187,50 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         $pageObj->setVar('xooghost_hits', $read );
         $this->insert( $pageObj );
         return true;
+    }
+
+    public function SetLike_Dislike( $page_id, $like_dislike )
+    {
+        if ($page_id != 0){
+            $page = $this->get( $page_id );
+            if (is_object($page) && count($page) != 0) {
+                $xoops = Xoops::getInstance();
+                $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');
+                if ( $ret = $rld_handler->SetLike_Dislike($page_id, $like_dislike) ) {
+                    if ($like_dislike == 0) {
+                        $xooghost_dislike = $page->getVar('xooghost_dislike') + 1;
+                        $page->setVar('xooghost_dislike', $xooghost_dislike);
+                    } elseif ($like_dislike == 1) {
+                        $xooghost_like = $page->getVar('xooghost_like') + 1;
+                        $page->setVar('xooghost_like', $xooghost_like);
+                    }
+                    $this->insert( $page );
+                    return $page->toArray();
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public function SetRate( $page_id, $rate )
+    {
+        if ($page_id != 0){
+            $page = $this->get( $page_id );
+            if (is_object($page) && count($page) != 0) {
+                $xoops = Xoops::getInstance();
+                $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');
+                if ( $ret = $rld_handler->SetRate($page_id, $rate) ) {
+                    if ( is_array($ret) && count($ret) == 3 ) {
+                        $page->setVar('xooghost_rates', $ret['average']);
+                        $this->insert( $page );
+                        return $ret;
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
     public function SelectPage()
@@ -219,9 +268,9 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xooghost' );
 
-        $xooGhost_config = XooGhostPreferences::getInstance()->getConfig();
+        $Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
 
-        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $xooGhost_config['xooghost_image_size'], $xooGhost_config['xooghost_image_width'], $xooGhost_config['xooghost_image_height']);
+        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $Xooghost_config['xooghost_image_size'], $Xooghost_config['xooghost_image_width'], $Xooghost_config['xooghost_image_height']);
 
         $ret = array();
         foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {

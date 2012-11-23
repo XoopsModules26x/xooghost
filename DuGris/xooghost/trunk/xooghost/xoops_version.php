@@ -79,9 +79,9 @@ $modversion['hasMain'] = 1;
 
 $xoops = Xoops::getInstance();
 if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' && !$xoops->isAdminSide ) {    XoopsLoad::load('xoopreferences', 'xooghost');
-    $xooGhost_config = XooGhostPreferences::getInstance()->getConfig();
+    $Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
 
-    if ( $xooGhost_config['xooghost_main'] ) {
+    if ( $Xooghost_config['xooghost_main'] ) {
         $i = 0;
         $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
         $pages = $xooghost_handler->getPublished();
