@@ -18,9 +18,23 @@
  */
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
-$url = $system->CleanVars($_REQUEST, 'url', '', 'string');
-extract($Xooghost_config['xooghost_qrcode']);
 
-if ( $url != '' ) {    include XOOPS_PATH . '/phpqrcode/qrlib.php';
-    QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );}
+error_reporting(0);
+$xoopsLogger->activated = false;
+
+$ret['error'] = 1;
+
+if ( $xoops->security->check() ) {    $page_id = $system->CleanVars($_REQUEST, 'page_id', 0, 'int');
+    $option = $system->CleanVars($_REQUEST, 'option', 2, 'int');
+
+    $time = time();
+    if ( !isset($_SESSION['xooghost_like' . $page_id]) || $_SESSION['xooghost_like' . $page_id] < $time ) {
+        $_SESSION['xooghost_like' . $page_id] = $time + 3600;
+        $ghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
+        $ret = $ghost_handler->SetLike_Dislike( $page_id, $option );
+        if ( is_array($ret) && count($ret) > 1) {            $ret['error'] = 0;
+        } else {            $ret['error'] = 1;        }
+    }
+}
+echo json_encode($ret)
 ?>

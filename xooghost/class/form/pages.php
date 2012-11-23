@@ -36,7 +36,7 @@ class XooghostPagesForm extends XoopsThemeForm
     {        $xoops = Xoops::getInstance();
         global $xooghost_handler;
 
-        $xooGhost_config = XooGhostPreferences::getInstance()->loadConfig();
+        $Xooghost_config = XooGhostPreferences::getInstance()->loadConfig();
 
         if ($this->xoopsObject->isNew() ) {
             parent::__construct(_AM_XOO_GHOST_ADD, 'form_pages', 'pages.php', 'post', true);
@@ -67,9 +67,9 @@ class XooghostPagesForm extends XoopsThemeForm
         $this->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
 
         // image
-        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_SIZE . ' : ' . $xooGhost_config['xooghost_image_size'];
-        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_WIDTH . ' : ' . $xooGhost_config['xooghost_image_width'];
-        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_HEIGHT . ' : ' . $xooGhost_config['xooghost_image_height'];
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_SIZE . ' : ' . $Xooghost_config['xooghost_image_size'];
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_WIDTH . ' : ' . $Xooghost_config['xooghost_image_width'];
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_HEIGHT . ' : ' . $Xooghost_config['xooghost_image_height'];
 
         $image_tray = new XoopsFormElementTray(_XOO_GHOST_IMAGE, '' );
         $image_tray->setDescription( $this->message($upload_msg) );

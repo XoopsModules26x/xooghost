@@ -11,7 +11,7 @@
         <div class="itemHead">
             <{if $xooghost_qrcode.use_qrcode}>
                 <div class="itemQRcode">
-                    <a href="<{$page.xooghost_link}>" title="<{$partner.xooghost_title}>"><img src="<{xoAppUrl modules/xooghost/qrcode.php}>?url=<{$page.xooghost_link}>" alt="<{$page.xooghost_link}>"></a>
+                    <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><img src="<{xoAppUrl modules/xooghost/qrcode.php}>?url=<{$page.xooghost_link}>" alt="<{$page.xooghost_link}>"></a>
                 </div>
             <{/if}>
             <{if $page.xooghost_image != "blank.gif"}>
@@ -21,7 +21,7 @@
             <{/if}>
 
             <div class="itemTitle">
-                <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{$page.xooghost_title}></a>
+                <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{if $pages}><img src="<{xoImgUrl modules/xooghost/icons/16/view.png}>" alt="<{$page.xooghost_title}>"><{/if}><{$page.xooghost_title}></a>
             </div>
             <div class="itemInfo">
                 <{$page.xooghost_published}>
@@ -36,9 +36,20 @@
 
         <{if !$pages}>
             <div class="itemFoot">
-                <div class="floatleft">
-                    <{$smarty.const._XOO_GHOST_READS}> : <{$page.xooghost_hits}>
+                <div class="itemStat floatleft">
+                    <button id="button-reads" title="<{$smarty.const._XOO_GHOST_READS}>"><i class="reads"></i><{$page.xooghost_hits}></button>
                 </div>
+
+                <{if $xooghost_rld.rld_mode != ''}>
+                    <div class="floatright">
+                        <{if $xooghost_rld.rld_mode == 'rate'}>
+                            <{includeq file='module:xooghost|xooghost_page_rate.html'}>
+                        <{else}>
+                            <{includeq file='module:xooghost|xooghost_page_like_dislike.html'}>
+                        <{/if}>
+                    </div>
+                <{/if}>
+
                 <div class="clear"></div>
             </div>
             <{includeq file='module:xoosocialnetwork|xoosocialnetwork.html'}>

@@ -13,6 +13,11 @@ return $config = array(
     'xooghost_image_width'  => 100,
     'xooghost_image_height' => 100,
 
+    'xooghost_rld' => array(
+        'rld_mode'          => 'likedislike',
+        'rate_scale'        => 10,
+    ),
+
     'xooghost_qrcode'       => array(
         'use_qrcode'        => 0,
         'CorrectionLevel'   => 'L',
