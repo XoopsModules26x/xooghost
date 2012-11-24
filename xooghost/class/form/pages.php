@@ -63,6 +63,15 @@ class XooghostPagesForm extends XoopsThemeForm
         // Title
         $this->addElement( new XoopsFormText(_XOO_GHOST_TITLE, 'xooghost_title', 100, 255, $this->xoopsObject->getVar('xooghost_title')) , true );
 
+        // submitter
+        if ($xoops->isAdminSide) {
+            $xooghost_uid = $this->xoopsObject->isNew() ? $xoops->user->getVar('uid') : $this->xoopsObject->getVar('xooghost_uid');
+            $this->addElement(new XoopsFormSelectUser(_XOO_GHOST_AUTHOR, 'xooghost_uid', true, $xooghost_uid, 1, false));
+        } else {
+            $xooghost_uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
+            $this->addElement( new XoopsFormHidden('xooghost_uid', $xooghost_uid) );
+        }
+
         // Content
         $this->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
 

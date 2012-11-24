@@ -20,6 +20,7 @@
 define("_XOO_GHOST_ID",                        "ID");
 define("_XOO_GHOST_URL",                       "Url");
 define("_XOO_GHOST_TITLE",                     "Title");
+define("_XOO_GHOST_AUTHOR",                    "Author");
 define("_XOO_GHOST_CONTENT",                   "Your html content");
 define("_XOO_GHOST_DESCRIPTION",               "Meta description");
 define("_XOO_GHOST_KEYWORDS",                  "Meta keywords");

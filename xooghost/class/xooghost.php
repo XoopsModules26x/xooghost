@@ -27,6 +27,7 @@ class Xooghost extends XoopsObject
         $this->initVar('xooghost_id',            XOBJ_DTYPE_INT,               0, true,      11);
         $this->initVar('xooghost_url',           XOBJ_DTYPE_TXTBOX,           '', true,      54);
         $this->initVar('xooghost_title',         XOBJ_DTYPE_TXTBOX,           '', true,     255);
+        $this->initVar('xooghost_uid',           XOBJ_DTYPE_INT,               0, true,       8);
         $this->initVar('xooghost_content',       XOBJ_DTYPE_TXTBOX,           '', true);
         $this->initVar('xooghost_description',   XOBJ_DTYPE_TXTAREA,          '', true);
         $this->initVar('xooghost_keywords',      XOBJ_DTYPE_TXTAREA,          '', true);
@@ -47,6 +48,38 @@ class Xooghost extends XoopsObject
         $this->__construct();
     }
 
+    public function getMetaDescription()
+    {
+        $string = $this->getVar('xooghost_description');
+        $string = str_replace('[breakpage]', '', $string);
+        // remove html tags
+        $string = strip_tags( $string );
+//        return preg_replace(array('/&amp;/i'), array('&'), $string);
+        return $string;
+    }
+    public function getMetaKeywords( $limit=5 )
+    {
+        $string = $this->getMetaDescription() . ', ' . $this->getVar('xooghost_keywords') . ', ' . $this->getVar('xooghost_title');
+
+        $string = html_entity_decode( $string, ENT_QUOTES );
+        $search_pattern=array("\t","\r\n","\r","\n",",",".","'",";",":",")","(",'"','?','!','{','}','[',']','<','>','/','+','_','\\','*','pagebreak','page');
+        $replace_pattern=array(' ',' ',' ',' ',' ',' ',' ','','','','','','','','','','','','','','','','','','','','');
+        $string = str_replace($search_pattern, $replace_pattern, $string);
+
+        $tmpkeywords = explode(' ',$string);
+        $tmpkeywords = array_count_values($tmpkeywords);
+        arsort($tmpkeywords);
+        $tmpkeywords = array_keys($tmpkeywords);
+
+        $tmpkeywords = array_unique($tmpkeywords);
+        foreach($tmpkeywords as $keyword) {
+            if ( strlen(trim($keyword)) >= $limit && !is_numeric($keyword) ) {
+                $keywords[] = htmlentities( trim( $keyword ) );
+            }
+        }
+        return implode(', ', $keywords);
+    }
+
     public function toArray()
     {
         $xoops = Xoops::getInstance();
@@ -59,6 +92,14 @@ class Xooghost extends XoopsObject
         $ret['xooghost_published'] = date(_SHORTDATESTRING, $ret['xooghost_published']);
 
         $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $ret['xooghost_url'];
+
+        if ( $xoops->isUser() ) {
+            $ret['xooghost_uid_name'] = $xoops->user->getUnameFromId($ret['xooghost_uid'], true);
+        } else {
+            $member_handler = $xoops->getHandlerMember();
+            $user = $member_handler->getUser( $ret['xooghost_uid'] );
+            $ret['xooghost_uid_name'] = $user->getUnameFromId($ret['xooghost_uid'], true);
+        }
 
         if ($ret['xooghost_image'] != 'blank.gif') {
             $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $ret['xooghost_image'];
