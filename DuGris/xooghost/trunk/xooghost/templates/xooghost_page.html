@@ -24,6 +24,11 @@
                 <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{if $pages}><img src="<{xoImgUrl modules/xooghost/icons/16/view.png}>" alt="<{$page.xooghost_title}>"><{/if}><{$page.xooghost_title}></a>
             </div>
             <div class="itemInfo">
+                <div class="temPoster">
+                    <{$smarty.const._XOO_GHOST_AUTHOR}> : <a href="<{xoAppUrl userinfo.php}>?uid=<{$page.xooghost_uid}>" title="<{$page.xooghost_uid_name}>">
+                    <{$page.xooghost_uid_name}>
+                    </a>
+                </div>
                 <{$page.xooghost_published}>
             </div>
         </div>

@@ -115,4 +115,9 @@ $modversion['blocks'][$i]['template']       = 'xooghost_block.html';
 
 // Preferences
 $i = 0;
+
+// Search
+$modversion['hasSearch'] = 1;
+$modversion['search']['file'] = "include/search.php";
+$modversion['search']['func'] = "xooghost_search";
 ?>
