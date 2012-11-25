@@ -3,9 +3,11 @@
 @import url(like_dislike.css);
 @import url(rate.css);
 
-.xooghostMsg {    padding:               1em;
+.xooghostMsg {
+    padding:               1em;
     margin-bottom:         1em;
-    text-align:            center;    background-color:      #f1f1f1;
+    text-align:            center;
+    background-color:      #f1f1f1;
     color:                 #049cd9;
     border:                2px solid #049cd9;
 }
@@ -24,7 +26,9 @@ blockquote {
     border-width:           1px 1px 1px 6px;
 }
 
-.ul-xooghost {    list-style-type:        none;}
+.ul-xooghost {
+    list-style-type:        none;
+}
 
 [class^="xooghost-ico-"], [class*=" xooghost-ico-"] {
     background-position:    0 0;
@@ -74,6 +78,6 @@ blockquote {
 .floatright {
     float:                 right;
     margin:                0;
-    padding:               0;
+    padding-right:               0;
     border:                0;
 }

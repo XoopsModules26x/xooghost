@@ -68,8 +68,8 @@
 #button-reads, #button-visits, #button-stats {
     background:             -moz-linear-gradient(bottom, #dadada, #fff);
     background:             -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
-    border:                 1px solid #CCCCCC;
-    color:                  #000000;
+    border:                 1px solid #ccc;
+    color:                  #000;
     cursor:                 pointer;
     height:                 2em;
     width :                 70px;
@@ -78,13 +78,13 @@
     float:                  left;
 }
 #button-reads {
-    border-radius:          3px 3px 3px 3px;
+    border-radius:          3px;
 }
 #button-visits {
-    border-radius:          0px 3px 3px 0px;
+    border-radius:          0 3px 3px 0;
 }
 #button-stats {
-    border-radius:          3px 3px 3px 3px;
+    border-radius:          3px;
     width:                  auto;
     padding:                0 10px;
     margin-right:           10px;
