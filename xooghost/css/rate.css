@@ -1,20 +1,19 @@
 #button-stats {
     background:             -moz-linear-gradient(bottom, #dadada, #fff);
     background:             -webkit-gradient(linear, center bottom, center top, from(#dadada), to(#fff));
-    border:                 1px solid #CCCCCC;
-    color:                  #000000;
+    border:                 1px solid #ccc;
+    color:                  #000;
     cursor:                 pointer;
     height:                 2em;
     width :                 70px;
     font-size:              .6em;
     line-height:            1.5em;
     float:                  left;
-}
-#button-stats {
     border-radius:          3px 0px 0px 3px;
     width:                  auto;
 }
 .stats {
+    background-image:       url("../icons/16/stats.png");
     background-size:        16px 18px;
     background-repeat:      no-repeat;
     background-position:    0 0;
@@ -25,11 +24,7 @@
     clear:                  right;
     float:                  left;
 }
-.stats {
-    background-image:       url("../icons/16/stats.png");
-}
-#rating {
-    float:                  right;
+#rating {    float:                  right;
     font-size:              2em;
 }
 #button-stars {
@@ -75,17 +70,12 @@
     float:                  left;
 }
 
-.stars:hover {
-    background-image:       url('../icons/16/star_o.png');
+.stars:hover {    background-image:       url('../icons/16/star_o.png');
 }
-#stats {
-    float:                  left;
-    margin-right:           10px;
+#stats {    float:                  left;    margin-right:           10px;
 }
-.average {
-    font-weight:            bold;
-    margin-left:            10px;
-}
+.average {    font-weight:            bold;
+    margin-left:            10px;}
 .vote {
     font-weight:            bold;
     color:                  #F00;
