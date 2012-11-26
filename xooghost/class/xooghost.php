@@ -52,9 +52,9 @@ class Xooghost extends XoopsObject
     {
         $myts = MyTextSanitizer::getInstance();
         if ( $this->getVar('xooghost_description') != '' ) {
-            echo $string = $this->getVar('xooghost_description');
+            $string = $this->getVar('xooghost_description');
         } else {
-            echo $string = $myts->undoHtmlSpecialChars( $this->getVar('xooghost_content') );
+            $string = $myts->undoHtmlSpecialChars( $this->getVar('xooghost_content') );
         }
 
         $string = str_replace('[breakpage]', '', $string);
