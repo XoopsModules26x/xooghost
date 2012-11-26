@@ -22,18 +22,41 @@ function xooghost_show($options)
     $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
     $block['template'] = $options[0];
-    $block['pages'] = $xooghost_handler->getPublished();
+    $block['pages'] = $xooghost_handler->getPublished($options[1], $options[2]);
 	return $block;
 }
 
 function xooghost_edit($options)
 {    $block_form = new XoopsFormElementTray('&nbsp;', '<br />');
+    XoopsLoad::load('xoopreferences', 'xooghost');
+    $Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
 
-    $tmp = new XoopsFormSelect(_MB_XOO_GHOST_MODE . ' : ', 'options[0]', $options[0]);
-    $tmp->addOption('list', _MB_XOO_GHOST_MODE_LIST);
-    $tmp->addOption('table', _MB_XOO_GHOST_MODE_TABLE);
-    $tmp->addOption('select', _MB_XOO_GHOST_MODE_SELECT);
-    $block_form->addElement($tmp);
+    $display_mode = new XoopsFormSelect(_MB_XOO_GHOST_MODE . ' : ', 'options[0]', $options[0]);
+    $display_mode->addOption('list',   _MB_XOO_GHOST_MODE_LIST);
+    $display_mode->addOption('table',  _MB_XOO_GHOST_MODE_TABLE);
+    $display_mode->addOption('select', _MB_XOO_GHOST_MODE_SELECT);
+    $block_form->addElement($display_mode);
+
+    $sort_mode = new XoopsFormSelect(_MB_XOO_GHOST_SORT . ' : ', 'options[1]', $options[1]);
+    $sort_mode->addOption('id',        _MB_XOO_GHOST_SORT_ID);
+    $sort_mode->addOption('published', _MB_XOO_GHOST_SORT_RECENTS);
+    $sort_mode->addOption('hits',      _MB_XOO_GHOST_SORT_HITS);
+
+    if ( $Xooghost_config['xooghost_rld']['rld_mode'] != 'none' ) {
+        if ( $Xooghost_config['xooghost_rld']['rld_mode'] == 'rate' ) {            $sort_mode->addOption('rates',     _MB_XOO_GHOST_SORT_RATES);
+        } else {
+            $sort_mode->addOption('like',      _MB_XOO_GHOST_SORT_LIKE);
+            $sort_mode->addOption('dislike',   _MB_XOO_GHOST_SORT_DISLIKE);
+        }
+    }
+    $sort_mode->addOption('random',    _MB_XOO_GHOST_SORT_RANDOM);
+    $block_form->addElement($sort_mode);
+
+    $order_mode = new XoopsFormSelect(_MB_XOO_GHOST_ORDER . ' : ', 'options[2]', $options[2]);
+    $order_mode->addOption('asc',  _MB_XOO_GHOST_ORDER_ASC);
+    $order_mode->addOption('desc', _MB_XOO_GHOST_ORDER_DESC);
+    $block_form->addElement($order_mode);
+
 	return $block_form->render();
 }
 ?>

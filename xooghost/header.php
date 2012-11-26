@@ -29,8 +29,8 @@ $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
 XoopsLoad::load('xoopreferences', 'xooghost');
 $Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
-$Xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 
+$Xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 
 $exclude = array(
     'footer.php',

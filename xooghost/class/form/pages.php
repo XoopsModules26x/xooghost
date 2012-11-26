@@ -95,10 +95,10 @@ class XooghostPagesForm extends XoopsThemeForm
         $this->addElement( $image_tray );
 
         // Meta description
-        $this->addElement( new XoopsFormTextArea(_XOO_GHOST_DESCRIPTION, 'xooghost_description', $this->xoopsObject->getVar('xooghost_description'), 7, 50), true );
+        $this->addElement( new XoopsFormTextArea(_XOO_GHOST_DESCRIPTION, 'xooghost_description', $this->xoopsObject->getVar('xooghost_description'), 7, 50));
 
         // Meta Keywords
-        $this->addElement( new XoopsFormTextArea(_XOO_GHOST_KEYWORDS, 'xooghost_keywords', $this->xoopsObject->getVar('xooghost_keywords'), 7, 50), true );
+        $this->addElement( new XoopsFormTextArea(_XOO_GHOST_KEYWORDS, 'xooghost_keywords', $this->xoopsObject->getVar('xooghost_keywords'), 7, 50, _XOO_GHOST_KEYWORDS_DESC));
 
         // Published date
         $published = ($this->xoopsObject->getVar('xooghost_published') == 0) ? time() : $this->xoopsObject->getVar('xooghost_published');
