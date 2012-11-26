@@ -46,7 +46,8 @@ $exclude = array(
 if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.html');
 } else {    $xoops->header('xooghost_page.html');
     $page = $xooghost_handler->getByURL($Xooghost_url);
-    if ( is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') && $page->getVar('xooghost_online') ) {        $time = time();
+    if ( is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') && $page->getVar('xooghost_online') ) {        $_SESSION['xooghost_stat'] = true;
+        $time = time();
         $Xooghost_id = $page->getVar('xooghost_id');
         if ( !isset($_SESSION['xooghost_view' . $Xooghost_id]) || $_SESSION['xooghost_view' . $Xooghost_id] < $time ) {
             $_SESSION['xooghost_view' . $Xooghost_id] = $time + 3600;
