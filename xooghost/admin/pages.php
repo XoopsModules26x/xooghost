@@ -35,7 +35,7 @@ switch ($op) {    case 'save':
 
     // uploads images
     $myts = MyTextSanitizer::getInstance();
-    $upload_images = $xooghost_handler->upload_images();
+    $upload_images = $xooghost_handler->upload_images( $page->getVar('xooghost_title') );
 
     if ( is_array( $upload_images ) && count( $upload_images) != 0 ) {        foreach ($upload_images as $k => $reponse ) {            if ( $reponse['error'] == true ) {                $errors[] = $reponse['message'];
             } else {                $page->setVar( $k, $reponse['filename'] );
