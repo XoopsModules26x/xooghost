@@ -109,9 +109,11 @@ class Xooghost extends XoopsObject
 
         $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
 
-        $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');
-        $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
-        $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
+        if ( isset($_SESSION['xooghost_stat'])) {
+            $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');
+            $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
+            $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
+        }
         return $ret;
     }
 
