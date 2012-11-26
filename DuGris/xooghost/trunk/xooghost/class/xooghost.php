@@ -194,14 +194,18 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         return $page[0];
     }
 
-    public function getPublished()
+    public function getPublished( $sort = 'published', $order = 'asc')
     {
         if ( !isset($this->_published) ) {
             $criteria = new CriteriaCompo();
             $criteria->add( new Criteria('xooghost_online', 1) ) ;
             $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
-            $criteria->setSort( 'xooghost_published' );
-            $criteria->setOrder( 'asc' );
+            if ( $sort == 'random' ) {
+                $criteria->setSort( 'rand()' );
+            } else {
+                $criteria->setSort( 'xooghost_' . $sort );
+            }
+            $criteria->setOrder( $order );
             $this->_published = $this->getObjects($criteria, null, false);
         }
         return $this->_published;

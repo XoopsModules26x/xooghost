@@ -24,6 +24,7 @@ define("_XOO_GHOST_AUTHOR",                    "Author");
 define("_XOO_GHOST_CONTENT",                   "Your html content");
 define("_XOO_GHOST_DESCRIPTION",               "Meta description");
 define("_XOO_GHOST_KEYWORDS",                  "Meta keywords");
+define("_XOO_GHOST_KEYWORDS_DESC",             "Meta keywords separated by comma");
 define("_XOO_GHOST_IMAGE",                     "Image");
 define("_XOO_GHOST_PUBLISHED",                 "Publication date");
 define("_XOO_GHOST_DISPLAY",                   "Display").

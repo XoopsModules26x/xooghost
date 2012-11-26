@@ -110,7 +110,7 @@ $modversion['blocks'][$i]['name']           = _MI_XOO_GHOST_BLOCK_NAME;
 $modversion['blocks'][$i]['description']    = '';
 $modversion['blocks'][$i]['show_func']      = 'xooghost_show';
 $modversion['blocks'][$i]['edit_func']      = 'xooghost_edit';
-$modversion['blocks'][$i]['options']        = 'list';
+$modversion['blocks'][$i]['options']        = 'list|published|asc';
 $modversion['blocks'][$i]['template']       = 'xooghost_block.html';
 
 // Preferences
