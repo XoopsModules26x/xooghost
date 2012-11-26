@@ -50,7 +50,13 @@ class Xooghost extends XoopsObject
 
     public function getMetaDescription()
     {
-        $string = $this->getVar('xooghost_description');
+        $myts = MyTextSanitizer::getInstance();
+        if ( $this->getVar('xooghost_description') != '' ) {
+            echo $string = $this->getVar('xooghost_description');
+        } else {
+            echo $string = $myts->undoHtmlSpecialChars( $this->getVar('xooghost_content') );
+        }
+
         $string = str_replace('[breakpage]', '', $string);
         // remove html tags
         $string = strip_tags( $string );
@@ -59,7 +65,12 @@ class Xooghost extends XoopsObject
     }
     public function getMetaKeywords( $limit=5 )
     {
-        $string = $this->getMetaDescription() . ', ' . $this->getVar('xooghost_keywords') . ', ' . $this->getVar('xooghost_title');
+        if ( $this->getVar('xooghost_keywords') != '' ) {
+            $string = $this->getVar('xooghost_keywords');
+        } else {
+            $string = $this->getMetaDescription() . ', ' . $this->getVar('xooghost_keywords');
+        }
+        $string .= $this->getVar('xooghost_title');
 
         $string = html_entity_decode( $string, ENT_QUOTES );
         $search_pattern=array("\t","\r\n","\r","\n",",",".","'",";",":",")","(",'"','?','!','{','}','[',']','<','>','/','+','_','\\','*','pagebreak','page');
