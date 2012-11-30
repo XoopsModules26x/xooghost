@@ -33,7 +33,7 @@ switch ($op) {    case 'save':
     // Write configuration file
     $object = XooGhostPreferences::getInstance();
     $object->writeConfig( $object->Prepare2Save() );
-    $xoops->redirect("preferences.php", 3, _AM_XOO_GHOST_SAVED);
+    $xoops->redirect("preferences.php", 3, _XOO_CONFIG_SAVED);
     break;
     default:
     $form = $xoops->getModuleForm(null, 'preferences', 'xooghost');

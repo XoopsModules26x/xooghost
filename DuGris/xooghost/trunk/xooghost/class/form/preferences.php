@@ -36,23 +36,23 @@ class XooghostPreferencesForm extends XoopsThemeForm
     public function PreferencesForm()
     {        extract( $this->_config );        parent::__construct('', "form_preferences", "preferences.php", 'post', true);
         $this->setExtra('enctype="multipart/form-data"');
-        $this->insertBreak(_MI_XOO_CONFIG_MAINPAGE,'preferenceTitle');
+        $this->insertBreak(_XOO_CONFIG_MAINPAGE,'preferenceTitle');
 
         //xooghost_main
-        $this->addElement( new XoopsFormRadioYN(_MI_XOO_CONFIG_MAIN, 'xooghost_main', $xooghost_main) );
+        $this->addElement( new XoopsFormRadioYN(_XOO_CONFIG_MAIN, 'xooghost_main', $xooghost_main) );
 
         //xooghost_welcome
-        $this->addElement( new XoopsFormTextArea(_MI_XOO_CONFIG_WELCOME, 'xooghost_welcome', $xooghost_welcome, 12, 12) );
+        $this->addElement( new XoopsFormTextArea(_XOO_CONFIG_WELCOME, 'xooghost_welcome', $xooghost_welcome, 12, 12) );
 
         //xooghost_main_mode
-        $main_mode = new XoopsFormSelect(_MI_XOO_CONFIG_MAIN_MODE, 'xooghost_main_mode', $xooghost_main_mode, $size = 1);
-        $main_mode->addOption('list',   _MI_XOO_CONFIG_MAIN_MODE_LIST);
-        $main_mode->addOption('table',  _MI_XOO_CONFIG_MAIN_MODE_TABLE);
-        $main_mode->addOption('select', _MI_XOO_CONFIG_MAIN_MODE_SELECT);
-        $main_mode->addOption('news',   _MI_XOO_CONFIG_MAIN_MODE_NEWS);
+        $main_mode = new XoopsFormSelect(_XOO_CONFIG_MAIN_MODE, 'xooghost_main_mode', $xooghost_main_mode, $size = 1);
+        $main_mode->addOption('list',   _XOO_CONFIG_MAIN_MODE_LIST);
+        $main_mode->addOption('table',  _XOO_CONFIG_MAIN_MODE_TABLE);
+        $main_mode->addOption('select', _XOO_CONFIG_MAIN_MODE_SELECT);
+        $main_mode->addOption('news',   _XOO_CONFIG_MAIN_MODE_NEWS);
         $this->addElement( $main_mode );
 
-        $this->insertBreak(_MI_XOO_CONFIG_IMAGE,'preferenceTitle');
+        $this->insertBreak(_XOO_CONFIG_IMAGE,'preferenceTitle');
         // xooghost_image_size
         $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_SIZE, 'xooghost_image_size', 1, 10, $xooghost_image_size) );
 
@@ -79,15 +79,15 @@ class XooghostPreferencesForm extends XoopsThemeForm
     private function rldForm()
     {
         extract( $this->_config );
-        $this->insertBreak(_MI_XOO_CONFIG_RLD,'preferenceTitle');
+        $this->insertBreak(_XOO_CONFIG_RLD,'preferenceTitle');
         // Rate / Like / Dislike Mode
-        $rld_mode = new XoopsFormSelect(_MI_XOO_CONFIG_RLD_MODE, 'xooghost_rld[rld_mode]', $xooghost_rld['rld_mode']);
-        $rld_mode->addOption('none',        _MI_XOO_CONFIG_RLD_NONE);
-        $rld_mode->addOption('rate',        _MI_XOO_CONFIG_RLD_RATE);
-        $rld_mode->addOption('likedislike', _MI_XOO_CONFIG_RLD_LIKEDISLIKE);
+        $rld_mode = new XoopsFormSelect(_XOO_CONFIG_RLD_MODE, 'xooghost_rld[rld_mode]', $xooghost_rld['rld_mode']);
+        $rld_mode->addOption('none',        _XOO_CONFIG_RLD_NONE);
+        $rld_mode->addOption('rate',        _XOO_CONFIG_RLD_RATE);
+        $rld_mode->addOption('likedislike', _XOO_CONFIG_RLD_LIKEDISLIKE);
         $this->addElement( $rld_mode );
 
-        $rate_scale = new XoopsFormSelect(_MI_XOO_CONFIG_RATE_SCALE, 'xooghost_rld[rate_scale]', $xooghost_rld['rate_scale']);
+        $rate_scale = new XoopsFormSelect(_XOO_CONFIG_RATE_SCALE, 'xooghost_rld[rate_scale]', $xooghost_rld['rate_scale']);
         for ($i=4; $i <= 10; $i++) {
             $rate_scale->addOption($i, $i);
         }
@@ -98,23 +98,23 @@ class XooghostPreferencesForm extends XoopsThemeForm
     {
         if ( file_exists(XOOPS_PATH . '/phpqrcode/qrlib.php') ) {
             extract( $this->_config );
-            $this->insertBreak(_MI_XOO_CONFIG_QRCODE,'preferenceTitle');
+            $this->insertBreak(_XOO_CONFIG_QRCODE,'preferenceTitle');
 
             // use QR code
-            $this->addElement( new XoopsFormRadioYN(_MI_XOO_CONFIG_QRCODE_USE, 'xooghost_qrcode[use_qrcode]', $xooghost_qrcode['use_qrcode']) );
+            $this->addElement( new XoopsFormRadioYN(_XOO_CONFIG_QRCODE_USE, 'xooghost_qrcode[use_qrcode]', $xooghost_qrcode['use_qrcode']) );
 
             // Error Correction Level
-            $ecl_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_ECL, 'xooghost_qrcode[CorrectionLevel]', $xooghost_qrcode['CorrectionLevel']);
-            $ecl_mode->addOption('L',   _MI_XOO_CONFIG_QRCODE_ECL_L);
-            $ecl_mode->addOption('M',   _MI_XOO_CONFIG_QRCODE_ECL_M);
-            $ecl_mode->addOption('Q',   _MI_XOO_CONFIG_QRCODE_ECL_Q);
-            $ecl_mode->addOption('H',   _MI_XOO_CONFIG_QRCODE_ECL_H);
+            $ecl_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_ECL, 'xooghost_qrcode[CorrectionLevel]', $xooghost_qrcode['CorrectionLevel']);
+            $ecl_mode->addOption('L',   _XOO_CONFIG_QRCODE_ECL_L);
+            $ecl_mode->addOption('M',   _XOO_CONFIG_QRCODE_ECL_M);
+            $ecl_mode->addOption('Q',   _XOO_CONFIG_QRCODE_ECL_Q);
+            $ecl_mode->addOption('H',   _XOO_CONFIG_QRCODE_ECL_H);
             $this->addElement( $ecl_mode );
 
             // Matrix Point Size
             $this->addElement( new XoopsFormHidden('xooghost_qrcode[matrixPointSize]', 2) );
 /*
-            $matrix_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_MATRIX, 'xooghost_qrcode[matrixPointSize]', $xooghost_qrcode['matrixPointSize']);
+            $matrix_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_MATRIX, 'xooghost_qrcode[matrixPointSize]', $xooghost_qrcode['matrixPointSize']);
             for ($i = 1; $i <= 5; $i++) {
                 $matrix_mode->addOption($i, $i * 37 . ' px');
             }
@@ -122,7 +122,7 @@ class XooghostPreferencesForm extends XoopsThemeForm
 */
 
             // Margin
-            $margin_mode = new XoopsFormSelect(_MI_XOO_CONFIG_QRCODE_MARGIN, 'xooghost_qrcode[whiteMargin]', $xooghost_qrcode['whiteMargin']);
+            $margin_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_MARGIN, 'xooghost_qrcode[whiteMargin]', $xooghost_qrcode['whiteMargin']);
             for ($i = 0; $i <= 20; $i++) {
                 $margin_mode->addOption($i,   $i);
             }

@@ -17,39 +17,42 @@
  * @version         $Id$
  */
 
-define("_MI_XOO_CONFIG_MAINPAGE",             "Main page");
-define("_MI_XOO_CONFIG_IMAGE",                "Image");
+if (!defined("_XOO_CONFIG_SAVED")) {
+    define("_XOO_CONFIG_SAVED",            "Configuration was saved");
+}
+define("_XOO_CONFIG_MAINPAGE",             "Main page");
+define("_XOO_CONFIG_IMAGE",                "Image");
 
-define("_MI_XOO_CONFIG_MAIN",                 "Display pages in main menu");
-define("_MI_XOO_CONFIG_WELCOME",              "Text to display in index page");
-define("_MI_XOO_CONFIG_MAIN_MODE",            "Display mode of the main page");
-define("_MI_XOO_CONFIG_MAIN_MODE_DESC",       "");
-define("_MI_XOO_CONFIG_MAIN_MODE_NEWS",       "News");
-define("_MI_XOO_CONFIG_MAIN_MODE_LIST",       "List");
-define("_MI_XOO_CONFIG_MAIN_MODE_TABLE",      "Table");
-define("_MI_XOO_CONFIG_MAIN_MODE_SELECT",     "Select");
+define("_XOO_CONFIG_MAIN",                 "Display pages in main menu");
+define("_XOO_CONFIG_WELCOME",              "Text to display in index page");
+define("_XOO_CONFIG_MAIN_MODE",            "Display mode of the main page");
+define("_XOO_CONFIG_MAIN_MODE_DESC",       "");
+define("_XOO_CONFIG_MAIN_MODE_NEWS",       "News");
+define("_XOO_CONFIG_MAIN_MODE_LIST",       "List");
+define("_XOO_CONFIG_MAIN_MODE_TABLE",      "Table");
+define("_XOO_CONFIG_MAIN_MODE_SELECT",     "Select");
 
-define("_MI_XOO_CONFIG_PAGE_LIMIT",           "Limit");
-define("_MI_XOO_CONFIG_PAGE_LIMIT_DESC",      "Number of items to display on the main page (0 = no limit)");
+define("_XOO_CONFIG_PAGE_LIMIT",           "Limit");
+define("_XOO_CONFIG_PAGE_LIMIT_DESC",      "Number of items to display on the main page (0 = no limit)");
 
-define("_MI_XOO_CONFIG_DATEFORMAT",           "Date&#39;s format");
+define("_XOO_CONFIG_DATEFORMAT",           "Date&#39;s format");
 
 // RLD
-define("_MI_XOO_CONFIG_RLD",                 "Rate / Like Dislike");
-define("_MI_XOO_CONFIG_RLD_MODE",            "Rate / Like Dislike");
-define("_MI_XOO_CONFIG_RLD_NONE",            "None");
-define("_MI_XOO_CONFIG_RLD_RATE",            "Rates");
-define("_MI_XOO_CONFIG_RLD_LIKEDISLIKE",     "Like / Dislike");
-define("_MI_XOO_CONFIG_RATE_SCALE",          "Number of stars for vote");
+define("_XOO_CONFIG_RLD",                 "Rate / Like Dislike");
+define("_XOO_CONFIG_RLD_MODE",            "Rate / Like Dislike");
+define("_XOO_CONFIG_RLD_NONE",            "None");
+define("_XOO_CONFIG_RLD_RATE",            "Rates");
+define("_XOO_CONFIG_RLD_LIKEDISLIKE",     "Like / Dislike");
+define("_XOO_CONFIG_RATE_SCALE",          "Number of stars for vote");
 
 // QRCode
-define("_MI_XOO_CONFIG_QRCODE",              "QR Code");
-define("_MI_XOO_CONFIG_QRCODE_USE",          "Use QR Code");
-define("_MI_XOO_CONFIG_QRCODE_ECL",          "Error Correction Level");
-define("_MI_XOO_CONFIG_QRCODE_ECL_L",        "Smallest");
-define("_MI_XOO_CONFIG_QRCODE_ECL_M",        "Medium");
-define("_MI_XOO_CONFIG_QRCODE_ECL_Q",        "Hight");
-define("_MI_XOO_CONFIG_QRCODE_ECL_H",        "Best");
-define("_MI_XOO_CONFIG_QRCODE_MATRIX",       "Image width");
-define("_MI_XOO_CONFIG_QRCODE_MARGIN",       "Image margin (px)");
+define("_XOO_CONFIG_QRCODE",              "QR Code");
+define("_XOO_CONFIG_QRCODE_USE",          "Use QR Code");
+define("_XOO_CONFIG_QRCODE_ECL",          "Error Correction Level");
+define("_XOO_CONFIG_QRCODE_ECL_L",        "Smallest");
+define("_XOO_CONFIG_QRCODE_ECL_M",        "Medium");
+define("_XOO_CONFIG_QRCODE_ECL_Q",        "Hight");
+define("_XOO_CONFIG_QRCODE_ECL_H",        "Best");
+define("_XOO_CONFIG_QRCODE_MATRIX",       "Image width");
+define("_XOO_CONFIG_QRCODE_MARGIN",       "Image margin (px)");
 ?>
