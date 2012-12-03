@@ -75,6 +75,12 @@ class XooghostPagesForm extends XoopsThemeForm
         // Content
         $this->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
 
+        // tags
+        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {            $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
+            $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xooghost_id'));
+            $this->addElement( $tagform );
+        }
+
         // image
         $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_SIZE . ' : ' . $Xooghost_config['xooghost_image_size'];
         $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_WIDTH . ' : ' . $Xooghost_config['xooghost_image_width'];

@@ -125,6 +125,12 @@ class Xooghost extends XoopsObject
             $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
             $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
         }
+
+        // tags
+        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
+            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+            $ret['tags'] = $xootags_handler->getbyItem($ret['xooghost_id']);
+        }
         return $ret;
     }
 
@@ -233,7 +239,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
             } else {
                 $page->setVar('xooghost_online', 1);
             }
-            $this->insert( $page );
+            $this->insertPage( $page );
             return true;
         }
         return false;
@@ -243,7 +249,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
     {
         $read = $pageObj->getVar('xooghost_hits') + 1;
         $pageObj->setVar('xooghost_hits', $read );
-        $this->insert( $pageObj );
+        $this->insertPage( $pageObj );
         return true;
     }
 
@@ -262,7 +268,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
                         $xooghost_like = $page->getVar('xooghost_like') + 1;
                         $page->setVar('xooghost_like', $xooghost_like);
                     }
-                    $this->insert( $page );
+                    $this->insertPage( $page );
                     return $page->toArray();
                 }
             }
@@ -281,7 +287,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
                 if ( $ret = $rld_handler->SetRate($page_id, $rate) ) {
                     if ( is_array($ret) && count($ret) == 3 ) {
                         $page->setVar('xooghost_rates', $ret['average']);
-                        $this->insert( $page );
+                        $this->insertPage( $page );
                         return $ret;
                     }
                 }
@@ -312,7 +318,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         return $this->getObjects($criteria, null, false);
     }
 
-    public function insert($object, $force = true)
+    public function insertPage($object, $force = true)
     {
         if ( parent::insert($object, $force) ) {
             $object->create_page();

@@ -20,7 +20,7 @@
 include dirname(__FILE__) . '/header.php';
 
 switch ($op) {    case 'save':
-    if ( !$GLOBALS['xoopsSecurity']->check() ) {
+    if ( !$xoops->security->check() ) {
         $xoops->redirect('pages.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
     }
 
@@ -45,8 +45,15 @@ switch ($op) {    case 'save':
     }
 
 
-    if ($xooghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
+    if ( $page_id = $xooghost_handler->insertPage($page)) {        $msg = _AM_XOO_GHOST_SAVED;
         if ( isset($errors) && count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
+
+        // tags
+        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
+            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+            $msg .= '<br />' . $xootags_handler->updateByItem( 'tags', $page_id) ;
+        }
+
         $xoops->redirect('pages.php', 5, $msg);
     }
     break;
@@ -72,7 +79,7 @@ switch ($op) {    case 'save':
         if ($page = $xooghost_handler->get($xooghost_id) ) {
             $delete = $system->CleanVars( $_POST, 'ok', 0, 'int' );
             if ($delete == 1) {
-                if ( !$GLOBALS['xoopsSecurity']->check() ) {
+                if ( !$xoops->security->check() ) {
                     $xoops->redirect('pages.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 $xooghost_handler->delete($page);
