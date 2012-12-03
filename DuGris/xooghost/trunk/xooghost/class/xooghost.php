@@ -119,6 +119,12 @@ class Xooghost extends XoopsObject
         }
 
         $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
+        if ( (basename($xoops->getenv('PHP_SELF'), '.php') == 'index' || basename($xoops->getenv('PHP_SELF'), '.php') == 'search' ) && strpos($ret['xooghost_content'], '[breakpage]') !== false ) {
+            $ret['xooghost_content'] = substr( $ret['xooghost_content'], 0, strpos($ret['xooghost_content'], '[breakpage]') );
+            $ret['readmore'] = true;
+        } else {
+            $ret['xooghost_content'] = str_replace('[breakpage]', '', $ret['xooghost_content']);
+        }
 
         if ( isset($_SESSION['xooghost_stat'])) {
             $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');

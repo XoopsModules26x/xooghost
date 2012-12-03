@@ -46,10 +46,10 @@ class XooghostPreferencesForm extends XoopsThemeForm
 
         //xooghost_main_mode
         $main_mode = new XoopsFormSelect(_XOO_CONFIG_MAIN_MODE, 'xooghost_main_mode', $xooghost_main_mode, $size = 1);
+        $main_mode->addOption('blog',   _XOO_CONFIG_MAIN_MODE_BLOG);
         $main_mode->addOption('list',   _XOO_CONFIG_MAIN_MODE_LIST);
-        $main_mode->addOption('table',  _XOO_CONFIG_MAIN_MODE_TABLE);
         $main_mode->addOption('select', _XOO_CONFIG_MAIN_MODE_SELECT);
-        $main_mode->addOption('news',   _XOO_CONFIG_MAIN_MODE_NEWS);
+        $main_mode->addOption('table',  _XOO_CONFIG_MAIN_MODE_TABLE);
         $this->addElement( $main_mode );
 
         $this->insertBreak(_XOO_CONFIG_IMAGE,'preferenceTitle');

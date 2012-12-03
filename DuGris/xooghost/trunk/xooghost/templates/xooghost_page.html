@@ -13,6 +13,8 @@
                 <div class="itemQRcode">
                     <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><img src="<{xoAppUrl modules/xooghost/qrcode.php}>?url=<{$page.xooghost_link}>" alt="<{$page.xooghost_link}>"></a>
                 </div>
+                <div>
+                </div>
             <{/if}>
             <{if $page.xooghost_image != "blank.gif"}>
                 <div class="itemImage">
@@ -22,7 +24,7 @@
 
             <div>
                 <div class="itemTitle">
-                    <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{if $pages}><img src="<{xoImgUrl modules/xooghost/icons/16/view.png}>" alt="<{$page.xooghost_title}>"><{/if}><{$page.xooghost_title}></a>
+                    <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><{$page.xooghost_title}></a>
                 </div>
 
                 <div class="itemInfo">
@@ -38,14 +40,24 @@
                     <{/if}>
                 </div>
             </div>
-
         </div>
 
-        <div class="itemBody">
-            <div class="itemText">
-                <{$page.xooghost_content}>
+        <{if $page.xooghost_content}>
+            <div class="itemBody">
+                <div class="itemText">
+                    <{$page.xooghost_content}>
+                </div>
             </div>
-        </div>
+        <{else}>
+            <div class="clear"></div>
+        <{/if}>
+
+        <{if $page.readmore}>
+            <div class="itemFoot floatright">
+                <a href="<{$page.xooghost_link}>" title="<{$smarty.const._XOO_GHOST_READMORE}>"><{$smarty.const._XOO_GHOST_READMORE}></a>
+            </div>
+            <div class="clear"></div>
+        <{/if}>
 
         <{if !$pages}>
             <div class="itemFoot">
