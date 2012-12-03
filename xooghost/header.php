@@ -54,6 +54,7 @@ if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.ht
             $_SESSION['xooghost_view' . $Xooghost_id] = $time + 3600;
             $xooghost_handler->SetRead( $page );
         }
+
         $xoops->tpl->assign('security', $xoops->security->createToken() );
         $xoops->tpl->assign('page', $page->toArray() );
         $xoops->tpl->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
@@ -72,5 +73,4 @@ $xoops->tpl->assign('width', $Xooghost_config['xooghost_image_width'] );
 $xoops->tpl->assign('height', $Xooghost_config['xooghost_image_height'] );
 $xoops->tpl->assign('xooghost_qrcode', $Xooghost_config['xooghost_qrcode'] );
 $xoops->tpl->assign('xooghost_rld', $Xooghost_config['xooghost_rld'] );
-
 ?>
