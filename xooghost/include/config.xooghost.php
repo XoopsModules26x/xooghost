@@ -4,7 +4,7 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 return $config = array(
     'xooghost_main'         => 1,
     'xooghost_welcome'      => '',
-    'xooghost_main_mode'    => 'list',
+    'xooghost_main_mode'    => 'blog',
 /*
     'xooghost_limit'        => 5,
     'xooghost_date_format'  => "_SHORTDATESTRING",
@@ -20,13 +20,11 @@ return $config = array(
 
     'xooghost_qrcode'       => array(
         'use_qrcode'        => 0,
-        'CorrectionLevel'   => 'L',
+        'CorrectionLevel'   => 0,
         'matrixPointSize'   => 2,
         'whiteMargin'       => 0,
-/*
-        'backgroundColor'   => 'FFFFFF',
-        'foregroundColor'   => '000000',
-*/
+        'backgroundColor'   => 'White',
+        'foregroundColor'   => 'Black',
     ),
 );
 ?>

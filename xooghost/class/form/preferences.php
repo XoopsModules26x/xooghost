@@ -21,6 +21,25 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 class XooghostPreferencesForm extends XoopsThemeForm
 {
+    private $_colors = array(
+        'Aqua'    => '#00FFFF',
+        'Black'   => '#000000',
+        'Blue'    => '#0000FF',
+        'Fuchsia' => '#FF00FF',
+        'Gray'    => '#808080',
+        'Green'   => '#008000',
+        'Lime'    => '#00FF00',
+        'Maroon'  => '#800000',
+        'Navy'    => '#000080',
+        'Olive'   => '#808000',
+        'Purple'  => '#800080',
+        'Red'     => '#FF0000',
+        'Silver'  => '#C0C0C0',
+        'Teal'    => '#008080',
+        'White'   => '#FFFFFF',
+        'Yellow'  => '#FFFF00',
+    );
+
     private $_config = array();
     /**
      * @param null $obj
@@ -96,7 +115,8 @@ class XooghostPreferencesForm extends XoopsThemeForm
 
     private function QRcodeForm()
     {
-        if ( file_exists(XOOPS_PATH . '/phpqrcode/qrlib.php') ) {
+        if ( file_exists(XOOPS_PATH . '/phpqrcode/qrlib.php') ) {            $xoops = xoops::getinstance();
+            $xoops->theme->addScript('modules/xooghost/include/qrcode.js');
             extract( $this->_config );
             $this->insertBreak(_XOO_CONFIG_QRCODE,'preferenceTitle');
 
@@ -105,31 +125,50 @@ class XooghostPreferencesForm extends XoopsThemeForm
 
             // Error Correction Level
             $ecl_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_ECL, 'xooghost_qrcode[CorrectionLevel]', $xooghost_qrcode['CorrectionLevel']);
-            $ecl_mode->addOption('L',   _XOO_CONFIG_QRCODE_ECL_L);
-            $ecl_mode->addOption('M',   _XOO_CONFIG_QRCODE_ECL_M);
-            $ecl_mode->addOption('Q',   _XOO_CONFIG_QRCODE_ECL_Q);
-            $ecl_mode->addOption('H',   _XOO_CONFIG_QRCODE_ECL_H);
+            $ecl_mode->setExtra( "onchange='showImgQRcode(\"image_qrcode\", \"" . 'xooghost' . "\", \"url=http://dugris.xoofoo.org\", \"" . $xoops->url('modules') . "\")'" );
+            $ecl_mode->addOption(0,   _XOO_CONFIG_QRCODE_ECL_L);
+            $ecl_mode->addOption(1,   _XOO_CONFIG_QRCODE_ECL_M);
+            $ecl_mode->addOption(2,   _XOO_CONFIG_QRCODE_ECL_Q);
+            $ecl_mode->addOption(3,   _XOO_CONFIG_QRCODE_ECL_H);
             $this->addElement( $ecl_mode );
 
             // Matrix Point Size
-            $this->addElement( new XoopsFormHidden('xooghost_qrcode[matrixPointSize]', 2) );
-/*
             $matrix_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_MATRIX, 'xooghost_qrcode[matrixPointSize]', $xooghost_qrcode['matrixPointSize']);
+            $matrix_mode->setExtra( "onchange='showImgQRcode(\"image_qrcode\", \"" . 'xooghost' . "\", \"url=http://dugris.xoofoo.org\", \"" . $xoops->url('modules') . "\")'" );
             for ($i = 1; $i <= 5; $i++) {
-                $matrix_mode->addOption($i, $i * 37 . ' px');
+                $matrix_mode->addOption($i, $i);
             }
             $this->addElement( $matrix_mode );
-*/
 
             // Margin
             $margin_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_MARGIN, 'xooghost_qrcode[whiteMargin]', $xooghost_qrcode['whiteMargin']);
+            $margin_mode->setExtra( "onchange='showImgQRcode(\"image_qrcode\", \"" . 'xooghost' . "\", \"url=http://dugris.xoofoo.org\", \"" . $xoops->url('modules') . "\")'" );
             for ($i = 0; $i <= 20; $i++) {
                 $margin_mode->addOption($i,   $i);
             }
             $this->addElement( $margin_mode );
+
+            // Background & Foreground Color
+            $colors_tray = new XoopsFormElementTray(_XOO_CONFIG_QRCODE_COLORS, '' );
+
+            $colors_bg = new XoopsFormSelect(_XOO_CONFIG_QRCODE_COLORS_BG . ': ', 'xooghost_qrcode[backgroundColor]', $xooghost_qrcode['backgroundColor'], 1);
+            $colors_bg->setExtra( "onchange='showImgQRcode(\"image_qrcode\", \"" . 'xooghost' . "\", \"url=http://dugris.xoofoo.org\", \"" . $xoops->url('modules') . "\")'" );
+
+            $colors_fg = new XoopsFormSelect(_XOO_CONFIG_QRCODE_COLORS_FG . ': ', 'xooghost_qrcode[foregroundColor]', $xooghost_qrcode['foregroundColor'], 1);
+            $colors_fg->setExtra( "onchange='showImgQRcode(\"image_qrcode\", \"" . 'xooghost' . "\", \"url=http://dugris.xoofoo.org\", \"" . $xoops->url('modules') . "\")'" );
+
+            foreach ( $this->_colors as $k => $color ) {
+                $colors_bg->addOption( $k );
+                $colors_fg->addOption( $k );
+            }
+            $colors_tray->addElement( new XoopsFormLabel( '', "<div class='floatright'><img src='" . $xoops->url('/modules/xooghost/') . "qrcode.php?url=http://dugris.xoofoo.org' name='image_qrcode' id='image_qrcode' alt='" . _XOO_CONFIG_QRCODE . "' /></div>" ) );
+            $colors_tray->addElement( $colors_bg );
+            $colors_tray->addElement( new XoopsFormLabel( '', '<br />') );
+            $colors_tray->addElement( $colors_fg );
+
+            $this->addElement( $colors_tray );
         } else {
             $this->addElement( new XoopsFormHidden('xooghost_qrcode[use_qrcode]', 0) );
-            $this->addElement( new XoopsFormHidden('xooghost_qrcode[matrixPointSize]', 2) );
         }
     }
 }
