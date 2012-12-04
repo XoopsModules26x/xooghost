@@ -22,29 +22,29 @@ $url = $system->CleanVars($_REQUEST, 'url', '', 'string');
 extract($Xooghost_config['xooghost_qrcode']);
 
 if ( count($_GET) > 1 ) {    if ( isset($_GET['bgcolor']) ) {
-        $xoops->registry->set('XGHOST_BGCOLOR', $_GET['bgcolor']);
+        $xoops->registry->set('GHOST_BGCOLOR', $_GET['bgcolor']);
     }
-    $backgroundColor = ($xoops->registry->offsetExists('XGHOSTBGCOLOR')) ? $xoops->registry->get('XGHOSTBGCOLOR') : $backgroundColor;
+    $backgroundColor = ($xoops->registry->offsetExists('GHOST_BGCOLOR')) ? $xoops->registry->get('GHOST_BGCOLOR') : $backgroundColor;
 
     if ( isset($_GET['fgcolor']) ) {
-        $xoops->registry->set('XGHOSTFGCOLOR', $_GET['fgcolor']);
+        $xoops->registry->set('GHOST_FGCOLOR', $_GET['fgcolor']);
     }
-    $foregroundColor = ($xoops->registry->offsetExists('XGHOSTFGCOLOR')) ? $xoops->registry->get('XGHOSTFGCOLOR') : $foregroundColor;
+    $foregroundColor = ($xoops->registry->offsetExists('GHOST_FGCOLOR')) ? $xoops->registry->get('GHOST_FGCOLOR') : $foregroundColor;
 
     if ( isset($_GET['margin']) ) {
-        $xoops->registry->set('XGHOSTMARGIN', $_GET['margin']);
+        $xoops->registry->set('GHOST_MARGIN', $_GET['margin']);
     }
-    $whiteMargin = ($xoops->registry->offsetExists('XGHOSTMARGIN')) ? $xoops->registry->get('XGHOSTMARGIN') : $whiteMargin;
+    $whiteMargin = ($xoops->registry->offsetExists('GHOST_MARGIN')) ? $xoops->registry->get('GHOST_MARGIN') : $whiteMargin;
 
     if ( isset($_GET['correction']) ) {
-        $xoops->registry->set('XGHOSTCORRECTION', $_GET['correction']);
+        $xoops->registry->set('GHOST_CORRECTION', $_GET['correction']);
     }
-    $CorrectionLevel = ($xoops->registry->offsetExists('XGHOSTCORRECTION')) ? $xoops->registry->get('XGHOSTCORRECTION') : $CorrectionLevel;
+    $CorrectionLevel = ($xoops->registry->offsetExists('GHOST_CORRECTION')) ? $xoops->registry->get('GHOST_CORRECTION') : $CorrectionLevel;
 
     if ( isset($_GET['size']) ) {
-        $xoops->registry->set('XGHOSTSIZE', $_GET['size']);
+        $xoops->registry->set('GHOST_SIZE', $_GET['size']);
     }
-    $matrixPointSize = ($xoops->registry->offsetExists('XGHOSTSIZE')) ? $xoops->registry->get('XGHOSTSIZE') :$matrixPointSize;
+    $matrixPointSize = ($xoops->registry->offsetExists('GHOST_SIZE')) ? $xoops->registry->get('GHOST_SIZE') :$matrixPointSize;
 }
 if ( $url != '' ) {
     $qrcode = new Xoops_QRcode();
