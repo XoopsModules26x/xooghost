@@ -21,6 +21,40 @@ include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 $url = $system->CleanVars($_REQUEST, 'url', '', 'string');
 extract($Xooghost_config['xooghost_qrcode']);
 
-if ( $url != '' ) {    include XOOPS_PATH . '/phpqrcode/qrlib.php';
-    QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );}
+if ( count($_GET) > 1 ) {    if ( isset($_GET['bgcolor']) ) {
+        $xoops->registry->set('XGHOST_BGCOLOR', $_GET['bgcolor']);
+    }
+    $backgroundColor = ($xoops->registry->offsetExists('XGHOSTBGCOLOR')) ? $xoops->registry->get('XGHOSTBGCOLOR') : $backgroundColor;
+
+    if ( isset($_GET['fgcolor']) ) {
+        $xoops->registry->set('XGHOSTFGCOLOR', $_GET['fgcolor']);
+    }
+    $foregroundColor = ($xoops->registry->offsetExists('XGHOSTFGCOLOR')) ? $xoops->registry->get('XGHOSTFGCOLOR') : $foregroundColor;
+
+    if ( isset($_GET['margin']) ) {
+        $xoops->registry->set('XGHOSTMARGIN', $_GET['margin']);
+    }
+    $whiteMargin = ($xoops->registry->offsetExists('XGHOSTMARGIN')) ? $xoops->registry->get('XGHOSTMARGIN') : $whiteMargin;
+
+    if ( isset($_GET['correction']) ) {
+        $xoops->registry->set('XGHOSTCORRECTION', $_GET['correction']);
+    }
+    $CorrectionLevel = ($xoops->registry->offsetExists('XGHOSTCORRECTION')) ? $xoops->registry->get('XGHOSTCORRECTION') : $CorrectionLevel;
+
+    if ( isset($_GET['size']) ) {
+        $xoops->registry->set('XGHOSTSIZE', $_GET['size']);
+    }
+    $matrixPointSize = ($xoops->registry->offsetExists('XGHOSTSIZE')) ? $xoops->registry->get('XGHOSTSIZE') :$matrixPointSize;
+}
+if ( $url != '' ) {
+    $qrcode = new Xoops_QRcode();
+    $qrcode->setLevel( intval($CorrectionLevel) );
+    $qrcode->setSize( intval($matrixPointSize) );
+    $qrcode->setMargin( intval($whiteMargin) );
+    $qrcode->setBackground( constant(strtoupper('_' . $backgroundColor)) );
+    $qrcode->setForeground( constant(strtoupper('_' . $foregroundColor)) );
+    $qrcode->render( $url );
+//    include XOOPS_PATH . '/phpqrcode/qrlib.php';
+//    QRcode::png($url, false, $CorrectionLevel, $matrixPointSize, $whiteMargin );
+}
 ?>
