@@ -40,12 +40,15 @@ $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
 if ($script_name != 'about') {    $xoops->header('xooghost_' . $script_name . '.html');} else {    $xoops->header();}
-
-$xoops->theme->addStylesheet('modules/xooghost/css/moduladmin.css');
+$xoops->theme()->addStylesheet('modules/xooghost/css/moduladmin.css');
 $xoops->loadLanguage('common', 'xooghost');
 
 $admin_page = new XoopsModuleAdmin();
-$admin_page->renderNavigation( basename($_SERVER['SCRIPT_NAME']) );
+if ($script_name != 'about' && $script_name != 'index') {
+    $admin_page->renderNavigation( basename($_SERVER['SCRIPT_NAME']) );
+} elseif ($script_name != 'index') {
+    $admin_page->displayNavigation( basename($_SERVER['SCRIPT_NAME']) );
+}
 
 $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 ?>

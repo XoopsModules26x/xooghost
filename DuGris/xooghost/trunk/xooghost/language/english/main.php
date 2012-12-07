@@ -20,6 +20,8 @@
 define("_XOO_GHOST_NOTFOUND",               "Page not found");
 define("_XOO_GHOST_CHOOSE",                 "Choose a page");
 define("_XOO_GHOST_READS",                  "Read(s)");
+define("_XOO_GHOST_PRINT",                  "Print");
+define("_XOO_GHOST_PDF",                    "Pdf");
 
 define("_XOO_GHOST_READMORE",               "Read more ...");
 

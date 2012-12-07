@@ -22,7 +22,7 @@ include dirname(__FILE__) . '/header.php';
 $xoops->header();
 
 $admin_page = new XoopsModuleAdmin();
-$admin_page->renderIndex();
+$admin_page->displayIndex();
 
 include dirname(__FILE__) . '/footer.php';
 ?>

@@ -76,7 +76,7 @@ class XooghostPagesForm extends XoopsThemeForm
         $this->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
 
         // tags
-        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {            $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
+        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {            $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
             $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xooghost_id'));
             $this->addElement( $tagform );
         }

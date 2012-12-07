@@ -24,7 +24,7 @@ $xoopsLogger->activated = false;
 
 $ret['error'] = 1;
 
-if ( $xoops->security->check() ) {    $page_id = $system->CleanVars($_REQUEST, 'page_id', 0, 'int');
+if ( $xoops->security()->check() ) {    $page_id = $system->CleanVars($_REQUEST, 'page_id', 0, 'int');
     $option = $system->CleanVars($_REQUEST, 'option', 2, 'int');
 
     $time = time();

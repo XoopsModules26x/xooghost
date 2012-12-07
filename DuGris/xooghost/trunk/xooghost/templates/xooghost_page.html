@@ -63,6 +63,8 @@
             <div class="itemFoot">
                 <div class="itemStat floatleft">
                     <button id="button-reads" title="<{$smarty.const._XOO_GHOST_READS}>"><i class="reads"></i><{$page.xooghost_hits}></button>
+                    <button id="button-print" title="<{$smarty.const._XOO_GHOST_PRINT}>"><i class="print"></i></button>
+                    <button id="button-pdf" title="<{$smarty.const._XOO_GHOST_PDF}>"><i class="pdf"></i></button>
                 </div>
 
                 <{if $xooghost_rld.rld_mode != ''}>
@@ -77,7 +79,9 @@
 
                 <div class="clear"></div>
             </div>
-            <{includeq file='module:xoosocialnetwork|xoosocialnetwork.html'}>
+            <{if $xoosocialnetwork}>
+                <{includeq file='module:xoosocialnetwork|xoosocialnetwork.html'}>
+            <{/if}>
         <{/if}>
     </div>
 <{else}>

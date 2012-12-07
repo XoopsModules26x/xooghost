@@ -20,7 +20,7 @@
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 
 $pages = $xooghost_handler->getPublished();
-$xoops->tpl->assign('pages', $pages);
+$xoops->tpl()->assign('pages', $pages);
 
 $i=0;
 $description = '';
@@ -31,8 +31,8 @@ foreach ($pages as $k => $page ) {
         $description .= ', ';
     }
 }
-$xoops->theme->addMeta($type = 'meta', 'description', getMetaDescription( $description ) );
-$xoops->theme->addMeta($type = 'meta', 'keywords', getMetaKeywords( $description ) );
+$xoops->theme()->addMeta($type = 'meta', 'description', getMetaDescription( $description ) );
+$xoops->theme()->addMeta($type = 'meta', 'keywords', getMetaKeywords( $description ) );
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
 ?>
