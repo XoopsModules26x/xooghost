@@ -71,6 +71,7 @@ $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 
 // Tables created by sql file (without prefix!)
 $modversion['tables'][1] = 'xooghost';
+$modversion['tables'][2] = 'xooghost_rld';
 
 // blocks
 $i = 0;
