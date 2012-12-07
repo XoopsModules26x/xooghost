@@ -20,11 +20,12 @@
 include dirname(__FILE__) . '/header.php';
 
 switch ($op) {    case 'save':
-    if ( !$xoops->security->check() ) {
-        $xoops->redirect('pages.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+    if ( !$xoops->security()->check() ) {
+        $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
     }
 
     $xooghost_id = $system->CleanVars($_POST, 'xooghost_id', 0, 'int');
+
     if( isset($xooghost_id) && $xooghost_id > 0 ){
         $page = $xooghost_handler->get($xooghost_id);
     } else {
@@ -49,7 +50,7 @@ switch ($op) {    case 'save':
         if ( isset($errors) && count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
 
         // tags
-        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
+        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
             $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
             $msg .= '<br />' . $xootags_handler->updateByItem( 'tags', $page_id) ;
         }
@@ -62,7 +63,7 @@ switch ($op) {    case 'save':
     $page = $xooghost_handler->create();
     $form = $xoops->getModuleForm($page, 'pages', 'xooghost');
     $form->PageForm();
-    $form->render();
+    $form->display();
     break;
 
     case 'edit':
@@ -70,7 +71,7 @@ switch ($op) {    case 'save':
     $page = $xooghost_handler->get($xooghost_id);
     $form = $xoops->getModuleForm($page, 'pages', 'xooghost');
     $form->PageForm();
-    $form->render();
+    $form->display();
     break;
 
     case 'del':
@@ -79,8 +80,8 @@ switch ($op) {    case 'save':
         if ($page = $xooghost_handler->get($xooghost_id) ) {
             $delete = $system->CleanVars( $_POST, 'ok', 0, 'int' );
             if ($delete == 1) {
-                if ( !$xoops->security->check() ) {
-                    $xoops->redirect('pages.php', 5, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
+                if ( !$xoops->security()->check() ) {
+                    $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
                 }
                 $xooghost_handler->delete($page);
                 $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_DELETED);
@@ -106,7 +107,7 @@ switch ($op) {    case 'save':
     $admin_page->addItemButton(_AM_XOO_GHOST_ADD, 'pages.php?op=add', 'add');
     $admin_page->renderButton();
 
-    $xoops->tpl->assign('pages', $xooghost_handler->renderAdminList() );
+    $xoops->tpl()->assign('pages', $xooghost_handler->renderAdminList() );
     break;
 }
 include dirname(__FILE__) . '/footer.php';

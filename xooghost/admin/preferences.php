@@ -22,8 +22,8 @@ include dirname(__FILE__) . '/header.php';
 $xoops->loadLanguage('preferences', 'xooghost');
 
 switch ($op) {    case 'save':
-    if (!$xoops->security->check()) {
-        $xoops->redirect("preferences.php", 3, implode('<br />', $xoops->security->getErrors()));
+    if (!$xoops->security()->check()) {
+        $xoops->redirect("preferences.php", 3, implode('<br />', $xoops->security()->getErrors()));
     }
 
     $xooghost_main      = $system->CleanVars($_POST, 'xooghost_main', 0, 'int');
@@ -38,7 +38,7 @@ switch ($op) {    case 'save':
     default:
     $form = $xoops->getModuleForm(null, 'preferences', 'xooghost');
     $form->PreferencesForm();
-    $form->render();
+    $form->display();
     break;
 }
 include dirname(__FILE__) . '/footer.php';

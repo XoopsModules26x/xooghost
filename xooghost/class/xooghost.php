@@ -91,51 +91,50 @@ class Xooghost extends XoopsObject
         return implode(', ', $keywords);
     }
 
-    public function toArray()
+    public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $xoops = Xoops::getInstance();
         $myts = MyTextSanitizer::getInstance();
-        $ret = $this->getValues();
+        $ret = parent::getValues();
 
         $ret['xooghost_date_day'] = date('d', $ret['xooghost_published'] );
         $ret['xooghost_date_month'] = date('m', $ret['xooghost_published'] );
         $ret['xooghost_date_year'] = date('Y', $ret['xooghost_published'] );
+        $ret['xooghost_time']      = $ret['xooghost_published'];
         $ret['xooghost_published'] = date(_SHORTDATESTRING, $ret['xooghost_published']);
 
         $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $ret['xooghost_url'];
 
-        if ( $xoops->isUser() ) {
-            $ret['xooghost_uid_name'] = $xoops->user->getUnameFromId($ret['xooghost_uid'], true);
-        } else {
-            $member_handler = $xoops->getHandlerMember();
-            $user = $member_handler->getUser( $ret['xooghost_uid'] );
-            $ret['xooghost_uid_name'] = $user->getUnameFromId($ret['xooghost_uid'], true);
-        }
+        $ret['xooghost_uid_name'] = XoopsUser::getUnameFromId($ret['xooghost_uid'], true);
 
         if ($ret['xooghost_image'] != 'blank.gif') {
             $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $ret['xooghost_image'];
         } else {
-            $ret['xooghost_image_link'] = XOOPS_URL . '/' . $xoops->theme->resourcePath('/modules/xooghost/images/pages.png');
+            $ret['xooghost_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xooghost/images/pages.png');
         }
 
         $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
-        if ( (basename($xoops->getenv('PHP_SELF'), '.php') == 'index' || basename($xoops->getenv('PHP_SELF'), '.php') == 'search' ) && strpos($ret['xooghost_content'], '[breakpage]') !== false ) {
+
+        $page = array('index','search','tag','userinfo');
+        if ( in_array( basename($xoops->getenv('PHP_SELF'), '.php'), $page) && strpos($ret['xooghost_content'], '[breakpage]') !== false ) {
             $ret['xooghost_content'] = substr( $ret['xooghost_content'], 0, strpos($ret['xooghost_content'], '[breakpage]') );
             $ret['readmore'] = true;
         } else {
             $ret['xooghost_content'] = str_replace('[breakpage]', '', $ret['xooghost_content']);
         }
 
-        if ( isset($_SESSION['xooghost_stat'])) {
-            $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');
-            $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
-            $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
-        }
+        if ( !in_array( basename($xoops->getenv('PHP_SELF'), '.php'), $page) ) {
+            if ( isset($_SESSION['xooghost_stat'])) {
+                $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');
+                $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
+                $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
+            }
 
-        // tags
-        if ( $xoops->registry->offsetExists('XOOTAGS') && $xoops->registry->get('XOOTAGS') ) {
-            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-            $ret['tags'] = $xootags_handler->getbyItem($ret['xooghost_id']);
+            // tags
+            if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
+                $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                $ret['tags'] = $xootags_handler->getbyItem($ret['xooghost_id']);
+            }
         }
         return $ret;
     }
@@ -275,7 +274,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
                         $page->setVar('xooghost_like', $xooghost_like);
                     }
                     $this->insertPage( $page );
-                    return $page->toArray();
+                    return $page->getValues();
                 }
             }
             return false;

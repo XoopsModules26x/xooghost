@@ -56,22 +56,22 @@ if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.ht
             $xooghost_handler->SetRead( $page );
         }
 
-        $xoops->tpl->assign('security', $xoops->security->createToken() );
-        $xoops->tpl->assign('page', $page->toArray() );
-        $xoops->tpl->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
-        $xoops->theme->addMeta($type = 'meta', 'description', $page->getMetaDescription() );
-        $xoops->theme->addMeta($type = 'meta', 'keywords', $page->getMetaKeywords() );
-    } else {        $xoops->tpl->assign('not_found', true);
+        $xoops->tpl()->assign('security', $xoops->security()->createToken() );
+        $xoops->tpl()->assign('page', $page->getValues() );
+        $xoops->tpl()->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
+        $xoops->theme()->addMeta($type = 'meta', 'description', $page->getMetaDescription() );
+        $xoops->theme()->addMeta($type = 'meta', 'keywords', $page->getMetaKeywords() );
+    } else {        $xoops->tpl()->assign('not_found', true);
     }
 }
-$xoops->theme->addStylesheet('modules/xooghost/css/module.css');
+$xoops->theme()->addStylesheet('modules/xooghost/css/module.css');
 
-$xoops->tpl->assign('moduletitle', $xoops->module->name() );
+$xoops->tpl()->assign('moduletitle', $xoops->module->name() );
 
-$xoops->tpl->assign('template', $Xooghost_config['xooghost_main_mode'] );
-$xoops->tpl->assign('welcome', $Xooghost_config['xooghost_welcome'] );
-$xoops->tpl->assign('width', $Xooghost_config['xooghost_image_width'] );
-$xoops->tpl->assign('height', $Xooghost_config['xooghost_image_height'] );
-$xoops->tpl->assign('xooghost_qrcode', $Xooghost_config['xooghost_qrcode'] );
-$xoops->tpl->assign('xooghost_rld', $Xooghost_config['xooghost_rld'] );
+$xoops->tpl()->assign('template', $Xooghost_config['xooghost_main_mode'] );
+$xoops->tpl()->assign('welcome', $Xooghost_config['xooghost_welcome'] );
+$xoops->tpl()->assign('width', $Xooghost_config['xooghost_image_width'] );
+$xoops->tpl()->assign('height', $Xooghost_config['xooghost_image_height'] );
+$xoops->tpl()->assign('xooghost_qrcode', $Xooghost_config['xooghost_qrcode'] );
+$xoops->tpl()->assign('xooghost_rld', $Xooghost_config['xooghost_rld'] );
 ?>

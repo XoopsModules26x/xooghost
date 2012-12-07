@@ -116,7 +116,7 @@ class XooghostPreferencesForm extends XoopsThemeForm
     private function QRcodeForm()
     {
         if ( file_exists(XOOPS_PATH . '/phpqrcode/qrlib.php') ) {            $xoops = xoops::getinstance();
-            $xoops->theme->addScript('modules/xooghost/include/qrcode.js');
+            $xoops->theme()->addScript('modules/xooghost/include/qrcode.js');
             extract( $this->_config );
             $this->insertBreak(_XOO_CONFIG_QRCODE,'preferenceTitle');
 
