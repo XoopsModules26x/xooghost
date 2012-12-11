@@ -58,7 +58,7 @@ function xooghost_search($queryarray, $andor, $limit, $offset, $userid)
         $ret[$k]['image']    = 'icons/logo_small.png';
         $ret[$k]['link']     = $page['xooghost_url'] . '?' . $searchstring;
         $ret[$k]['title']    = $page['xooghost_title'];
-        $ret[$k]['time']     = $page['xooghost_published'];
+        $ret[$k]['time']     = $page['xooghost_time'];
         $ret[$k]['uid']      = $page['xooghost_uid'];
         $ret[$k]['content']  = $page['xooghost_description'];
     }
