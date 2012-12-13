@@ -53,7 +53,7 @@ class XooghostPreferencesForm extends XoopsThemeForm
      * @return void
      */
     public function PreferencesForm()
-    {        extract( $this->_config );        parent::__construct('', "form_preferences", "preferences.php", 'post', true);
+    {        extract( $this->_config );        parent::__construct('', 'form_preferences', 'preferences.php', 'post', true);
         $this->setExtra('enctype="multipart/form-data"');
         $this->insertBreak(_XOO_CONFIG_MAINPAGE,'preferenceTitle');
 

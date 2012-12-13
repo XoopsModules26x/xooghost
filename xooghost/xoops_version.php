@@ -85,8 +85,13 @@ $modversion['blocks'][$i]['template']       = 'xooghost_block.html';
 
 // Search
 $modversion['hasSearch'] = 1;
-$modversion['search']['file'] = "include/search.php";
-$modversion['search']['func'] = "xooghost_search";
+$modversion['search']['file'] = 'include/search.php';
+$modversion['search']['func'] = 'xooghost_search';
+
+// Users Synchronize post
+$modversion['sync']['table_name'] = 'xooghost';
+$modversion['sync']['uid_column'] = 'xooghost_uid';
+$modversion['sync']['criteria']   = new Criteria('xooghost_online', 1);
 
 // Menu
 $modversion['hasMain'] = 1;
@@ -101,8 +106,8 @@ if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' && !$x
         $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
         $pages = $xooghost_handler->getPublished();
         foreach ($pages as $page) {
-            $modversion["sub"][$i]["name"]  = $page['xooghost_title'];
-            $modversion["sub"][$i]["url"]   = $page['xooghost_url'];
+            $modversion['sub'][$i]['name']  = $page['xooghost_title'];
+            $modversion['sub'][$i]['url']   = $page['xooghost_url'];
             $i++;
         }
     }
