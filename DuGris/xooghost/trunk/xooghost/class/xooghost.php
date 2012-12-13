@@ -48,6 +48,20 @@ class Xooghost extends XoopsObject
         $this->__construct();
     }
 
+    public function setPost( $addpost = true )
+    {
+        $xoops = Xoops::getinstance();
+        $member_handler = $xoops->getHandlerMember();
+        $poster = $member_handler->getUser( $this->getVar('xooghost_uid'));
+        if ($poster instanceof XoopsUser) {
+            if ($addpost) {
+                $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
+            } else {
+                $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') - 1);
+            }
+        }
+    }
+
     public function getMetaDescription()
     {
         $myts = MyTextSanitizer::getInstance();
@@ -142,7 +156,7 @@ class Xooghost extends XoopsObject
     public function create_page() {
         if ( !file_exists( XOOPS_ROOT_PATH . '/modules/xooghost/' . $this->getVar('xooghost_url') ) ) {
             $xoopstmp = Xoops::getInstance();
-            $content = $xoopstmp->tpl->fetch('admin:xooghost|xooghost_model_page.html');
+            $content = $xoopstmp->tpl()->fetch('admin:xooghost|xooghost_model_page.html');
             file_put_contents( XOOPS_ROOT_PATH . '/modules/xooghost/' . $this->getVar('xooghost_url') , $content );
         }
         return true;
@@ -151,7 +165,7 @@ class Xooghost extends XoopsObject
     public function CleanVarsForDB()
     {
         $system = System::getInstance();
-        foreach ( $this->getValues() as $k => $v ) {
+        foreach ( parent::getValues() as $k => $v ) {
             if ( $k != 'dohtml' ) {
                 if ( $this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
                     $value = $system->CleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->CleanVars($_POST[$k], 'time', date('u'), 'int');
@@ -244,7 +258,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
             } else {
                 $page->setVar('xooghost_online', 1);
             }
-            $this->insertPage( $page );
+            $this->insert( $page );
             return true;
         }
         return false;
@@ -254,7 +268,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
     {
         $read = $pageObj->getVar('xooghost_hits') + 1;
         $pageObj->setVar('xooghost_hits', $read );
-        $this->insertPage( $pageObj );
+        $this->insert( $pageObj );
         return true;
     }
 
@@ -273,7 +287,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
                         $xooghost_like = $page->getVar('xooghost_like') + 1;
                         $page->setVar('xooghost_like', $xooghost_like);
                     }
-                    $this->insertPage( $page );
+                    $this->insert( $page );
                     return $page->getValues();
                 }
             }
@@ -292,7 +306,7 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
                 if ( $ret = $rld_handler->SetRate($page_id, $rate) ) {
                     if ( is_array($ret) && count($ret) == 3 ) {
                         $page->setVar('xooghost_rates', $ret['average']);
-                        $this->insertPage( $page );
+                        $this->insert( $page );
                         return $ret;
                     }
                 }
@@ -323,11 +337,16 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         return $this->getObjects($criteria, null, false);
     }
 
-    public function insertPage($object, $force = true)
+    public function insert(XoopsObject $object, $force = true)
     {
+        $xoops = Xoops::getinstance();
         if ( parent::insert($object, $force) ) {
             $object->create_page();
-            return true;
+            if ($object->isNew()) {
+                return $xoops->db()->getInsertId();
+            } else {
+                return $object->getVar('xooghost_id');
+            }
         }
         return false;
     }

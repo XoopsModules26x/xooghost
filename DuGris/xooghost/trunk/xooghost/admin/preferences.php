@@ -23,7 +23,7 @@ $xoops->loadLanguage('preferences', 'xooghost');
 
 switch ($op) {    case 'save':
     if (!$xoops->security()->check()) {
-        $xoops->redirect("preferences.php", 3, implode('<br />', $xoops->security()->getErrors()));
+        $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));
     }
 
     $xooghost_main      = $system->CleanVars($_POST, 'xooghost_main', 0, 'int');
@@ -33,7 +33,7 @@ switch ($op) {    case 'save':
     // Write configuration file
     $object = XooGhostPreferences::getInstance();
     $object->writeConfig( $object->Prepare2Save() );
-    $xoops->redirect("preferences.php", 3, _XOO_CONFIG_SAVED);
+    $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
     break;
     default:
     $form = $xoops->getModuleForm(null, 'preferences', 'xooghost');

@@ -28,8 +28,10 @@ switch ($op) {    case 'save':
 
     if( isset($xooghost_id) && $xooghost_id > 0 ){
         $page = $xooghost_handler->get($xooghost_id);
+        $isnew = false;
     } else {
         $page = $xooghost_handler->create();
+        $isnew = true;
     }
 
     $page->CleanVarsForDB();
@@ -46,15 +48,17 @@ switch ($op) {    case 'save':
     }
 
 
-    if ( $page_id = $xooghost_handler->insertPage($page)) {        $msg = _AM_XOO_GHOST_SAVED;
+    if ($page_id = $xooghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
         if ( isset($errors) && count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
 
         // tags
-        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
-            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-            $msg .= '<br />' . $xootags_handler->updateByItem( 'tags', $page_id) ;
+        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+            $msg .= '<br />' . $xootags_handler->updateByItem('tags', $page_id) ;
         }
 
+        if ($isnew) {
+            $page->setPost(true);
+        }
         $xoops->redirect('pages.php', 5, $msg);
     }
     break;
@@ -83,6 +87,12 @@ switch ($op) {    case 'save':
                 if ( !$xoops->security()->check() ) {
                     $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
                 }
+                // tags
+                if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
+                    $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                    $xootags_handler->deleteByItem($page->getVar('xooghost_id')) ;
+                }
+                $page->setPost(false);
                 $xooghost_handler->delete($page);
                 $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_DELETED);
             } else {
