@@ -71,6 +71,17 @@ class XooghostPreferencesForm extends XoopsThemeForm
         $main_mode->addOption('table',  _XOO_CONFIG_MAIN_MODE_TABLE);
         $this->addElement( $main_mode );
 
+        // limit per page
+        $this->addElement( new XoopsFormText(_XOO_CONFIG_LIMIT_MAIN, 'xooghost_limit_main', 1, 10, $xooghost_limit_main) );
+
+        // date format
+        $main_mode = new XoopsFormSelect(_XOO_CONFIG_DATE_FORMAT, 'xooghost_date_format', $xooghost_date_format, $size = 1);
+        $main_mode->addOption('_DATESTRING',       _DATESTRING);
+        $main_mode->addOption('_MEDIUMDATESTRING', _MEDIUMDATESTRING);
+        $main_mode->addOption('_SHORTDATESTRING',  _SHORTDATESTRING);
+        $this->addElement( $main_mode );
+
+
         $this->insertBreak(_XOO_CONFIG_IMAGE,'preferenceTitle');
         // xooghost_image_size
         $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_SIZE, 'xooghost_image_size', 1, 10, $xooghost_image_size) );

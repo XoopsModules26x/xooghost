@@ -21,9 +21,15 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 class Xooghost extends XoopsObject
 {
+    private $exclude_page = array('index','search','tag','userinfo');
+    private $php_self = '';
+
     // constructor
     public function __construct()
     {
+        $xoops = Xoops::getinstance();
+        $this->php_self = basename($xoops->getenv('PHP_SELF'), '.php');
+
         $this->initVar('xooghost_id',            XOBJ_DTYPE_INT,               0, true,      11);
         $this->initVar('xooghost_url',           XOBJ_DTYPE_TXTBOX,           '', true,      54);
         $this->initVar('xooghost_title',         XOBJ_DTYPE_TXTBOX,           '', true,     255);
@@ -111,11 +117,15 @@ class Xooghost extends XoopsObject
         $myts = MyTextSanitizer::getInstance();
         $ret = parent::getValues();
 
+        XoopsLoad::load('xoopreferences', 'xooghost');
+        $Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
+
+        $dateformat = $Xooghost_config['xooghost_date_format'];
         $ret['xooghost_date_day'] = date('d', $ret['xooghost_published'] );
         $ret['xooghost_date_month'] = date('m', $ret['xooghost_published'] );
         $ret['xooghost_date_year'] = date('Y', $ret['xooghost_published'] );
         $ret['xooghost_time']      = $ret['xooghost_published'];
-        $ret['xooghost_published'] = date(_SHORTDATESTRING, $ret['xooghost_published']);
+        $ret['xooghost_published'] = date(constant($dateformat), $ret['xooghost_published']);
 
         $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $ret['xooghost_url'];
 
@@ -129,22 +139,23 @@ class Xooghost extends XoopsObject
 
         $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
 
-        $page = array('index','search','tag','userinfo');
-        if ( in_array( basename($xoops->getenv('PHP_SELF'), '.php'), $page) && strpos($ret['xooghost_content'], '[breakpage]') !== false ) {
+        if ( in_array( $this->php_self, $this->exclude_page) && strpos($ret['xooghost_content'], '[breakpage]') !== false ) {
             $ret['xooghost_content'] = substr( $ret['xooghost_content'], 0, strpos($ret['xooghost_content'], '[breakpage]') );
             $ret['readmore'] = true;
         } else {
             $ret['xooghost_content'] = str_replace('[breakpage]', '', $ret['xooghost_content']);
         }
 
-        if ( !in_array( basename($xoops->getenv('PHP_SELF'), '.php'), $page) ) {
+        if ( !in_array( $this->php_self, $this->exclude_page) ) {
             if ( isset($_SESSION['xooghost_stat'])) {
                 $rld_handler = $xoops->getModuleHandler('xooghost_rld', 'xooghost');
                 $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
                 $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
             }
+        }
 
             // tags
+        if ( !in_array( $this->php_self, $this->exclude_page) || $this->php_self == 'index' || $this->php_self == 'page_print' ) {
             if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
                 $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
                 $ret['tags'] = $xootags_handler->getbyItem($ret['xooghost_id']);
@@ -213,12 +224,11 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         'header.php',
         'index.php',
         'page_like_dislike.php',
+        'page_print.php',
         'page_rate.php',
         'qrcode.php',
         'xoops_version.php',
     );
-
-    private $_published = null;
 
     public function __construct(&$db)
     {
@@ -232,21 +242,21 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         return $page[0];
     }
 
-    public function getPublished( $sort = 'published', $order = 'asc')
+    public function getPublished( $sort = 'published', $order = 'desc', $start = 0, $limit = 0 )
     {
-        if ( !isset($this->_published) ) {
-            $criteria = new CriteriaCompo();
-            $criteria->add( new Criteria('xooghost_online', 1) ) ;
-            $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
-            if ( $sort == 'random' ) {
-                $criteria->setSort( 'rand()' );
-            } else {
-                $criteria->setSort( 'xooghost_' . $sort );
-            }
-            $criteria->setOrder( $order );
-            $this->_published = $this->getObjects($criteria, null, false);
+        $criteria = new CriteriaCompo();
+        $criteria->add( new Criteria('xooghost_online', 1) ) ;
+        $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
+        if ( $sort == 'random' ) {
+            $criteria->setSort( 'rand()' );
+        } else {
+            $criteria->setSort( 'xooghost_' . $sort );
         }
-        return $this->_published;
+        $criteria->setOrder( $order );
+        $criteria->setStart( $start );
+        $criteria->setLimit( $limit );
+
+        return $this->getObjects($criteria, null, false);
     }
 
     public function SetOnline( $Xooghost_id )
