@@ -1,5 +1,3 @@
-<{includeq file='module:xooghost|xooghost_css.html'}>
-
 <{if $moduletitle != '' && !$pages}>
     <fieldset>
         <legend><{$moduletitle}></legend>
@@ -59,12 +57,14 @@
             <div class="clear"></div>
         <{/if}>
 
-        <{if !$pages}>
+        <{if !$pages && !$print}>
             <div class="itemFoot">
                 <div class="itemStat floatleft">
                     <button id="button-reads" title="<{$smarty.const._XOO_GHOST_READS}>"><i class="reads"></i><{$page.xooghost_hits}></button>
                     <button id="button-print" title="<{$smarty.const._XOO_GHOST_PRINT}>"><i class="print"></i></button>
+<!--
                     <button id="button-pdf" title="<{$smarty.const._XOO_GHOST_PDF}>"><i class="pdf"></i></button>
+-->
                 </div>
 
                 <{if $xooghost_rld.rld_mode != ''}>
@@ -89,3 +89,12 @@
         <{$smarty.const._XOO_GHOST_NOTFOUND}>
     </div>
 <{/if}>
+<script language="javascript">
+<!--
+$("#button-print").click(function(){    window.open('page_print.php?page_id=<{$page.xooghost_id}>', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
+});
+$("#button-pdf").click(function(){
+    window.open('page_print.php?page_id=<{$page.xooghost_id}>&output=pdf', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
+});
+//-->
+</script>

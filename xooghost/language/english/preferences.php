@@ -32,10 +32,8 @@ define("_XOO_CONFIG_MAIN_MODE_LIST",       "List");
 define("_XOO_CONFIG_MAIN_MODE_TABLE",      "Table");
 define("_XOO_CONFIG_MAIN_MODE_SELECT",     "Select");
 
-define("_XOO_CONFIG_PAGE_LIMIT",           "Limit");
-define("_XOO_CONFIG_PAGE_LIMIT_DESC",      "Number of items to display on the main page (0 = no limit)");
-
-define("_XOO_CONFIG_DATEFORMAT",           "Date&#39;s format");
+define("_XOO_CONFIG_LIMIT_MAIN",           "Number Pages on the main page<br />(0 = no limit)");
+define("_XOO_CONFIG_DATE_FORMAT",          "Date&#39;s format");
 
 // RLD
 define("_XOO_CONFIG_RLD",                 "Rate / Like Dislike");

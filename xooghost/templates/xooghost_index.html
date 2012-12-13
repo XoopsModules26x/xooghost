@@ -12,6 +12,7 @@
 
 <{includeq file='module:xooghost|xooghost_css.html'}>
 
+<{$xoopaginate->display()}>
 <{if $template == 'blog'}>
     <{includeq file="module:xooghost|xooghost_index_blog.html"}>
 <{elseif $template == 'list'}>
@@ -21,3 +22,4 @@
 <{elseif $template == 'select'}>
     <{includeq file="module:xooghost|xooghost_index_select.html"}>
 <{/if}>
+<{$xoopaginate->display()}>

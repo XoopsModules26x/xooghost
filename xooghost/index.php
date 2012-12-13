@@ -18,8 +18,18 @@
  */
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+XoopsLoad::load('xoopaginate', 'xooghost');
 
-$pages = $xooghost_handler->getPublished();
+$start = $system->CleanVars($_REQUEST, 'start', 0, 'int');
+
+$pages = $xooghost_handler->getPublished('published', 'desc', $start, $Xooghost_config['xooghost_limit_main']);
+
+$criteria = new CriteriaCompo();
+$criteria->add( new Criteria('xooghost_online', 1) ) ;
+$criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
+
+$pages_count = $xooghost_handler->getCount($criteria);
+
 $xoops->tpl()->assign('pages', $pages);
 
 $i=0;
@@ -33,6 +43,9 @@ foreach ($pages as $k => $page ) {
 }
 $xoops->theme()->addMeta($type = 'meta', 'description', getMetaDescription( $description ) );
 $xoops->theme()->addMeta($type = 'meta', 'keywords', getMetaKeywords( $description ) );
+
+// Page navigation
+$paginate = new Xoopaginate($pages_count, $Xooghost_config['xooghost_limit_main'], $start, 'start', '');
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
 ?>
