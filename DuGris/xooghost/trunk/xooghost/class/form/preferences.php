@@ -106,7 +106,9 @@ class XooghostPreferencesForm extends XoopsThemeForm
 
         $this->addElement($tabtray);
 
-        // button
+        /**
+         * Buttons
+         */
         $button_tray = new XoopsFormElementTray('', '');
         $button_tray->addElement(new XoopsFormHidden('op', 'save'));
 
@@ -124,7 +126,6 @@ class XooghostPreferencesForm extends XoopsThemeForm
         $button_tray->addElement($button_3);
 
         $this->addElement($button_tray);
-
     }
 
     /**
