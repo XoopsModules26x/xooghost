@@ -55,13 +55,18 @@ class XooghostPreferencesForm extends XoopsThemeForm
     public function PreferencesForm()
     {        extract( $this->_config );        parent::__construct('', 'form_preferences', 'preferences.php', 'post', true);
         $this->setExtra('enctype="multipart/form-data"');
-        $this->insertBreak(_XOO_CONFIG_MAINPAGE,'preferenceTitle');
 
+        $tabtray = new XoopsFormTabTray('', 'uniqueid');
+
+        /**
+         * Main page
+         */
+        $tab1 = new XoopsFormTab(_XOO_CONFIG_MAINPAGE, 'tabid-1');
         //xooghost_main
-        $this->addElement( new XoopsFormRadioYN(_XOO_CONFIG_MAIN, 'xooghost_main', $xooghost_main) );
+        $tab1->addElement( new XoopsFormRadioYN(_XOO_CONFIG_MAIN, 'xooghost_main', $xooghost_main) );
 
         //xooghost_welcome
-        $this->addElement( new XoopsFormTextArea(_XOO_CONFIG_WELCOME, 'xooghost_welcome', $xooghost_welcome, 12, 12) );
+        $tab1->addElement( new XoopsFormTextArea(_XOO_CONFIG_WELCOME, 'xooghost_welcome', $xooghost_welcome, 12, 12) );
 
         //xooghost_main_mode
         $main_mode = new XoopsFormSelect(_XOO_CONFIG_MAIN_MODE, 'xooghost_main_mode', $xooghost_main_mode, $size = 1);
@@ -69,71 +74,95 @@ class XooghostPreferencesForm extends XoopsThemeForm
         $main_mode->addOption('list',   _XOO_CONFIG_MAIN_MODE_LIST);
         $main_mode->addOption('select', _XOO_CONFIG_MAIN_MODE_SELECT);
         $main_mode->addOption('table',  _XOO_CONFIG_MAIN_MODE_TABLE);
-        $this->addElement( $main_mode );
+        $tab1->addElement( $main_mode );
 
         // limit per page
-        $this->addElement( new XoopsFormText(_XOO_CONFIG_LIMIT_MAIN, 'xooghost_limit_main', 1, 10, $xooghost_limit_main) );
+        $tab1->addElement( new XoopsFormText(_XOO_CONFIG_LIMIT_MAIN, 'xooghost_limit_main', 1, 10, $xooghost_limit_main) );
 
         // date format
         $main_mode = new XoopsFormSelect(_XOO_CONFIG_DATE_FORMAT, 'xooghost_date_format', $xooghost_date_format, $size = 1);
         $main_mode->addOption('_DATESTRING',       _DATESTRING);
         $main_mode->addOption('_MEDIUMDATESTRING', _MEDIUMDATESTRING);
         $main_mode->addOption('_SHORTDATESTRING',  _SHORTDATESTRING);
-        $this->addElement( $main_mode );
+        $tab1->addElement( $main_mode );
 
-
-        $this->insertBreak(_XOO_CONFIG_IMAGE,'preferenceTitle');
+        /**
+         * Images
+         */
+        $tab2 = new XoopsFormTab(_XOO_CONFIG_IMAGE, 'tabid-2');
         // xooghost_image_size
-        $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_SIZE, 'xooghost_image_size', 1, 10, $xooghost_image_size) );
+        $tab2->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_SIZE, 'xooghost_image_size', 1, 10, $xooghost_image_size) );
 
         // xooghost_image_width
-        $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_WIDTH, 'xooghost_image_width', 1, 10, $xooghost_image_width) );
+        $tab2->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_WIDTH, 'xooghost_image_width', 1, 10, $xooghost_image_width) );
 
         // xooghost_image_height
-        $this->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_HEIGHT, 'xooghost_image_height', 1, 10, $xooghost_image_height) );
+        $tab2->addElement( new XoopsFormText(_XOO_GHOST_CONFIG_IMAGE_HEIGHT, 'xooghost_image_height', 1, 10, $xooghost_image_height) );
 
-        $this->rldForm();
-        $this->QRcodeForm();
+        $tabtray->addElement($tab1);
+        $tabtray->addElement($tab2);
+        $tabtray->addElement( $this->rldForm() );
+        $tabtray->addElement( $this->QRcodeForm());
+
+        $this->addElement($tabtray);
 
         // button
         $button_tray = new XoopsFormElementTray('', '');
         $button_tray->addElement(new XoopsFormHidden('op', 'save'));
-        $button_tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-        $button_tray->addElement(new XoopsFormButton('', 'reset', _RESET, 'reset'));
-        $cancel_send = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
-        $cancel_send->setExtra("onclick='javascript:history.go(-1);'");
-        $button_tray->addElement($cancel_send);
+
+        $button = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+        $button->setClass('btn btn-success');
+        $button_tray->addElement($button);
+
+        $button_2 = new XoopsFormButton('', 'reset', _RESET, 'reset');
+        $button_2->setClass('btn btn-warning');
+        $button_tray->addElement($button_2);
+
+        $button_3 = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
+        $button_3->setExtra("onclick='javascript:history.go(-1);'");
+        $button_3->setClass('btn btn-danger');
+        $button_tray->addElement($button_3);
+
         $this->addElement($button_tray);
+
     }
 
+    /**
+     * Rate / Like - Dislike
+     */
     private function rldForm()
     {
+        $tab3 = new XoopsFormTab(_XOO_CONFIG_RLD, 'tabid-3');
         extract( $this->_config );
-        $this->insertBreak(_XOO_CONFIG_RLD,'preferenceTitle');
+
         // Rate / Like / Dislike Mode
         $rld_mode = new XoopsFormSelect(_XOO_CONFIG_RLD_MODE, 'xooghost_rld[rld_mode]', $xooghost_rld['rld_mode']);
         $rld_mode->addOption('none',        _XOO_CONFIG_RLD_NONE);
         $rld_mode->addOption('rate',        _XOO_CONFIG_RLD_RATE);
         $rld_mode->addOption('likedislike', _XOO_CONFIG_RLD_LIKEDISLIKE);
-        $this->addElement( $rld_mode );
+        $tab3->addElement( $rld_mode );
 
         $rate_scale = new XoopsFormSelect(_XOO_CONFIG_RATE_SCALE, 'xooghost_rld[rate_scale]', $xooghost_rld['rate_scale']);
         for ($i=4; $i <= 10; $i++) {
             $rate_scale->addOption($i, $i);
         }
-        $this->addElement( $rate_scale );
+        $tab3->addElement( $rate_scale );
+        return $tab3;
     }
 
+    /**
+     * QR Code
+     */
     private function QRcodeForm()
     {
+        $tab4 = new XoopsFormTab(_XOO_CONFIG_QRCODE, 'tabid-4');
         $xoops = Xoops::getinstance();
         if ( $xoops->isActiveModule('qrcode') ) {
             $xoops->theme()->addScript('modules/xooghost/include/qrcode.js');
             extract( $this->_config );
-            $this->insertBreak(_XOO_CONFIG_QRCODE,'preferenceTitle');
 
             // use QR code
-            $this->addElement( new XoopsFormRadioYN(_XOO_CONFIG_QRCODE_USE, 'xooghost_qrcode[use_qrcode]', $xooghost_qrcode['use_qrcode']) );
+            $tab4->addElement( new XoopsFormRadioYN(_XOO_CONFIG_QRCODE_USE, 'xooghost_qrcode[use_qrcode]', $xooghost_qrcode['use_qrcode']) );
 
             // Error Correction Level
             $ecl_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_ECL, 'xooghost_qrcode[CorrectionLevel]', $xooghost_qrcode['CorrectionLevel']);
@@ -142,7 +171,7 @@ class XooghostPreferencesForm extends XoopsThemeForm
             $ecl_mode->addOption(1,   _XOO_CONFIG_QRCODE_ECL_M);
             $ecl_mode->addOption(2,   _XOO_CONFIG_QRCODE_ECL_Q);
             $ecl_mode->addOption(3,   _XOO_CONFIG_QRCODE_ECL_H);
-            $this->addElement( $ecl_mode );
+            $tab4->addElement( $ecl_mode );
 
             // Matrix Point Size
             $matrix_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_MATRIX, 'xooghost_qrcode[matrixPointSize]', $xooghost_qrcode['matrixPointSize']);
@@ -150,7 +179,7 @@ class XooghostPreferencesForm extends XoopsThemeForm
             for ($i = 1; $i <= 5; $i++) {
                 $matrix_mode->addOption($i, $i);
             }
-            $this->addElement( $matrix_mode );
+            $tab4->addElement( $matrix_mode );
 
             // Margin
             $margin_mode = new XoopsFormSelect(_XOO_CONFIG_QRCODE_MARGIN, 'xooghost_qrcode[whiteMargin]', $xooghost_qrcode['whiteMargin']);
@@ -158,7 +187,7 @@ class XooghostPreferencesForm extends XoopsThemeForm
             for ($i = 0; $i <= 20; $i++) {
                 $margin_mode->addOption($i,   $i);
             }
-            $this->addElement( $margin_mode );
+            $tab4->addElement( $margin_mode );
 
             // Background & Foreground Color
             $colors_tray = new XoopsFormElementTray(_XOO_CONFIG_QRCODE_COLORS, '' );
@@ -178,10 +207,12 @@ class XooghostPreferencesForm extends XoopsThemeForm
             $colors_tray->addElement( new XoopsFormLabel( '', '<br />') );
             $colors_tray->addElement( $colors_fg );
 
-            $this->addElement( $colors_tray );
+            $tab4->addElement( $colors_tray );
         } else {
-            $this->addElement( new XoopsFormHidden('xooghost_qrcode[use_qrcode]', 0) );
+            $tab4->addElement( new XoopsFormHidden('xooghost_qrcode[use_qrcode]', 0) );
         }
+
+        return $tab4;
     }
 }
 ?>
