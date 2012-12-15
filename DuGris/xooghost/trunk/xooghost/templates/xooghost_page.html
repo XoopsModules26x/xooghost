@@ -91,7 +91,8 @@
 <{/if}>
 <script language="javascript">
 <!--
-$("#button-print").click(function(){    window.open('page_print.php?page_id=<{$page.xooghost_id}>', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
+$("#button-print").click(function(){
+    window.open('page_print.php?page_id=<{$page.xooghost_id}>', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
 });
 $("#button-pdf").click(function(){
     window.open('page_print.php?page_id=<{$page.xooghost_id}>&output=pdf', 'New Project', 'left=20, top=20, width=1100, height=700, toolbar=0, resizable=1, scrollbars=1');
