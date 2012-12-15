@@ -28,7 +28,6 @@ function XooSitemap_xooghost( $subcategories = true)
         $sitemap[$k]['uname']    = $page['xooghost_uid_name'];
         $sitemap[$k]['image']    = $page['xooghost_image_link'];
         $sitemap[$k]['date']     = $page['xooghost_published'];
-        $sitemap[$k]['category'] = false;
     }
     return $sitemap;
 }
