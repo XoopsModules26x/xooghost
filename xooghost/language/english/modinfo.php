@@ -18,7 +18,7 @@
  */
 
 define("_MI_XOO_GHOST_NAME",                 "XooFoo - Ghost");
-define("_MI_XOO_GHOST_DESC",                 "XooFoo - Ghost Module module for Xoops 2.6.x ++");
+define("_MI_XOO_GHOST_DESC",                 "XooFoo - Ghost<br />Module for Xoops 2.6.x ++");
 
 // Admin menu
 define("_MI_XOO_GHOST_INDEX",                "Index");
