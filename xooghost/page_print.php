@@ -60,6 +60,10 @@ if ( is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') )
     } else {
         $tpl->display('module:xooghost|xooghost_page_print.html');
     }} else {
-    $xoops->tpl()->assign('not_found', true);
+    $tpl = new XoopsTpl();
+    $tpl->assign('xoops_sitename', $xoops->getConfig('sitename'));
+    $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
+    $tpl->assign('not_found', true);
+    $tpl->display('module:xooghost|xooghost_page_print.html');
 }
 ?>
