@@ -6,18 +6,24 @@
 
 <script language="javascript">
 <!--
-$(".option").click(function(){
+$(".option").click(function(){
+
     var option = $(this).val();
     var item   = $("#page_id").val();
     var token  = "<{$security}>";
 
-    $.ajax({        type: "POST",
+    $.ajax({
+        type: "POST",
         url: "page_like_dislike.php",
         data: "option="+option+"&page_id="+item+"&XOOPS_TOKEN_REQUEST="+token,
-        success: function(responce) {            var json = jQuery.parseJSON(responce);
+        success: function(responce) {
+            var json = jQuery.parseJSON(responce);
             //alert( json.error );
-            if(json.error == "0") {                if ( option == "1" ) {                    $(".like").html( json.xooghost_like );
-                } else {                    $(".dislike").html( json.xooghost_dislike );
+            if(json.error == "0") {
+                if ( option == "1" ) {
+                    $(".like").html( json.xooghost_like );
+                } else {
+                    $(".dislike").html( json.xooghost_dislike );
                 }
             }
         }
