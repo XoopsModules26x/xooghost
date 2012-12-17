@@ -33,4 +33,10 @@ define("_AM_XOO_GHOST_HTMLCODE",        "Your text and/or html code without html
 
 define("_AM_XOO_GHOST_DELETE_CFM",      "Are you sure to delete this page ?");
 define("_AM_XOO_GHOST_DELETED",         "The page has been deleted");
+
+// form tabs
+define("_AM_XOO_TABFORM_MAIN",          "Index");
+define("_AM_XOO_TABFORM_METAS",         "Metas");
+define("_AM_XOO_TABFORM_OPTIONS",       "Options");
+define("_AM_XOO_TABFORM_TAGS",          "Tags");
 ?>
