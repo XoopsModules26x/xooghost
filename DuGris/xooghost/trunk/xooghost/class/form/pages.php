@@ -26,17 +26,12 @@ class XooghostPagesForm extends XoopsThemeForm
      */
     public function __construct($obj = null)
     {        $this->xoopsObject = $obj;
-    }
 
-    /**
-     * Maintenance Form
-     * @return void
-     */
-    public function PageForm()
-    {        $xoops = Xoops::getInstance();
-        global $xooghost_handler;
+        $ghost_module = Ghost::getInstance();
+        $xooghost_handler = $ghost_module->getHandler('xooghost');
+        $Xooghost_config = $ghost_module->LoadConfig();
+        $xoops = Xoops::getInstance();
 
-        $Xooghost_config = XooGhostPreferences::getInstance()->loadConfig();
 
         if ($this->xoopsObject->isNew() ) {
             parent::__construct(_AM_XOO_GHOST_ADD, 'form_pages', 'pages.php', 'post', true);
@@ -44,6 +39,9 @@ class XooghostPagesForm extends XoopsThemeForm
         }
         $this->setExtra('enctype="multipart/form-data"');
 
+        $tabtray = new XoopsFormTabTray('', 'uniqueid');
+
+        $tab1 = new XoopsFormTab(_AM_XOO_TABFORM_MAIN, 'tabid-1');
         // Url
         if ($this->xoopsObject->isNew() ) {
             $dirlist = $xooghost_handler->getPhpListAsArray();
@@ -52,34 +50,31 @@ class XooghostPagesForm extends XoopsThemeForm
                 $ele = new XoopsFormSelect('', 'xooghost_url');
                 $ele->addOption(0, _AM_XOO_GHOST_CHOOSE);
                 $ele->addOptionArray( $dirlist );
-                $this->addElement( $ele );
+                $tab1->addElement( $ele );
             } else {
-                $this->addElement( new XoopsFormText(_XOO_GHOST_URL, 'xooghost_url', 50, 50, $this->xoopsObject->getVar('xooghost_url')), true );
+                $tab1->addElement( new XoopsFormText(_XOO_GHOST_URL, 'xooghost_url', 50, 50, $this->xoopsObject->getVar('xooghost_url')), true );
             }
         } else {
-            $this->addElement( new XoopsFormHidden('xooghost_url', $this->xoopsObject->getVar('xooghost_url')) );
+            $tab1->addElement( new XoopsFormHidden('xooghost_url', $this->xoopsObject->getVar('xooghost_url')) );
         }
 
+        /**
+         * Main
+         */
         // Title
-        $this->addElement( new XoopsFormText(_XOO_GHOST_TITLE, 'xooghost_title', 100, 255, $this->xoopsObject->getVar('xooghost_title')) , true );
+        $tab1->addElement( new XoopsFormText(_XOO_GHOST_TITLE, 'xooghost_title', 100, 255, $this->xoopsObject->getVar('xooghost_title')) , true );
 
         // submitter
-        if ($xoops->isAdminSide) {
+        if ($ghost_module->isUserAdmin()) {
             $xooghost_uid = $this->xoopsObject->isNew() ? $xoops->user->getVar('uid') : $this->xoopsObject->getVar('xooghost_uid');
-            $this->addElement(new XoopsFormSelectUser(_XOO_GHOST_AUTHOR, 'xooghost_uid', true, $xooghost_uid, 1, false));
+            $tab1->addElement(new XoopsFormSelectUser(_XOO_GHOST_AUTHOR, 'xooghost_uid', true, $xooghost_uid, 1, false));
         } else {
             $xooghost_uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-            $this->addElement( new XoopsFormHidden('xooghost_uid', $xooghost_uid) );
+            $tab1->addElement( new XoopsFormHidden('xooghost_uid', $xooghost_uid) );
         }
 
         // Content
-        $this->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
-
-        // tags
-        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {            $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
-            $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xooghost_id'));
-            $this->addElement( $tagform );
-        }
+        $tab1->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
 
         // image
         $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_SIZE . ' : ' . $Xooghost_config['xooghost_image_size'];
@@ -98,20 +93,43 @@ class XooghostPagesForm extends XoopsThemeForm
         $image_select->setExtra( "onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xooghost/images/' . "\", \"\", \"" . $xoops->url('uploads') . "\")'" );
         $image_tray->addElement( $image_select );
         $image_tray->addElement( new XoopsFormLabel( '', "<br /><img src='" . $xoops->url('uploads') . '/xooghost/images/' . $this->xoopsObject->getVar('xooghost_image') . "' name='select_image' id='select_image' alt='' />" ) );
-        $this->addElement( $image_tray );
+        $tab1->addElement( $image_tray );
 
+        $tabtray->addElement($tab1);
+
+        /**
+         * Metas
+         */
+        $tab2 = new XoopsFormTab(_AM_XOO_TABFORM_METAS, 'tabid-2');
         // Meta description
-        $this->addElement( new XoopsFormTextArea(_XOO_GHOST_DESCRIPTION, 'xooghost_description', $this->xoopsObject->getVar('xooghost_description'), 7, 50));
+        $tab2->addElement( new XoopsFormTextArea(_XOO_GHOST_DESCRIPTION, 'xooghost_description', $this->xoopsObject->getVar('xooghost_description'), 7, 50));
 
         // Meta Keywords
-        $this->addElement( new XoopsFormTextArea(_XOO_GHOST_KEYWORDS, 'xooghost_keywords', $this->xoopsObject->getVar('xooghost_keywords'), 7, 50, _XOO_GHOST_KEYWORDS_DESC));
+        $tab2->addElement( new XoopsFormTextArea(_XOO_GHOST_KEYWORDS, 'xooghost_keywords', $this->xoopsObject->getVar('xooghost_keywords'), 7, 50, _XOO_GHOST_KEYWORDS_DESC));
+        $tabtray->addElement($tab2);
 
+        /**
+         * Options
+         */
         // Published date
+        $tab3 = new XoopsFormTab(_AM_XOO_TABFORM_OPTIONS, 'tabid-3');
         $published = ($this->xoopsObject->getVar('xooghost_published') == 0) ? time() : $this->xoopsObject->getVar('xooghost_published');
-        $this->addElement( new XoopsFormDateTime(_XOO_GHOST_PUBLISHED, 'xooghost_published', 15, $published, false) );
+        $tab3->addElement( new XoopsFormDateTime(_XOO_GHOST_PUBLISHED, 'xooghost_published', 15, $published, false) );
 
         // display
-        $this->addElement( new XoopsFormRadioYN(_XOO_GHOST_DISPLAY, 'xooghost_online',  $this->xoopsObject->getVar('xooghost_online')) );
+        $tab3->addElement( new XoopsFormRadioYN(_XOO_GHOST_DISPLAY, 'xooghost_online',  $this->xoopsObject->getVar('xooghost_online')) );
+        $tabtray->addElement($tab3);
+
+        /**
+         * Tags
+         */
+        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
+            $tab4 = new XoopsFormTab(_AM_XOO_TABFORM_TAGS, 'tabid-4');
+            $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
+            $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xooghost_id'));
+            $tab4->addElement( $tagform );
+            $tabtray->addElement($tab4);
+        }
 
         // hidden
         $this->addElement( new XoopsFormHidden('xooghost_id', $this->xoopsObject->getVar('xooghost_id')) );
@@ -120,14 +138,27 @@ class XooghostPagesForm extends XoopsThemeForm
         $this->addElement( new XoopsFormHidden('xooghost_like', $this->xoopsObject->getVar('xooghost_like')) );
         $this->addElement( new XoopsFormHidden('xooghost_dislike', $this->xoopsObject->getVar('xooghost_dislike')) );
 
-        // button
+        $this->addElement($tabtray);
+
+        /**
+         * Buttons
+         */
         $button_tray = new XoopsFormElementTray('', '');
         $button_tray->addElement(new XoopsFormHidden('op', 'save'));
-        $button_tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-        $button_tray->addElement(new XoopsFormButton('', 'reset', _RESET, 'reset'));
-        $cancel_send = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
-        $cancel_send->setExtra("onclick='javascript:history.go(-1);'");
-        $button_tray->addElement($cancel_send);
+
+        $button = new XoopsFormButton('', 'submit', _SUBMIT, 'submit');
+        $button->setClass('btn btn-success');
+        $button_tray->addElement($button);
+
+        $button_2 = new XoopsFormButton('', 'reset', _RESET, 'reset');
+        $button_2->setClass('btn btn-warning');
+        $button_tray->addElement($button_2);
+
+        $button_3 = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
+        $button_3->setExtra("onclick='javascript:history.go(-1);'");
+        $button_3->setClass('btn btn-danger');
+        $button_tray->addElement($button_3);
+
         $this->addElement($button_tray);
     }
 

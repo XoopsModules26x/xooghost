@@ -75,7 +75,7 @@ class Xooghost_rld extends XoopsObject
 
 class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
 {
-    public function __construct(&$db)
+    public function __construct($db)
     {
         parent::__construct($db, 'xooghost_rld', 'Xooghost_rld', 'xooghost_rld_id', 'xooghost_rld_page');
     }

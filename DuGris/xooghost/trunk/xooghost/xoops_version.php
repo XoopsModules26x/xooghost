@@ -83,11 +83,6 @@ $modversion['blocks'][$i]['edit_func']      = 'xooghost_edit';
 $modversion['blocks'][$i]['options']        = 'list|published|asc';
 $modversion['blocks'][$i]['template']       = 'xooghost_block.html';
 
-// Search
-$modversion['hasSearch'] = 1;
-$modversion['search']['file'] = 'include/search.php';
-$modversion['search']['func'] = 'xooghost_search';
-
 // Users Synchronize post
 $modversion['sync']['table_name'] = 'xooghost';
 $modversion['sync']['uid_column'] = 'xooghost_uid';

@@ -33,15 +33,12 @@ if ( isset( $_GET ) ){
 
 $script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
 
-XoopsLoad::load('xoopreferences', 'xooghost');
-
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
 if ($script_name != 'about') {    $xoops->header('xooghost_' . $script_name . '.html');} else {    $xoops->header();}
 $xoops->theme()->addStylesheet('modules/xooghost/css/moduladmin.css');
-$xoops->loadLanguage('common', 'xooghost');
 
 $admin_page = new XoopsModuleAdmin();
 if ($script_name != 'about' && $script_name != 'index') {
@@ -50,5 +47,8 @@ if ($script_name != 'about' && $script_name != 'index') {
     $admin_page->displayNavigation( basename($_SERVER['SCRIPT_NAME']) );
 }
 
-$xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
+$ghost_module = Ghost::getInstance();
+$ghost_module->loadLanguage('common', 'xooghost');
+$Xooghost_config = $ghost_module->LoadConfig();
+$xooghost_handler = $ghost_module->getHandler('xooghost');
 ?>

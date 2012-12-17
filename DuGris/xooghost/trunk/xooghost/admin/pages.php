@@ -65,16 +65,14 @@ switch ($op) {    case 'save':
 
     case 'add':
     $page = $xooghost_handler->create();
-    $form = $xoops->getModuleForm($page, 'pages', 'xooghost');
-    $form->PageForm();
+    $form = $ghost_module->getForm($page, 'pages');
     $form->display();
     break;
 
     case 'edit':
     $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
     $page = $xooghost_handler->get($xooghost_id);
-    $form = $xoops->getModuleForm($page, 'pages', 'xooghost');
-    $form->PageForm();
+    $form = $ghost_module->getForm($page, 'pages');
     $form->display();
     break;
 

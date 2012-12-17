@@ -230,9 +230,9 @@ class XooghostXooghostHandler extends XoopsPersistableObjectHandler
         'xoops_version.php',
     );
 
-    public function __construct(&$db)
+    public function __construct($db)
     {
-        parent::__construct($db, 'xooghost', 'xooghost', 'xooghost_id', 'xooghost_title');
+        parent::__construct($db, 'xooghost', 'Xooghost', 'xooghost_id', 'xooghost_title');
     }
 
     public function getByURL( $Xooghost_url )

@@ -23,13 +23,10 @@ include dirname(__FILE__) . '/include/functions.php';
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
-$xoops = Xoops::getInstance();
-$xoops->loadLanguage('common', 'xooghost');
-
-$xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
-
-XoopsLoad::load('xoopreferences', 'xooghost');
-$Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
+$ghost_module = Ghost::getInstance();
+$ghost_module->loadLanguage('common', 'xooghost');
+$Xooghost_config = $ghost_module->LoadConfig();
+$xooghost_handler = $ghost_module->getHandler('xooghost');
 
 $Xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 
@@ -42,7 +39,6 @@ $exclude = array(
     'qrcode.php',
     'xoops_version.php',
 );
-
 
 if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.html');
 } else {    $xoops->header('xooghost_page.html');
