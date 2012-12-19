@@ -90,15 +90,16 @@ $modversion['sync']['criteria']   = new Criteria('xooghost_online', 1);
 
 // Menu
 $modversion['hasMain'] = 1;
-
 $xoops = Xoops::getInstance();
+
 if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' && !$xoops->isAdminSide ) {
-    XoopsLoad::load('xoopreferences', 'xooghost');
-    $Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
+
+    $ghost_module = Xooghost::getInstance();
+    $xooghost_handler = $ghost_module->getHandler('xooghost_page');
+    $Xooghost_config = $ghost_module->LoadConfig();
 
     if ( $Xooghost_config['xooghost_main'] ) {
         $i = 0;
-        $xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
         $pages = $xooghost_handler->getPublished();
         foreach ($pages as $page) {
             $modversion['sub'][$i]['name']  = $page['xooghost_title'];
@@ -107,5 +108,4 @@ if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' && !$x
         }
     }
 }
-
 ?>

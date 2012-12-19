@@ -29,7 +29,10 @@ if ( $xoops->security()->check() ) {    $page_id = $system->CleanVars($_REQUEST
     $time = time();
     if ( !isset($_SESSION['xooghost_rates' . $page_id]) || $_SESSION['xooghost_rates' . $page_id] < $time ) {
         $_SESSION['xooghost_rates' . $page_id] = $time + 3600;
-        $ghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
+
+        $ghost_module = Xooghost::getInstance();
+        $xooghost_handler = $ghost_module->getHandler('xooghost_page');
+
         $ret = $ghost_handler->SetRate( $page_id, $option );
         if ( is_array($ret) && count($ret) > 1) {            $ret['error'] = 0;
         } else {            $ret['error'] = 1;        }

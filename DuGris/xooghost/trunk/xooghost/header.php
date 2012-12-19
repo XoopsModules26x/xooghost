@@ -23,10 +23,10 @@ include dirname(__FILE__) . '/include/functions.php';
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
-$ghost_module = Ghost::getInstance();
+$ghost_module = Xooghost::getInstance();
 $ghost_module->loadLanguage('common', 'xooghost');
 $Xooghost_config = $ghost_module->LoadConfig();
-$xooghost_handler = $ghost_module->getHandler('xooghost');
+$xooghost_handler = $ghost_module->getHandler('xooghost_page');
 
 $Xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 

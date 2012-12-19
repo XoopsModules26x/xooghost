@@ -28,8 +28,7 @@ class XooGhostPreferences
     private $module_dirname = 'xooghost';
 
     public function __construct()
-    {        $xoops = Xoops::getInstance();
-        $this->configFile = 'config.' . $this->module_dirname . '.php';
+    {        $this->configFile = 'config.' . $this->module_dirname . '.php';
 
         $this->configPath = XOOPS_VAR_PATH . '/configs/' . $this->module_dirname . '/';
 
