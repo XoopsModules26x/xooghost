@@ -19,17 +19,16 @@
 
 include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
-XoopsLoad::load('xoopreferences', 'xooghost');
-$Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
+$ghost_module = Xooghost::getInstance();
+$ghost_module->loadLanguage('common', 'xooghost');
+$Xooghost_config = $ghost_module->LoadConfig();
+$xooghost_handler = $ghost_module->getHandler('xooghost_page');
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
-$xoops->loadLanguage('common', 'xooghost');
-
-$xooghost_handler = $xoops->getModuleHandler('xooghost', 'xooghost');
 
 $page_id = $system->CleanVars($_REQUEST, 'page_id', 0, 'int');
 $page = $xooghost_handler->get($page_id);

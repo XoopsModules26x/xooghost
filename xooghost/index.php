@@ -18,7 +18,6 @@
  */
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
-XoopsLoad::load('xoopaginate', 'xooghost');
 
 $start = $system->CleanVars($_REQUEST, 'start', 0, 'int');
 

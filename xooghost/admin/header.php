@@ -47,8 +47,8 @@ if ($script_name != 'about' && $script_name != 'index') {
     $admin_page->displayNavigation( basename($_SERVER['SCRIPT_NAME']) );
 }
 
-$ghost_module = Ghost::getInstance();
+$ghost_module = Xooghost::getInstance();
 $ghost_module->loadLanguage('common', 'xooghost');
 $Xooghost_config = $ghost_module->LoadConfig();
-$xooghost_handler = $ghost_module->getHandler('xooghost');
+$xooghost_handler = $ghost_module->getHandler('xooghost_page');
 ?>

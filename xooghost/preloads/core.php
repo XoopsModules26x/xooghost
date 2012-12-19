@@ -25,7 +25,7 @@ class XooghostCorePreload extends XoopsPreloadItem
     {
         $path = dirname(dirname(__FILE__));
         XoopsLoad::addMap(array(
-            'ghost' => $path . '/class/ghost.php',
+            'xooghost' => $path . '/class/xooghost.php',
         ));
     }
 }

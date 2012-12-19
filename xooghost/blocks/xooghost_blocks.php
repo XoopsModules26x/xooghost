@@ -18,11 +18,11 @@
  */
 
 function xooghost_show($options)
-{    $ghost_module = Ghost::getInstance();
+{    $ghost_module = Xooghost::getInstance();
     $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/module.css');
     $ghost_module->loadLanguage('common', 'xooghost');
     $Xooghost_config = $ghost_module->LoadConfig();
-    $xooghost_handler = $ghost_module->getHandler('xooghost');
+    $xooghost_handler = $ghost_module->getHandler('xooghost_page');
 
     $block['template'] = $options[0];
     $block['pages'] = $xooghost_handler->getPublished($options[1], $options[2]);

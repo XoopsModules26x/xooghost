@@ -19,49 +19,31 @@
 
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 
-class XooghostSearchPlugin extends Xoops_Plugin_Abstract implements SearchPluginInterface
+class XooghostXootagsPlugin extends Xoops_Plugin_Abstract implements XootagsPluginInterface
 {
-    public function search($queries, $andor, $limit, $start, $uid)
+    public function Xootags( $items )
     {
-        $searchstring = '';
-        $ret = array();
+        $ghost_module = Xooghost::getInstance();
+        $xooghost_handler = $ghost_module->getHandler('xooghost_page');
 
         $criteria = new CriteriaCompo();
-
-        $criteria->setLimit($limit);
-        $criteria->setStart($start);
         $criteria->setSort('xooghost_published');
         $criteria->setOrder('DESC');
 
         $criteria->add( new Criteria('xooghost_online', 1) ) ;
         $criteria->add( new Criteria('xooghost_published', 0, '>') ) ;
         $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
-
-        if ( is_array($queries) && $count = count($queries) ) {
-            foreach ($queries as $k => $v) {
-                $criteria_content = new CriteriaCompo();
-                $criteria_content->add( new Criteria('xooghost_title', '%' . $v . '%', 'LIKE'), 'OR' ) ;
-                $criteria_content->add( new Criteria('xooghost_content', '%' . $v . '%', 'LIKE'), 'OR' ) ;
-                $criteria_content->add( new Criteria('xooghost_description', '%' . $v . '%', 'LIKE'), 'OR' ) ;
-                $criteria_content->add( new Criteria('xooghost_keywords', '%' . $v . '%', 'LIKE'), 'OR' ) ;
-                $criteria->add( $criteria_content, $andor);
-            }
-        }
-
-        if ( $uid != 0 ) {
-            $criteria->add( new Criteria('xooghost_uid', $uid) ) ;
-        }
-
-        $ghost_module = Xooghost::getInstance();
-        $xooghost_handler = $ghost_module->getHandler('xooghost_page');
+        $criteria->add( new Criteria('xooghost_id', '(' . implode(', ', $items) . ')', 'IN') ) ;
 
         $pages = $xooghost_handler->getObjects($criteria, false, false);
 
-        foreach ( $pages as $k => $page ) {
-            $ret[$k]['image']    = 'icons/logo_small.png';
+        $ret = array();
+        foreach ( $pages as $page ) {
+            $k = $page['xooghost_time'];
+            $ret[$k]['itemid']   = $page['xooghost_id'];
             $ret[$k]['link']     = $page['xooghost_url'];
             $ret[$k]['title']    = $page['xooghost_title'];
-            $ret[$k]['time']     = $page['xooghost_time'];
+            $ret[$k]['time']     = $page['xooghost_published'];
             $ret[$k]['uid']      = $page['xooghost_uid'];
             $ret[$k]['content']  = $page['xooghost_content'];
         }

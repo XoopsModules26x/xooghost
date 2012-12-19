@@ -19,7 +19,7 @@
 
 include dirname(__FILE__) . '/header.php';
 
-$xoops->loadLanguage('preferences', 'xooghost');
+$ghost_module->loadLanguage('preferences', 'xooghost');
 
 switch ($op) {    case 'save':
     if (!$xoops->security()->check()) {
@@ -36,9 +36,7 @@ switch ($op) {    case 'save':
     $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
     break;
     default:
-//    $xoops->theme()->addStylesheet('modules/xooghost/css/preferences.css');
-    $form = $xoops->getModuleForm(null, 'preferences', 'xooghost');
-    $form->PreferencesForm();
+    $form = $ghost_module->getForm(null, 'preferences');
     $form->display();
     break;
 }

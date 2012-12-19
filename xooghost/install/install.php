@@ -34,7 +34,6 @@ function xoops_module_install_xooghost()
             }
         }
     }
-    xooghost_mkdirs($xoops->path(XOOPS_VAR_PATH) . '/configs/xooghost');
     return true;
 }
 

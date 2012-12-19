@@ -27,8 +27,8 @@ class XooghostPagesForm extends XoopsThemeForm
     public function __construct($obj = null)
     {        $this->xoopsObject = $obj;
 
-        $ghost_module = Ghost::getInstance();
-        $xooghost_handler = $ghost_module->getHandler('xooghost');
+        $ghost_module = Xooghost::getInstance();
+        $xooghost_handler = $ghost_module->getHandler('xooghost_page');
         $Xooghost_config = $ghost_module->LoadConfig();
         $xoops = Xoops::getInstance();
 
@@ -41,6 +41,9 @@ class XooghostPagesForm extends XoopsThemeForm
 
         $tabtray = new XoopsFormTabTray('', 'uniqueid');
 
+        /**
+         * Main
+         */
         $tab1 = new XoopsFormTab(_AM_XOO_TABFORM_MAIN, 'tabid-1');
         // Url
         if ($this->xoopsObject->isNew() ) {
@@ -58,9 +61,6 @@ class XooghostPagesForm extends XoopsThemeForm
             $tab1->addElement( new XoopsFormHidden('xooghost_url', $this->xoopsObject->getVar('xooghost_url')) );
         }
 
-        /**
-         * Main
-         */
         // Title
         $tab1->addElement( new XoopsFormText(_XOO_GHOST_TITLE, 'xooghost_title', 100, 255, $this->xoopsObject->getVar('xooghost_title')) , true );
 
