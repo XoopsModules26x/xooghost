@@ -126,11 +126,11 @@ class XooghostPagesForm extends XoopsThemeForm
          * Tags
          */
         if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
-            $tab4 = new XoopsFormTab(_AM_XOO_TABFORM_TAGS, 'tabid-4');
+            $tags_tray = new XoopsFormTab(_AM_XOO_TABFORM_TAGS, 'tabid-tags');
             $TagForm_handler = $xoops->getModuleForm(0, 'tags', 'xootags');
             $tagform = $TagForm_handler->TagsForm( 'tags', $this->xoopsObject->getVar('xooghost_id'));
-            $tab4->addElement( $tagform );
-            $tabtray->addElement($tab4);
+            $tags_tray->addElement( $tagform );
+            $tabtray->addElement($tags_tray);
         }
 
         // hidden
