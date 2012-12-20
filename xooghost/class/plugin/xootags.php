@@ -39,7 +39,7 @@ class XooghostXootagsPlugin extends Xoops_Plugin_Abstract implements XootagsPlug
 
         $ret = array();
         foreach ( $pages as $page ) {
-            $k = $page['xooghost_time'];
+            $k = $page['xooghost_time'] . '-' . $message['xooghost_id'] ;
             $ret[$k]['itemid']   = $page['xooghost_id'];
             $ret[$k]['link']     = $page['xooghost_url'];
             $ret[$k]['title']    = $page['xooghost_title'];
