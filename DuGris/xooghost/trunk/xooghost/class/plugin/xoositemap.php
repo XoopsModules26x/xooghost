@@ -24,9 +24,9 @@ class XooghostXoositemapPlugin extends Xoops_Plugin_Abstract implements Xoositem
     public function Xoositemap($subcategories)
     {
         $ghost_module = Xooghost::getInstance();
-        $xooghost_handler = $ghost_module->getHandler('xooghost_page');
+        $ghost_handler = $ghost_module->getHandler('xooghost_page');
 
-        $pages = $xooghost_handler->getPublished('published', 'desc');
+        $pages = $ghost_handler->getPublished('published', 'desc');
 
         $sitemap = array();
         foreach ($pages as $k => $page) {

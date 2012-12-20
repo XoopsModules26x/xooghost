@@ -118,9 +118,9 @@ class Xooghost_page extends XoopsObject
         $ret = parent::getValues();
 
         $ghost_module = Xooghost::getInstance();
-        $Xooghost_config = $ghost_module->LoadConfig();
+        $ghost_config = $ghost_module->LoadConfig();
 
-        $dateformat = $Xooghost_config['xooghost_date_format'];
+        $dateformat = $ghost_config['xooghost_date_format'];
         $ret['xooghost_date_day'] = date('d', $ret['xooghost_published'] );
         $ret['xooghost_date_month'] = date('m', $ret['xooghost_published'] );
         $ret['xooghost_date_year'] = date('Y', $ret['xooghost_published'] );
@@ -372,9 +372,9 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
         $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xooghost' );
 
-        $Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
+        $ghost_config = XooGhostPreferences::getInstance()->getConfig();
 
-        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $Xooghost_config['xooghost_image_size'], $Xooghost_config['xooghost_image_width'], $Xooghost_config['xooghost_image_height']);
+        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $ghost_config['xooghost_image_size'], $ghost_config['xooghost_image_width'], $ghost_config['xooghost_image_height']);
 
         $ret = array();
         foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {

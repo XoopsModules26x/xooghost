@@ -28,8 +28,8 @@ class XooghostPagesForm extends XoopsThemeForm
     {        $this->xoopsObject = $obj;
 
         $ghost_module = Xooghost::getInstance();
-        $xooghost_handler = $ghost_module->getHandler('xooghost_page');
-        $Xooghost_config = $ghost_module->LoadConfig();
+        $ghost_handler = $ghost_module->getHandler('xooghost_page');
+        $ghost_config = $ghost_module->LoadConfig();
         $xoops = Xoops::getInstance();
 
 
@@ -47,7 +47,7 @@ class XooghostPagesForm extends XoopsThemeForm
         $tab1 = new XoopsFormTab(_AM_XOO_TABFORM_MAIN, 'tabid-1');
         // Url
         if ($this->xoopsObject->isNew() ) {
-            $dirlist = $xooghost_handler->getPhpListAsArray();
+            $dirlist = $ghost_handler->getPhpListAsArray();
 
             if ( count( $dirlist ) > 0 ) {
                 $ele = new XoopsFormSelect('', 'xooghost_url');
@@ -77,15 +77,17 @@ class XooghostPagesForm extends XoopsThemeForm
         $tab1->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
 
         // image
-        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_SIZE . ' : ' . $Xooghost_config['xooghost_image_size'];
-        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_WIDTH . ' : ' . $Xooghost_config['xooghost_image_width'];
-        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_HEIGHT . ' : ' . $Xooghost_config['xooghost_image_height'];
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_SIZE . ' : ' . $ghost_config['xooghost_image_size'];
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_WIDTH . ' : ' . $ghost_config['xooghost_image_width'];
+        $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_HEIGHT . ' : ' . $ghost_config['xooghost_image_height'];
 
+        $warning_tray = new XoopsFormElementTray($this->message($upload_msg, '') );
         $image_tray = new XoopsFormElementTray(_XOO_GHOST_IMAGE, '' );
-        $image_tray->setDescription( $this->message($upload_msg) );
+
         $image_box = new XoopsFormFile('', 'xooghost_image', 5000000);
         $image_box->setExtra( "size ='70%'") ;
         $image_tray->addElement( $image_box );
+        $image_tray->addElement( $warning_tray );
 
         $image_array = XoopsLists :: getImgListAsArray( $xoops->path('uploads') . '/xooghost/images' );
         $image_select = new XoopsFormSelect( '<br />', 'image_list', $this->xoopsObject->getVar('xooghost_image') );

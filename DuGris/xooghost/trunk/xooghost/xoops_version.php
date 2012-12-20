@@ -95,12 +95,12 @@ $xoops = Xoops::getInstance();
 if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' && !$xoops->isAdminSide ) {
 
     $ghost_module = Xooghost::getInstance();
-    $xooghost_handler = $ghost_module->getHandler('xooghost_page');
-    $Xooghost_config = $ghost_module->LoadConfig();
+    $ghost_handler = $ghost_module->getHandler('xooghost_page');
+    $ghost_config = $ghost_module->LoadConfig();
 
-    if ( $Xooghost_config['xooghost_main'] ) {
+    if ( $ghost_config['xooghost_main'] ) {
         $i = 0;
-        $pages = $xooghost_handler->getPublished();
+        $pages = $ghost_handler->getPublished();
         foreach ($pages as $page) {
             $modversion['sub'][$i]['name']  = $page['xooghost_title'];
             $modversion['sub'][$i]['url']   = $page['xooghost_url'];

@@ -53,9 +53,9 @@ class XooghostSearchPlugin extends Xoops_Plugin_Abstract implements SearchPlugin
         }
 
         $ghost_module = Xooghost::getInstance();
-        $xooghost_handler = $ghost_module->getHandler('xooghost_page');
+        $ghost_handler = $ghost_module->getHandler('xooghost_page');
 
-        $pages = $xooghost_handler->getObjects($criteria, false, false);
+        $pages = $ghost_handler->getObjects($criteria, false, false);
 
         foreach ( $pages as $k => $page ) {
             $ret[$k]['image']    = 'icons/logo_small.png';

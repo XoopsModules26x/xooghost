@@ -21,18 +21,18 @@ function xooghost_show($options)
 {    $ghost_module = Xooghost::getInstance();
     $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/module.css');
     $ghost_module->loadLanguage('common', 'xooghost');
-    $Xooghost_config = $ghost_module->LoadConfig();
-    $xooghost_handler = $ghost_module->getHandler('xooghost_page');
+    $ghost_config = $ghost_module->LoadConfig();
+    $ghost_handler = $ghost_module->getHandler('xooghost_page');
 
     $block['template'] = $options[0];
-    $block['pages'] = $xooghost_handler->getPublished($options[1], $options[2]);
+    $block['pages'] = $ghost_handler->getPublished($options[1], $options[2]);
 	return $block;
 }
 
 function xooghost_edit($options)
 {    $block_form = new XoopsFormElementTray('&nbsp;', '<br />');
     XoopsLoad::load('xoopreferences', 'xooghost');
-    $Xooghost_config = XooGhostPreferences::getInstance()->getConfig();
+    $ghost_config = XooGhostPreferences::getInstance()->getConfig();
 
     $display_mode = new XoopsFormSelect(_MB_XOO_GHOST_MODE . ' : ', 'options[0]', $options[0]);
     $display_mode->addOption('list',   _MB_XOO_GHOST_MODE_LIST);
@@ -45,8 +45,8 @@ function xooghost_edit($options)
     $sort_mode->addOption('published', _MB_XOO_GHOST_SORT_RECENTS);
     $sort_mode->addOption('hits',      _MB_XOO_GHOST_SORT_HITS);
 
-    if ( $Xooghost_config['xooghost_rld']['rld_mode'] != 'none' ) {
-        if ( $Xooghost_config['xooghost_rld']['rld_mode'] == 'rate' ) {            $sort_mode->addOption('rates',     _MB_XOO_GHOST_SORT_RATES);
+    if ( $ghost_config['xooghost_rld']['rld_mode'] != 'none' ) {
+        if ( $ghost_config['xooghost_rld']['rld_mode'] == 'rate' ) {            $sort_mode->addOption('rates',     _MB_XOO_GHOST_SORT_RATES);
         } else {
             $sort_mode->addOption('like',      _MB_XOO_GHOST_SORT_LIKE);
             $sort_mode->addOption('dislike',   _MB_XOO_GHOST_SORT_DISLIKE);
