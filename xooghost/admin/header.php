@@ -49,6 +49,6 @@ if ($script_name != 'about' && $script_name != 'index') {
 
 $ghost_module = Xooghost::getInstance();
 $ghost_module->loadLanguage('common', 'xooghost');
-$Xooghost_config = $ghost_module->LoadConfig();
-$xooghost_handler = $ghost_module->getHandler('xooghost_page');
+$ghost_config = $ghost_module->LoadConfig();
+$ghost_handler = $ghost_module->getHandler('xooghost_page');
 ?>

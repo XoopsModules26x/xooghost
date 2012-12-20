@@ -27,10 +27,10 @@ switch ($op) {    case 'save':
     $xooghost_id = $system->CleanVars($_POST, 'xooghost_id', 0, 'int');
 
     if( isset($xooghost_id) && $xooghost_id > 0 ){
-        $page = $xooghost_handler->get($xooghost_id);
+        $page = $ghost_handler->get($xooghost_id);
         $isnew = false;
     } else {
-        $page = $xooghost_handler->create();
+        $page = $ghost_handler->create();
         $isnew = true;
     }
 
@@ -38,7 +38,7 @@ switch ($op) {    case 'save':
 
     // uploads images
     $myts = MyTextSanitizer::getInstance();
-    $upload_images = $xooghost_handler->upload_images( $page->getVar('xooghost_title') );
+    $upload_images = $ghost_handler->upload_images( $page->getVar('xooghost_title') );
 
     if ( is_array( $upload_images ) && count( $upload_images) != 0 ) {        foreach ($upload_images as $k => $reponse ) {            if ( $reponse['error'] == true ) {                $errors[] = $reponse['message'];
             } else {                $page->setVar( $k, $reponse['filename'] );
@@ -48,7 +48,7 @@ switch ($op) {    case 'save':
     }
 
 
-    if ($page_id = $xooghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
+    if ($page_id = $ghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
         if ( isset($errors) && count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
 
         // tags
@@ -64,14 +64,14 @@ switch ($op) {    case 'save':
     break;
 
     case 'add':
-    $page = $xooghost_handler->create();
+    $page = $ghost_handler->create();
     $form = $ghost_module->getForm($page, 'pages');
     $form->display();
     break;
 
     case 'edit':
     $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
-    $page = $xooghost_handler->get($xooghost_id);
+    $page = $ghost_handler->get($xooghost_id);
     $form = $ghost_module->getForm($page, 'pages');
     $form->display();
     break;
@@ -79,7 +79,7 @@ switch ($op) {    case 'save':
     case 'del':
     $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
     if( isset($xooghost_id) && $xooghost_id > 0 ){
-        if ($page = $xooghost_handler->get($xooghost_id) ) {
+        if ($page = $ghost_handler->get($xooghost_id) ) {
             $delete = $system->CleanVars( $_POST, 'ok', 0, 'int' );
             if ($delete == 1) {
                 if ( !$xoops->security()->check() ) {
@@ -91,7 +91,7 @@ switch ($op) {    case 'save':
                     $xootags_handler->deleteByItem($page->getVar('xooghost_id')) ;
                 }
                 $page->setPost(false);
-                $xooghost_handler->delete($page);
+                $ghost_handler->delete($page);
                 $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_DELETED);
             } else {
                 $xoops->confirm(array('ok' => 1, 'xooghost_id' => $xooghost_id, 'op' => 'del'), $_SERVER['REQUEST_URI'], sprintf(_AM_XOO_GHOST_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $page->getVar('xooghost_title')));
@@ -107,7 +107,7 @@ switch ($op) {    case 'save':
     case 'view':
     case 'hide':
     $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
-    $xooghost_handler->SetOnline($xooghost_id);
+    $ghost_handler->SetOnline($xooghost_id);
     $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_SAVED);
     break;
 
@@ -115,7 +115,7 @@ switch ($op) {    case 'save':
     $admin_page->addItemButton(_AM_XOO_GHOST_ADD, 'pages.php?op=add', 'add');
     $admin_page->renderButton();
 
-    $xoops->tpl()->assign('pages', $xooghost_handler->renderAdminList() );
+    $xoops->tpl()->assign('pages', $ghost_handler->renderAdminList() );
     break;
 }
 include dirname(__FILE__) . '/footer.php';

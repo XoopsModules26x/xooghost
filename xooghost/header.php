@@ -25,8 +25,8 @@ $system = System::getInstance();
 
 $ghost_module = Xooghost::getInstance();
 $ghost_module->loadLanguage('common', 'xooghost');
-$Xooghost_config = $ghost_module->LoadConfig();
-$xooghost_handler = $ghost_module->getHandler('xooghost_page');
+$ghost_config = $ghost_module->LoadConfig();
+$ghost_handler = $ghost_module->getHandler('xooghost_page');
 
 $Xooghost_url = basename($_SERVER['SCRIPT_NAME']);
 
@@ -42,13 +42,13 @@ $exclude = array(
 
 if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.html');
 } else {    $xoops->header('xooghost_page.html');
-    $page = $xooghost_handler->getByURL($Xooghost_url);
+    $page = $ghost_handler->getByURL($Xooghost_url);
     if ( is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') && $page->getVar('xooghost_online') ) {        $_SESSION['xooghost_stat'] = true;
         $time = time();
         $Xooghost_id = $page->getVar('xooghost_id');
         if ( !isset($_SESSION['xooghost_view' . $Xooghost_id]) || $_SESSION['xooghost_view' . $Xooghost_id] < $time ) {
             $_SESSION['xooghost_view' . $Xooghost_id] = $time + 3600;
-            $xooghost_handler->SetRead( $page );
+            $ghost_handler->SetRead( $page );
         }
 
         $xoops->tpl()->assign('security', $xoops->security()->createToken() );
@@ -63,10 +63,10 @@ $xoops->theme()->addStylesheet('modules/xooghost/css/module.css');
 
 $xoops->tpl()->assign('moduletitle', $xoops->module->name() );
 
-$xoops->tpl()->assign('template', $Xooghost_config['xooghost_main_mode'] );
-$xoops->tpl()->assign('welcome', $Xooghost_config['xooghost_welcome'] );
-$xoops->tpl()->assign('width', $Xooghost_config['xooghost_image_width'] );
-$xoops->tpl()->assign('height', $Xooghost_config['xooghost_image_height'] );
-$xoops->tpl()->assign('xooghost_qrcode', $Xooghost_config['xooghost_qrcode'] );
-$xoops->tpl()->assign('xooghost_rld', $Xooghost_config['xooghost_rld'] );
+$xoops->tpl()->assign('template', $ghost_config['xooghost_main_mode'] );
+$xoops->tpl()->assign('welcome', $ghost_config['xooghost_welcome'] );
+$xoops->tpl()->assign('width', $ghost_config['xooghost_image_width'] );
+$xoops->tpl()->assign('height', $ghost_config['xooghost_image_height'] );
+$xoops->tpl()->assign('xooghost_qrcode', $ghost_config['xooghost_qrcode'] );
+$xoops->tpl()->assign('xooghost_rld', $ghost_config['xooghost_rld'] );
 ?>

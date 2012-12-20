@@ -31,7 +31,7 @@ if ( $xoops->security()->check() ) {    $page_id = $system->CleanVars($_REQUEST
         $_SESSION['xooghost_like' . $page_id] = $time + 3600;
 
         $ghost_module = Xooghost::getInstance();
-        $xooghost_handler = $ghost_module->getHandler('xooghost_page');
+        $ghost_handler = $ghost_module->getHandler('xooghost_page');
 
         $ret = $ghost_handler->SetLike_Dislike( $page_id, $option );
         if ( is_array($ret) && count($ret) > 1) {            $ret['error'] = 0;

@@ -21,8 +21,8 @@ include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.ph
 
 $ghost_module = Xooghost::getInstance();
 $ghost_module->loadLanguage('common', 'xooghost');
-$Xooghost_config = $ghost_module->LoadConfig();
-$xooghost_handler = $ghost_module->getHandler('xooghost_page');
+$ghost_config = $ghost_module->LoadConfig();
+$ghost_handler = $ghost_module->getHandler('xooghost_page');
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
@@ -31,7 +31,7 @@ $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
 $page_id = $system->CleanVars($_REQUEST, 'page_id', 0, 'int');
-$page = $xooghost_handler->get($page_id);
+$page = $ghost_handler->get($page_id);
 
 $output = $system->CleanVars($_REQUEST, 'output', 'print', 'string');
 
@@ -39,9 +39,9 @@ if ( is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') )
 
     $tpl->assign('page', $page->getValues() );
 
-    $tpl->assign('width', $Xooghost_config['xooghost_image_width'] );
-    $tpl->assign('height', $Xooghost_config['xooghost_image_height'] );
-    $tpl->assign('xooghost_qrcode', $Xooghost_config['xooghost_qrcode'] );
+    $tpl->assign('width', $ghost_config['xooghost_image_width'] );
+    $tpl->assign('height', $ghost_config['xooghost_image_height'] );
+    $tpl->assign('xooghost_qrcode', $ghost_config['xooghost_qrcode'] );
 
     $tpl->assign('print', true );
     $tpl->assign('output', true );

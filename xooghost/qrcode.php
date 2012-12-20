@@ -19,7 +19,7 @@
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
 $url = $system->CleanVars($_REQUEST, 'url', '', 'string');
-extract($Xooghost_config['xooghost_qrcode']);
+extract($ghost_config['xooghost_qrcode']);
 
 if ( count($_GET) > 1 ) {    if ( isset($_GET['bgcolor']) ) {
         $xoops->registry()->set('GHOST_BGCOLOR', $_GET['bgcolor']);
