@@ -25,6 +25,7 @@ blockquote {
 }
 .ul-xooghost {
     list-style-type:       none;
+    padding:               1em 0;
 }
 /*========  Icons ======== */
 [class^="xooghost-ico-"], [class*=" xooghost-ico-"] {
