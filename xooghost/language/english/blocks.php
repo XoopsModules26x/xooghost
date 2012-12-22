@@ -35,5 +35,7 @@ define("_MB_XOO_GHOST_ORDER",                      "Order: ");
 define("_MB_XOO_GHOST_ORDER_ASC",                  "Ascending");
 define("_MB_XOO_GHOST_ORDER_DESC",                 "Descending");
 
+define("_MB_XOO_GHOST_LIMIT",                      "Limit per block: ");
+
 if ( !defined("_XOO_GHOST_CHOOSE") ) {    define("_XOO_GHOST_CHOOSE",                    "Choose a page");}
 ?>
