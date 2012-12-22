@@ -80,7 +80,7 @@ $modversion['blocks'][$i]['name']           = _MI_XOO_GHOST_BLOCK_NAME;
 $modversion['blocks'][$i]['description']    = '';
 $modversion['blocks'][$i]['show_func']      = 'xooghost_show';
 $modversion['blocks'][$i]['edit_func']      = 'xooghost_edit';
-$modversion['blocks'][$i]['options']        = 'list|published|asc';
+$modversion['blocks'][$i]['options']        = 'list|published|asc|10';
 $modversion['blocks'][$i]['template']       = 'xooghost_block.html';
 
 // Users Synchronize post

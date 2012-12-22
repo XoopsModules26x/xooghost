@@ -25,7 +25,7 @@ function xooghost_show($options)
     $ghost_handler = $ghost_module->getHandler('xooghost_page');
 
     $block['template'] = $options[0];
-    $block['pages'] = $ghost_handler->getPublished($options[1], $options[2]);
+    $block['pages'] = $ghost_handler->getPublished($options[1], $options[2], 0, $options[3]);
 	return $block;
 }
 
@@ -60,6 +60,7 @@ function xooghost_edit($options)
     $order_mode->addOption('desc', _MB_XOO_GHOST_ORDER_DESC);
     $block_form->addElement($order_mode);
 
+    $block_form->addElement( new XoopsFormText(_MB_XOO_GHOST_LIMIT, 'options[3]', 1, 2, $options[3]) );
 	return $block_form->render();
 }
 ?>
