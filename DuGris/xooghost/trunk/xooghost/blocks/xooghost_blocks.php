@@ -22,7 +22,6 @@ function xooghost_show($options)
     $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/module.css');
     $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/block.css');
 
-    $ghost_module->loadLanguage('common', 'xooghost');
     $ghost_config = $ghost_module->LoadConfig();
     $ghost_handler = $ghost_module->getHandler('xooghost_page');
 
