@@ -23,7 +23,7 @@ function xooghost_show($options)
     $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/block.css');
 
     $ghost_config = $ghost_module->LoadConfig();
-    $ghost_handler = $ghost_module->getHandler('xooghost_page');
+    $ghost_handler = $ghost_module->GhostHandler();
 
     $block['template'] = $options[0];
     $block['pages'] = $ghost_handler->getPublished($options[1], $options[2], 0, $options[3]);

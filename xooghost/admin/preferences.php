@@ -19,8 +19,6 @@
 
 include dirname(__FILE__) . '/header.php';
 
-$ghost_module->loadLanguage('preferences', 'xooghost');
-
 switch ($op) {    case 'save':
     if (!$xoops->security()->check()) {
         $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));

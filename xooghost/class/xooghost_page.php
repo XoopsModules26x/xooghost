@@ -148,7 +148,7 @@ class Xooghost_page extends XoopsObject
 
         if ( !in_array( $this->php_self, $this->exclude_page) ) {
             if ( isset($_SESSION['xooghost_stat'])) {
-                $rld_handler = $ghost_module->getHandler('xooghost_rld');
+                $rld_handler = $ghost_module->RldHandler();
                 $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
                 $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
             }
@@ -290,7 +290,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
                 $xoops = Xoops::getInstance();
 
                 $ghost_module = Xooghost::getInstance();
-                $rld_handler = $ghost_module->getHandler('xooghost_rld');
+                $rld_handler = $ghost_module->RldHandler();
 
                 if ( $ret = $rld_handler->SetLike_Dislike($page_id, $like_dislike) ) {
                     if ($like_dislike == 0) {
@@ -317,7 +317,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
                 $xoops = Xoops::getInstance();
 
                 $ghost_module = Xooghost::getInstance();
-                $rld_handler = $ghost_module->getHandler('xooghost_rld');
+                $rld_handler = $ghost_module->RldHandler();
 
                 if ( $ret = $rld_handler->SetRate($page_id, $rate) ) {
                     if ( is_array($ret) && count($ret) == 3 ) {
