@@ -83,11 +83,6 @@ $modversion['blocks'][$i]['edit_func']      = 'xooghost_edit';
 $modversion['blocks'][$i]['options']        = 'list|published|desc|10';
 $modversion['blocks'][$i]['template']       = 'xooghost_block.html';
 
-// Users Synchronize post
-$modversion['sync']['table_name'] = 'xooghost';
-$modversion['sync']['uid_column'] = 'xooghost_uid';
-$modversion['sync']['criteria']   = new Criteria('xooghost_online', 1);
-
 // Menu
 $modversion['hasMain'] = 1;
 $xoops = Xoops::getInstance();
@@ -95,8 +90,8 @@ $xoops = Xoops::getInstance();
 if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' && !$xoops->isAdminSide ) {
 
     $ghost_module = Xooghost::getInstance();
-    $ghost_handler = $ghost_module->getHandler('xooghost_page');
     $ghost_config = $ghost_module->LoadConfig();
+    $ghost_handler = $ghost_module->GhostHandler();
 
     if ( $ghost_config['xooghost_main'] ) {
         $i = 0;

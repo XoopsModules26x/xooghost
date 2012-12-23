@@ -29,6 +29,9 @@ class Xooghost extends Xoops_Module_Abstract
     public function init()
     {
         $this->setDirname('xooghost');
+        @$this->loadLanguage('common');
+        @$this->loadLanguage('preferences');
+
         XoopsLoad::load('xoopaginate', $this->_dirname);
     }
 
@@ -36,6 +39,16 @@ class Xooghost extends Xoops_Module_Abstract
     {
         XoopsLoad::load('xoopreferences', $this->_dirname);
         return XooGhostPreferences::getInstance()->getConfig();
+    }
+
+    public function GhostHandler()
+    {
+        return $this->getHandler('xooghost_page');
+    }
+
+    public function RldHandler()
+    {
+        return $this->getHandler('xooghost_rld');
     }
 }
 ?>

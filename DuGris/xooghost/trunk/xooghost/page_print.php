@@ -20,9 +20,8 @@
 include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 $ghost_module = Xooghost::getInstance();
-$ghost_module->loadLanguage('common', 'xooghost');
 $ghost_config = $ghost_module->LoadConfig();
-$ghost_handler = $ghost_module->getHandler('xooghost_page');
+$ghost_handler = $ghost_module->GhostHandler();
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();

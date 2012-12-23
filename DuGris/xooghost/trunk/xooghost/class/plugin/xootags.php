@@ -24,7 +24,7 @@ class XooghostXootagsPlugin extends Xoops_Plugin_Abstract implements XootagsPlug
     public function Xootags( $items )
     {
         $ghost_module = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->getHandler('xooghost_page');
+        $ghost_handler = $ghost_module->GhostHandler();
 
         $criteria = new CriteriaCompo();
         $criteria->setSort('xooghost_published');
@@ -39,7 +39,7 @@ class XooghostXootagsPlugin extends Xoops_Plugin_Abstract implements XootagsPlug
 
         $ret = array();
         foreach ( $pages as $page ) {
-            $k = $page['xooghost_time'] . '-' . $message['xooghost_id'] ;
+            $k = $page['xooghost_time'] . '-' . $page['xooghost_id'] ;
             $ret[$k]['itemid']   = $page['xooghost_id'];
             $ret[$k]['link']     = $page['xooghost_url'];
             $ret[$k]['title']    = $page['xooghost_title'];
