@@ -17,19 +17,17 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
-$url = $system->CleanVars($_REQUEST, 'url', '', 'string');
-if ( $url != '' ) {
-    $qrcode = new Xoops_qrcode();
-    $qrcode->render( $url );
-} else {
-    $contents = '';
-    $size = getimagesize($xoops->url('/images/blank.gif'));
-    $handle = fopen($xoops->url('/images/blank.gif'), 'rb');
-    while (!feof($handle)) {
-        $contents .= fread($handle, 1024);
-    }
-    fclose($handle);
-    echo $contents;
-}
-?>
+include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include dirname(__FILE__) . '/include/functions.php';
+
+XoopsLoad::load('system', 'system');
+$system = System::getInstance();
+
+$xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+
+$ghost_module = Xooghost::getInstance();
+$ghost_config = $ghost_module->LoadConfig();
+$ghost_handler = $ghost_module->GhostHandler();
+
+$page = $ghost_handler->get($xooghost_id);
+$xoops->redirect($ghost_handler->get($xooghost_id)->getVar('xooghost_url') . '?' . $xoops->getenv('QUERY_STRING'));

@@ -21,7 +21,7 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 class Xooghost_page extends XoopsObject
 {
-    private $exclude_page = array('index','search','tag','userinfo');
+    private $exclude_page = array('index','search','tag','userinfo','comment_new');
     private $php_self = '';
 
     // constructor
@@ -44,6 +44,7 @@ class Xooghost_page extends XoopsObject
         $this->initVar('xooghost_rates',         XOBJ_DTYPE_INT,               0, false,     10);
         $this->initVar('xooghost_like',          XOBJ_DTYPE_INT,               0, false,     10);
         $this->initVar('xooghost_dislike',       XOBJ_DTYPE_INT,               0, false,     10);
+        $this->initVar('xooghost_comments',      XOBJ_DTYPE_INT,               0, false,     10);
 
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
@@ -344,10 +345,13 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
         return $form->render();
     }
 
-    public function renderAdminList()
+    public function renderAdminList($online = -1)
     {
         $criteria = new CriteriaCompo();
         $criteria->setSort( 'xooghost_published' );
+        if ($online >= 0) {
+            $criteria->add( new Criteria('xooghost_online', $online) ) ;
+        }
         $criteria->setOrder( 'asc' );
 
         return $this->getObjects($criteria, null, false);

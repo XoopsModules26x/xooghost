@@ -28,7 +28,6 @@ $ghost_config = $ghost_module->LoadConfig();
 $ghost_handler = $ghost_module->GhostHandler();
 
 $Xooghost_url = basename($_SERVER['SCRIPT_NAME']);
-
 $exclude = array(
     'footer.php',
     'header.php',
@@ -50,6 +49,10 @@ if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.ht
             $ghost_handler->SetRead( $page );
         }
 
+        // For comments module
+        $_GET['xooghost_id'] = $page->getVar('xooghost_id');
+        // For comments module
+
         $xoops->tpl()->assign('security', $xoops->security()->createToken() );
         $xoops->tpl()->assign('page', $page->getValues() );
         $xoops->tpl()->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
@@ -66,6 +69,8 @@ $xoops->tpl()->assign('template', $ghost_config['xooghost_main_mode'] );
 $xoops->tpl()->assign('welcome', $ghost_config['xooghost_welcome'] );
 $xoops->tpl()->assign('width', $ghost_config['xooghost_image_width'] );
 $xoops->tpl()->assign('height', $ghost_config['xooghost_image_height'] );
-$xoops->tpl()->assign('xooghost_qrcode', $ghost_config['xooghost_qrcode'] );
 $xoops->tpl()->assign('xooghost_rld', $ghost_config['xooghost_rld'] );
+
+$xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode') );
+$xoops->tpl()->assign('comments', $xoops->isActiveModule('comments') );
 ?>
