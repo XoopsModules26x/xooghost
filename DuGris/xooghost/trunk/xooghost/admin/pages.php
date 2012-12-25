@@ -112,10 +112,11 @@ switch ($op) {    case 'save':
     break;
 
     default:
+    $online = $system->CleanVars($_REQUEST, 'online', -1, 'int');
     $admin_page->addItemButton(_AM_XOO_GHOST_ADD, 'pages.php?op=add', 'add');
     $admin_page->renderButton();
 
-    $xoops->tpl()->assign('pages', $ghost_handler->renderAdminList() );
+    $xoops->tpl()->assign('pages', $ghost_handler->renderAdminList($online) );
     break;
 }
 include dirname(__FILE__) . '/footer.php';

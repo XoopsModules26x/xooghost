@@ -19,7 +19,7 @@
 
 class XooghostSystemPlugin extends Xoops_Plugin_Abstract implements SystemPluginInterface
 {
-    public function UserSync($uid)
+    public function userPosts($uid)
     {        $ghost_module = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
 
@@ -29,5 +29,17 @@ class XooghostSystemPlugin extends Xoops_Plugin_Abstract implements SystemPlugin
         $criteria->add( new Criteria('xooghost_uid', $uid) );
 
         return $ghost_handler->getCount($criteria);
+    }
+
+    public function waiting()
+    {        $ghost_module = Xooghost::getInstance();
+        $ghost_handler = $ghost_module->GhostHandler();
+        $criteria = new CriteriaCompo(new Criteria('xooghost_online', 0));
+        if ($count = $ghost_handler->getCount($criteria)) {            $ret['count'] = $count;
+            $ret['name'] = Xoops::getInstance()->getHandlerModule()->getBydirname('xooghost')->getVar('name');
+            $ret['link'] = Xoops::getInstance()->url('modules/xooghost/admin/pages.php?online=0');
+            return $ret;
+        }
+        return false;
     }
 }

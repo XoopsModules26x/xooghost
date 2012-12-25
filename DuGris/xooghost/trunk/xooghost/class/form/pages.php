@@ -139,6 +139,7 @@ class XooghostPagesForm extends XoopsThemeForm
         $this->addElement( new XoopsFormHidden('xooghost_rates', $this->xoopsObject->getVar('xooghost_rates')) );
         $this->addElement( new XoopsFormHidden('xooghost_like', $this->xoopsObject->getVar('xooghost_like')) );
         $this->addElement( new XoopsFormHidden('xooghost_dislike', $this->xoopsObject->getVar('xooghost_dislike')) );
+        $this->addElement( new XoopsFormHidden('xooghost_comments', $this->xoopsObject->getVar('xooghost_comments')) );
 
         $this->addElement($tabtray);
 
