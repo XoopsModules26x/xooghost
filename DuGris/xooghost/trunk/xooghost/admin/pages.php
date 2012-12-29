@@ -48,16 +48,19 @@ switch ($op) {    case 'save':
     }
 
 
-    if ($page_id = $ghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
+    if ($xooghost_id = $ghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
         if ( isset($errors) && count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
 
         // tags
         if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-            $msg .= '<br />' . $xootags_handler->updateByItem('tags', $page_id) ;
+            $msg .= '<br />' . $xootags_handler->updateByItem('tags', $xooghost_id) ;
         }
 
         if ($isnew) {
             $page->setPost(true);
+
+            //notifications
+            $page->sendNotifications();
         }
         $xoops->redirect('pages.php', 5, $msg);
     }

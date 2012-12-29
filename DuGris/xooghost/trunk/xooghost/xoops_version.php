@@ -85,22 +85,4 @@ $modversion['blocks'][$i]['template']       = 'xooghost_block.html';
 
 // Menu
 $modversion['hasMain'] = 1;
-$xoops = Xoops::getInstance();
-
-if ( is_object($xoops->module) && $xoops->module->dirname() == 'xooghost' && !$xoops->isAdminSide ) {
-
-    $ghost_module = Xooghost::getInstance();
-    $ghost_config = $ghost_module->LoadConfig();
-    $ghost_handler = $ghost_module->GhostHandler();
-
-    if ( $ghost_config['xooghost_main'] ) {
-        $i = 0;
-        $pages = $ghost_handler->getPublished();
-        foreach ($pages as $page) {
-            $modversion['sub'][$i]['name']  = $page['xooghost_title'];
-            $modversion['sub'][$i]['url']   = $page['xooghost_url'];
-            $i++;
-        }
-    }
-}
 ?>

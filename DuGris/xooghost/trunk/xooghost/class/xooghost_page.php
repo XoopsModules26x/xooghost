@@ -21,7 +21,7 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 class Xooghost_page extends XoopsObject
 {
-    private $exclude_page = array('index','search','tag','userinfo','comment_new');
+    private $exclude_page = array('index','search','tag','userinfo','comment_new', 'pages');
     private $php_self = '';
 
     // constructor
@@ -216,6 +216,21 @@ class Xooghost_page extends XoopsObject
         $string = str_replace('xooghost', '_' , $string);
         return $string . '.php';
     }
+
+    public function sendNotifications()
+    {
+        $xoops = Xoops::getInstance();
+        if ($xoops->isActiveModule('notifications')) {
+            $notification_handler = Notifications::getInstance()->getNotificationHandler();
+            $tags = array();
+            $tags['MODULE_NAME'] = $xoops->module->getVar('name');
+            $tags['ITEM_NAME'] = $this->getVar('xooghost_title');
+            $tags['ITEM_URL'] = $xoops->url('/modules/xooghost/' . $this->getVar('xooghost_url'));
+            $tags['ITEM_BODY'] = $this->getVar('xooghost_content');
+            $tags['DATESUB'] = $this->getVar('xooghost_published');
+            $notification_handler->triggerEvent('global', 0, 'newcontent', $tags);
+        }
+    }
 }
 
 class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
@@ -224,6 +239,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
         'footer.php',
         'header.php',
         'index.php',
+        'page_comment.php',
         'page_like_dislike.php',
         'page_print.php',
         'page_rate.php',
@@ -258,6 +274,16 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
         $criteria->setLimit( $limit );
 
         return $this->getObjects($criteria, null, false);
+    }
+
+    public function getUrls()
+    {
+        $ret = array();
+        $pages = $this->getPublished();
+        foreach ($pages as $page) {
+            $ret[] = $page['xooghost_url'];
+        }
+        return $ret;
     }
 
     public function SetOnline( $Xooghost_id )
@@ -376,7 +402,8 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
         $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xooghost' );
 
-        $ghost_config = XooGhostPreferences::getInstance()->getConfig();
+        $ghost_config = $ghost_module->LoadConfig();
+        $ghost_handler = $ghost_module->GhostHandler();
 
         $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $ghost_config['xooghost_image_size'], $ghost_config['xooghost_image_width'], $ghost_config['xooghost_image_height']);
 

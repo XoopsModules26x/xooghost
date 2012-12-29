@@ -28,8 +28,8 @@ class XooghostPagesForm extends XoopsThemeForm
     {        $this->xoopsObject = $obj;
 
         $ghost_module = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
         $ghost_config = $ghost_module->LoadConfig();
+        $ghost_handler = $ghost_module->GhostHandler();
         $xoops = Xoops::getInstance();
 
 

@@ -26,7 +26,7 @@ class XooghostCommentsPlugin extends Xoops_Plugin_Abstract implements CommentsPl
      * @return string
      */
     public function itemName()
-    {        return 'xooghost_id';
+    {        return 'ghost_id';
     }
 
     /**
@@ -67,10 +67,10 @@ class XooghostCommentsPlugin extends Xoops_Plugin_Abstract implements CommentsPl
      *
      * @return void
      */
-    public function update($xooghost_id, $total_num)
+    public function update($item_id, $total_num)
     {
         $db = Xoops::getInstance()->db();
-        $sql = 'UPDATE ' . $db->prefix('xooghost') . ' SET xooghost_comments = ' . intval($total_num) . ' WHERE xooghost_id = ' . intval($xooghost_id);
+        $sql = 'UPDATE ' . $db->prefix('xooghost') . ' SET xooghost_comments = ' . intval($total_num) . ' WHERE xooghost_id = ' . intval($item_id);
         $db->query($sql);
     }
 
@@ -87,12 +87,12 @@ class XooghostCommentsPlugin extends Xoops_Plugin_Abstract implements CommentsPl
      *
      * @return array
      */
-    public function itemInfo($xooghost_id)
+    public function itemInfo($item_id)
     {        $ret = array();
 
         $ghost_module = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
-        $page = $page = $ghost_handler->get($xooghost_id);
+        $page = $page = $ghost_handler->get($item_id);
 
         $ret['text']      = $page->getVar('xooghost_content');
         $ret['title']     = $page->getVar('xooghost_title');
