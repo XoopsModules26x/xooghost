@@ -19,11 +19,11 @@
 
 function xooghost_show($options)
 {    $ghost_module = Xooghost::getInstance();
-    $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/module.css');
-    $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/block.css');
-
     $ghost_config = $ghost_module->LoadConfig();
     $ghost_handler = $ghost_module->GhostHandler();
+
+    $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/module.css');
+    $ghost_module->xoops()->theme()->addStylesheet('modules/xooghost/css/block.css');
 
     $block['template'] = $options[0];
     $block['pages'] = $ghost_handler->getPublished($options[1], $options[2], 0, $options[3]);
@@ -31,9 +31,10 @@ function xooghost_show($options)
 }
 
 function xooghost_edit($options)
-{    $block_form = new XoopsFormElementTray('&nbsp;', '<br />');
-    XoopsLoad::load('xoopreferences', 'xooghost');
-    $ghost_config = XooGhostPreferences::getInstance()->getConfig();
+{    $ghost_module = Xooghost::getInstance();
+    $ghost_config = $ghost_module->LoadConfig();
+
+    $block_form = new XoopsBlockForm();
 
     $display_mode = new XoopsFormSelect(_MB_XOO_GHOST_MODE . ' : ', 'options[0]', $options[0]);
     $display_mode->addOption('list',   _MB_XOO_GHOST_MODE_LIST);

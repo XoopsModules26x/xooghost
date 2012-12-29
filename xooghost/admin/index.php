@@ -22,6 +22,14 @@ include dirname(__FILE__) . '/header.php';
 $xoops->header();
 
 $admin_page = new XoopsModuleAdmin();
+
+// extension
+$admin_page->addConfigBoxLine(array('comments', 'warning'), 'extension');
+$admin_page->addConfigBoxLine(array('pdf', 'warning'), 'extension');
+$admin_page->addConfigBoxLine(array('qrcode', 'warning'), 'extension');
+$admin_page->addConfigBoxLine(array('xoosocialnetwork', 'warning'), 'extension');
+$admin_page->addConfigBoxLine(array('notifications', 'warning'), 'module');
+
 $admin_page->displayIndex();
 
 include dirname(__FILE__) . '/footer.php';

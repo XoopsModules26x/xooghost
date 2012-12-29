@@ -1,3 +1,6 @@
+<script type="text/javascript" src="<{xoImgUrl media/jquery/ui/jquery.ui.js}>"></script>
+<link rel="stylesheet" href="<{xoImgUrl media/jquery/ui/base/ui.all.css}>" type="text/css" media="screen" />
+
 <{includeq file='module:xooghost|xooghost_css.html'}>
 
 <{if $moduletitle != '' && !$pages}>
@@ -91,8 +94,9 @@
     </div>
 
     <{if !$pages && !$print}>
-        <{includeq file='module:comments|comments.html'}>
+        <{includeq file='module:xooghost|xooghost_footer.html'}>
     <{/if}>
+
 <{else}>
     <div class="errorMsg">
         <{$smarty.const._XOO_GHOST_NOTFOUND}>
