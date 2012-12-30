@@ -19,7 +19,7 @@
 
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 
-class XooghostNotificationsPlugin extends Xoops_Plugin_Abstract implements NotificationsPluginInterface
+class XooghostNotificationsPlugin extends Xoops_Module_Plugin_Abstract implements NotificationsPluginInterface
 {
     /**
      * @param string $category

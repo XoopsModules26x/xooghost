@@ -51,7 +51,7 @@ if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.ht
 
         // For comments module
         $_GET['ghost_id'] = $page->getVar('xooghost_id');
-        if ($plugin = Xoops_Plugin::getPlugin('xooghost', 'comments')) {
+        if ($plugin = Xoops_Module_Plugin::getPlugin('xooghost', 'comments')) {
             $xoops->tpl()->assign('xooghost_com', $xoops->isActiveModule('comments') );
         }
         // For comments module
@@ -76,7 +76,7 @@ $xoops->tpl()->assign('xooghost_rld', $ghost_config['xooghost_rld'] );
 
 $xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode') );
 
-if ($plugin = Xoops_Plugin::getPlugin('xooghost', 'notifications') && $xoops->isUser()) {
+if ($plugin = Xoops_Module_Plugin::getPlugin('xooghost', 'notifications') && $xoops->isUser()) {
     $xoops->tpl()->assign('xooghost_not', true );
 }
 ?>

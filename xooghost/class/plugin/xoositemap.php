@@ -19,7 +19,7 @@
 
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 
-class XooghostXoositemapPlugin extends Xoops_Plugin_Abstract implements XoositemapPluginInterface
+class XooghostXoositemapPlugin extends Xoops_Module_Plugin_Abstract implements XoositemapPluginInterface
 {
     public function Xoositemap($subcategories)
     {

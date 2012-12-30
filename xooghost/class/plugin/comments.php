@@ -20,7 +20,7 @@
 
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 
-class XooghostCommentsPlugin extends Xoops_Plugin_Abstract implements CommentsPluginInterface
+class XooghostCommentsPlugin extends Xoops_Module_Plugin_Abstract implements CommentsPluginInterface
 {
     /**
      * @return string
