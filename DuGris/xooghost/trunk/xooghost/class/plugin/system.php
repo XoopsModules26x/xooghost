@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-class XooghostSystemPlugin extends Xoops_Plugin_Abstract implements SystemPluginInterface
+class XooghostSystemPlugin extends Xoops_Module_Plugin_Abstract implements SystemPluginInterface
 {
     public function userPosts($uid)
     {        $ghost_module = Xooghost::getInstance();

@@ -19,7 +19,7 @@
 
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 
-class XooghostXootagsPlugin extends Xoops_Plugin_Abstract implements XootagsPluginInterface
+class XooghostXootagsPlugin extends Xoops_Module_Plugin_Abstract implements XootagsPluginInterface
 {
     public function Xootags( $items )
     {
