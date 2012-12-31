@@ -25,6 +25,7 @@ $pages = $ghost_handler->getPublished('published', 'desc', $start, $ghost_config
 
 $criteria = new CriteriaCompo();
 $criteria->add( new Criteria('xooghost_online', 1) ) ;
+$criteria->add( new Criteria('xooghost_published', 0, '>') ) ;
 $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
 
 $pages_count = $ghost_handler->getCount($criteria);

@@ -21,7 +21,8 @@ defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 class Xooghost_page extends XoopsObject
 {
-    private $exclude_page = array('index','search','tag','userinfo','comment_new', 'pages');
+    private $exclude_page = array('index', 'search', 'tag', 'userinfo',
+                            'page_comment', 'pages');
     private $php_self = '';
 
     // constructor
@@ -48,6 +49,11 @@ class Xooghost_page extends XoopsObject
 
         // Pour autoriser le html
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
+
+        // Module
+        $ghost_module = Xooghost::getInstance();
+        $this->config = $ghost_module->LoadConfig();
+        $this->rld_handler = $ghost_module->RldHandler();
     }
 
     private function Xooghost_page()
@@ -84,6 +90,7 @@ class Xooghost_page extends XoopsObject
 //        return preg_replace(array('/&amp;/i'), array('&'), $string);
         return $string;
     }
+
     public function getMetaKeywords( $limit=5 )
     {
         if ( $this->getVar('xooghost_keywords') != '' ) {
@@ -118,51 +125,55 @@ class Xooghost_page extends XoopsObject
         $myts = MyTextSanitizer::getInstance();
         $ret = parent::getValues();
 
-        $ghost_module = Xooghost::getInstance();
-        $ghost_config = $ghost_module->LoadConfig();
+        $dateformat = $this->config['xooghost_date_format'];
+        $ret['xooghost_date_day'] = date('d', $this->getVar('xooghost_published') );
+        $ret['xooghost_date_month'] = date('m', $this->getVar('xooghost_published') );
+        $ret['xooghost_date_year'] = date('Y', $this->getVar('xooghost_published') );
+        $ret['xooghost_time']      = $this->getVar('xooghost_published');
+        $ret['xooghost_published'] = date(constant($dateformat), $this->getVar('xooghost_published') );
 
-        $dateformat = $ghost_config['xooghost_date_format'];
-        $ret['xooghost_date_day'] = date('d', $ret['xooghost_published'] );
-        $ret['xooghost_date_month'] = date('m', $ret['xooghost_published'] );
-        $ret['xooghost_date_year'] = date('Y', $ret['xooghost_published'] );
-        $ret['xooghost_time']      = $ret['xooghost_published'];
-        $ret['xooghost_published'] = date(constant($dateformat), $ret['xooghost_published']);
+        $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $this->getVar('xooghost_url');
 
-        $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $ret['xooghost_url'];
+        $ret['xooghost_uid_name'] = XoopsUser::getUnameFromId($this->getVar('xooghost_uid'), true);
 
-        $ret['xooghost_uid_name'] = XoopsUser::getUnameFromId($ret['xooghost_uid'], true);
-
-        if ($ret['xooghost_image'] != 'blank.gif') {
-            $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $ret['xooghost_image'];
+        if ($this->getVar('xooghost_image') != 'blank.gif') {
+            $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $this->getVar('xooghost_image');
         } else {
             $ret['xooghost_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xooghost/images/pages.png');
         }
 
-        $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
+        $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($this->getVar('xooghost_content'));
 
-        if ( in_array( $this->php_self, $this->exclude_page) && strpos($ret['xooghost_content'], '[breakpage]') !== false ) {
-            $ret['xooghost_content'] = substr( $ret['xooghost_content'], 0, strpos($ret['xooghost_content'], '[breakpage]') );
+        if ( in_array( $this->php_self, $this->exclude_page) && strpos($this->getVar('xooghost_content'), '[breakpage]') !== false ) {
+            $ret['xooghost_content'] = substr( $this->getVar('xooghost_content'), 0, strpos($this->getVar('xooghost_content'), '[breakpage]') );
             $ret['readmore'] = true;
         } else {
-            $ret['xooghost_content'] = str_replace('[breakpage]', '', $ret['xooghost_content']);
+            $ret['xooghost_content'] = str_replace('[breakpage]', '', $this->getVar('xooghost_content') );
         }
 
-        if ( !in_array( $this->php_self, $this->exclude_page) ) {
-            if ( isset($_SESSION['xooghost_stat'])) {
-                $rld_handler = $ghost_module->RldHandler();
-                $ret['xooghost_vote'] = $rld_handler->getVotes($ret['xooghost_id']);
-                $ret['xooghost_yourvote'] = $rld_handler->getbyUser($ret['xooghost_id']);
-            }
-        }
-
-            // tags
+        // tags
+        static $tags;
         if ( !in_array( $this->php_self, $this->exclude_page) || $this->php_self == 'index' || $this->php_self == 'page_print' ) {
             if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
-                $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-                $ret['tags'] = $xootags_handler->getbyItem($ret['xooghost_id']);
+                $id = $this->getVar('xooghost_id');
+                if ( !isset($tags[$this->getVar('xooghost_id')]) ) {
+                    $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                    $tags[$this->getVar('xooghost_id')] = $xootags_handler->getbyItem($this->getVar('xooghost_id'));
+                }
+                $ret['tags'] = $tags[$this->getVar('xooghost_id')];
             }
         }
         return $ret;
+    }
+
+    public function getRLD( &$ret )
+    {
+        if ( !in_array( $this->php_self, $this->exclude_page) ) {
+            if ($this->config['xooghost_rld']['rld_mode'] == 'rate') {
+                $ret['xooghost_vote'] = $this->rld_handler->getVotes($this->getVar('xooghost_id'));
+                $ret['xooghost_yourvote'] = $this->rld_handler->getbyUser($this->getVar('xooghost_id'));
+            }
+        }
     }
 
     public function create_page() {
@@ -250,12 +261,17 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
     public function __construct($db)
     {
         parent::__construct($db, 'xooghost', 'Xooghost_page', 'xooghost_id', 'xooghost_title');
+
+        // Module
+        $ghost_module = Xooghost::getInstance();
+        $this->config = $ghost_module->LoadConfig();
+        $this->rld_handler = $ghost_module->RldHandler();
     }
 
     public function getByURL( $Xooghost_url )
     {
         $criteria = new Criteria('xooghost_url', $Xooghost_url);
-        $page = $this->getObjects($criteria, null, true);
+        $page = $this->getObjects($criteria, false, true);
         return $page[0];
     }
 
@@ -273,7 +289,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
         $criteria->setStart( $start );
         $criteria->setLimit( $limit );
 
-        return $this->getObjects($criteria, null, false);
+        return $this->getObjects($criteria, true, false);
     }
 
     public function getUrls()
@@ -316,10 +332,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
             if (is_object($page) && count($page) != 0) {
                 $xoops = Xoops::getInstance();
 
-                $ghost_module = Xooghost::getInstance();
-                $rld_handler = $ghost_module->RldHandler();
-
-                if ( $ret = $rld_handler->SetLike_Dislike($page_id, $like_dislike) ) {
+                if ( $ret = $this->rld_handler->SetLike_Dislike($page_id, $like_dislike) ) {
                     if ($like_dislike == 0) {
                         $xooghost_dislike = $page->getVar('xooghost_dislike') + 1;
                         $page->setVar('xooghost_dislike', $xooghost_dislike);
@@ -343,10 +356,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
             if (is_object($page) && count($page) != 0) {
                 $xoops = Xoops::getInstance();
 
-                $ghost_module = Xooghost::getInstance();
-                $rld_handler = $ghost_module->RldHandler();
-
-                if ( $ret = $rld_handler->SetRate($page_id, $rate) ) {
+                if ( $ret = $this->rld_handler->SetRate($page_id, $rate) ) {
                     if ( is_array($ret) && count($ret) == 3 ) {
                         $page->setVar('xooghost_rates', $ret['average']);
                         $this->insert( $page );
@@ -380,7 +390,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
         }
         $criteria->setOrder( 'asc' );
 
-        return $this->getObjects($criteria, null, false);
+        return $this->getObjects($criteria, true, false);
     }
 
     public function insert(XoopsObject $object, $force = true)
@@ -402,10 +412,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
         $xoops = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig( 'xooghost' );
 
-        $ghost_config = $ghost_module->LoadConfig();
-        $ghost_handler = $ghost_module->GhostHandler();
-
-        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $ghost_config['xooghost_image_size'], $ghost_config['xooghost_image_width'], $ghost_config['xooghost_image_height']);
+        $uploader = new XoopsMediaUploader( $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $this->config['xooghost_image_size'], $this->config['xooghost_image_width'], $this->config['xooghost_image_height']);
 
         $ret = array();
         foreach ( $_POST['xoops_upload_file'] as $k => $input_image ) {

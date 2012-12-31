@@ -53,7 +53,7 @@ class Xooghost_rld extends XoopsObject
     public function CleanVarsForDB()
     {
         $system = System::getInstance();
-        foreach ( $this->getValues() as $k => $v ) {
+        foreach ( parent::getValues() as $k => $v ) {
             if ( $k != 'dohtml' ) {
                 if ( $this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
                     $value = $system->CleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->CleanVars($_POST[$k], 'time', date('u'), 'int');
@@ -111,7 +111,7 @@ class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
         $criteria2->add( new Criteria('xooghost_rld_uid', $uid), 'OR' ) ;
         $criteria2->add( new Criteria('xooghost_rld_ip', $ip), 'OR' ) ;
         $criteria->add( $criteria2, 'AND');
-        $tmp = $this->getObjects( $criteria, null, null);
+        $tmp = $this->getObjects( $criteria, false, false);
         if ( count($tmp) != 0 ) {
             return $tmp[0]['xooghost_rld_rates'];
         }
@@ -133,7 +133,7 @@ class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
         $criteria2->add( new Criteria('xooghost_rld_uid', $uid), 'OR' ) ;
         $criteria2->add( new Criteria('xooghost_rld_ip', $ip), 'OR' ) ;
         $criteria->add( $criteria2, 'AND');
-        $tmp = $this->getObjects( $criteria, null, null);
+        $tmp = $this->getObjects( $criteria, false, false);
         if ( count($tmp) == 0 ) {
             $rldObject = $this->create();
             $rldObject->setVar('xooghost_rld_page', $page_id);
@@ -163,7 +163,7 @@ class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
         $criteria2->add( new Criteria('xooghost_rld_uid', $uid), 'OR' ) ;
         $criteria2->add( new Criteria('xooghost_rld_ip', $ip), 'OR' ) ;
         $criteria->add( $criteria2, 'AND');
-        $tmp = $this->getObjects( $criteria, null, null);
+        $tmp = $this->getObjects( $criteria, false, false);
         if ( count($tmp) == 0 ) {
             $rldObject = $this->create();
             $rldObject->setVar('xooghost_rld_page', $page_id);

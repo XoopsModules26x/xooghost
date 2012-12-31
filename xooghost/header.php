@@ -56,8 +56,10 @@ if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.ht
         }
         // For comments module
 
+        $content = $page->getValues();
+        $page->getRLD( &$content );
+        $xoops->tpl()->assign('page', $content );
         $xoops->tpl()->assign('security', $xoops->security()->createToken() );
-        $xoops->tpl()->assign('page', $page->getValues() );
         $xoops->tpl()->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
         $xoops->theme()->addMeta($type = 'meta', 'description', $page->getMetaDescription() );
         $xoops->theme()->addMeta($type = 'meta', 'keywords', $page->getMetaKeywords() );

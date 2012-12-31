@@ -55,7 +55,7 @@ class XooghostSearchPlugin extends Xoops_Module_Plugin_Abstract implements Searc
         $ghost_module = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
 
-        $pages = $ghost_handler->getObjects($criteria, false, false);
+        $pages = $ghost_handler->getObjects($criteria, true, false);
 
         foreach ( $pages as $k => $page ) {
             $ret[$k]['image']    = 'icons/logo_small.png';
