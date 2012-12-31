@@ -35,17 +35,18 @@ class XooghostXootagsPlugin extends Xoops_Module_Plugin_Abstract implements Xoot
         $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
         $criteria->add( new Criteria('xooghost_id', '(' . implode(', ', $items) . ')', 'IN') ) ;
 
-        $pages = $ghost_handler->getObjects($criteria, false, false);
+        $pages = $ghost_handler->getObjects($criteria, true, false);
 
         $ret = array();
+        $k=0;
         foreach ( $pages as $page ) {
-            $k = $page['xooghost_time'] . '-' . $page['xooghost_id'] ;
             $ret[$k]['itemid']   = $page['xooghost_id'];
             $ret[$k]['link']     = $page['xooghost_url'];
             $ret[$k]['title']    = $page['xooghost_title'];
-            $ret[$k]['time']     = $page['xooghost_published'];
+            $ret[$k]['time']     = $page['xooghost_time'];
             $ret[$k]['uid']      = $page['xooghost_uid'];
             $ret[$k]['content']  = $page['xooghost_content'];
+            $k++;
         }
         return $ret;
     }

@@ -42,4 +42,20 @@ class XooghostSystemPlugin extends Xoops_Module_Plugin_Abstract implements Syste
         }
         return false;
     }
+
+    public function backend($limit=10)
+    {        $xoops = Xoops::getInstance();
+        $ghost_module = Xooghost::getInstance();
+        $ghost_handler = $ghost_module->GhostHandler();
+
+        $ret = array();
+        $messages = $ghost_handler->getPublished('published', 'desc', 0, $limit);
+        foreach ($messages as $k => $message) {
+            $ret[$k]['title']   = $message['xooghost_title'];
+            $ret[$k]['link']    = $xoops->url('modules/xooghost/' . $message['xooghost_url']);
+            $ret[$k]['content'] = $message['xooghost_content'];
+            $ret[$k]['date']    = $message['xooghost_time'];
+        }
+        return $ret;
+    }
 }
