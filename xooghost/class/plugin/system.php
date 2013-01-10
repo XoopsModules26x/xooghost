@@ -58,4 +58,9 @@ class XooghostSystemPlugin extends Xoops_Module_Plugin_Abstract implements Syste
         }
         return $ret;
     }
+
+    public function userMenus()
+    {
+        return array();
+    }
 }

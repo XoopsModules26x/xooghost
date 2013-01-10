@@ -53,4 +53,3 @@ class XooghostMenusPlugin extends Xoops_Module_Plugin_Abstract implements MenusP
         return $ret;
     }
 }
-

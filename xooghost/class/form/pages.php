@@ -55,14 +55,14 @@ class XooghostPagesForm extends XoopsThemeForm
                 $ele->addOptionArray( $dirlist );
                 $tab1->addElement( $ele );
             } else {
-                $tab1->addElement( new XoopsFormText(_XOO_GHOST_URL, 'xooghost_url', 50, 50, $this->xoopsObject->getVar('xooghost_url')), true );
+                $tab1->addElement( new XoopsFormText(_XOO_GHOST_URL, 'xooghost_url', 12, 100, $this->xoopsObject->getVar('xooghost_url')), true );
             }
         } else {
             $tab1->addElement( new XoopsFormHidden('xooghost_url', $this->xoopsObject->getVar('xooghost_url')) );
         }
 
         // Title
-        $tab1->addElement( new XoopsFormText(_XOO_GHOST_TITLE, 'xooghost_title', 100, 255, $this->xoopsObject->getVar('xooghost_title')) , true );
+        $tab1->addElement( new XoopsFormText(_XOO_GHOST_TITLE, 'xooghost_title', 12, 100, $this->xoopsObject->getVar('xooghost_title')) , true );
 
         // submitter
         if ($ghost_module->isUserAdmin()) {
@@ -74,7 +74,7 @@ class XooghostPagesForm extends XoopsThemeForm
         }
 
         // Content
-        $tab1->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 50), true );
+        $tab1->addElement( new XoopsFormTextArea(_XOO_GHOST_CONTENT, 'xooghost_content', $this->xoopsObject->getVar('xooghost_content'), 7, 12), true );
 
         // image
         $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_SIZE . ' : ' . $ghost_config['xooghost_image_size'];
@@ -104,10 +104,10 @@ class XooghostPagesForm extends XoopsThemeForm
          */
         $tab2 = new XoopsFormTab(_AM_XOO_TABFORM_METAS, 'tabid-2');
         // Meta description
-        $tab2->addElement( new XoopsFormTextArea(_XOO_GHOST_DESCRIPTION, 'xooghost_description', $this->xoopsObject->getVar('xooghost_description'), 7, 50));
+        $tab2->addElement( new XoopsFormTextArea(_XOO_GHOST_DESCRIPTION, 'xooghost_description', $this->xoopsObject->getVar('xooghost_description'), 7, 12));
 
         // Meta Keywords
-        $tab2->addElement( new XoopsFormTextArea(_XOO_GHOST_KEYWORDS, 'xooghost_keywords', $this->xoopsObject->getVar('xooghost_keywords'), 7, 50, _XOO_GHOST_KEYWORDS_DESC));
+        $tab2->addElement( new XoopsFormTextArea(_XOO_GHOST_KEYWORDS, 'xooghost_keywords', $this->xoopsObject->getVar('xooghost_keywords'), 7, 12, _XOO_GHOST_KEYWORDS_DESC));
         $tabtray->addElement($tab2);
 
         /**

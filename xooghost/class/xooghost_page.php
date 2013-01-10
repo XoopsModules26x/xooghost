@@ -142,14 +142,13 @@ class Xooghost_page extends XoopsObject
             $ret['xooghost_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xooghost/images/pages.png');
         }
 
-        $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($this->getVar('xooghost_content'));
-
         if ( in_array( $this->php_self, $this->exclude_page) && strpos($this->getVar('xooghost_content'), '[breakpage]') !== false ) {
             $ret['xooghost_content'] = substr( $this->getVar('xooghost_content'), 0, strpos($this->getVar('xooghost_content'), '[breakpage]') );
             $ret['readmore'] = true;
         } else {
             $ret['xooghost_content'] = str_replace('[breakpage]', '', $this->getVar('xooghost_content') );
         }
+        $ret['xooghost_content'] = $myts->undoHtmlSpecialChars($ret['xooghost_content']);
 
         // tags
         static $tags;
@@ -187,6 +186,11 @@ class Xooghost_page extends XoopsObject
 
     public function CleanVarsForDB()
     {
+/*
+    $request = Xoops_Request::getInstance();
+    $url = $request->getUrl();
+    print_r( $request->getParam() );
+*/
         $system = System::getInstance();
         foreach ( parent::getValues() as $k => $v ) {
             if ( $k != 'dohtml' ) {
