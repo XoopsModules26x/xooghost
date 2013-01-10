@@ -3,6 +3,9 @@
 @import url(like_dislike.css);
 @import url(rate.css);
 
+legend img {
+    float:                 right;
+}
 .xooghostMsg {
     padding:               1em;
     margin-bottom:         1em;
