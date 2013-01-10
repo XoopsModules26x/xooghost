@@ -57,13 +57,15 @@ class XooghostSearchPlugin extends Xoops_Module_Plugin_Abstract implements Searc
 
         $pages = $ghost_handler->getObjects($criteria, true, false);
 
-        foreach ( $pages as $k => $page ) {
+        $k=0;
+        foreach ( $pages as $page ) {
             $ret[$k]['image']    = 'icons/logo_small.png';
             $ret[$k]['link']     = $page['xooghost_url'];
             $ret[$k]['title']    = $page['xooghost_title'];
             $ret[$k]['time']     = $page['xooghost_time'];
             $ret[$k]['uid']      = $page['xooghost_uid'];
             $ret[$k]['content']  = $page['xooghost_content'];
+            $k++;
         }
         return $ret;
     }
