@@ -36,4 +36,7 @@ define("_XOO_GHOST_RATE_YOURVOTE",          "Your vote: ");
 // Like / Dislike
 define("_XOO_GHOST_LIKE",                   "Like");
 define("_XOO_GHOST_DISLIKE",                "Dislike");
+
+// Others
+define("_XOO_GHOST_RSS_FEED",               "RSS feed");
 ?>
