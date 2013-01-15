@@ -57,7 +57,7 @@ if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.ht
         // For comments module
 
         $content = $page->getValues();
-        $page->getRLD( &$content );
+        $content = $page->getRLD( $content );
         $xoops->tpl()->assign('page', $content );
         $xoops->tpl()->assign('security', $xoops->security()->createToken() );
         $xoops->tpl()->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
@@ -78,7 +78,8 @@ $xoops->tpl()->assign('xooghost_rld', $ghost_config['xooghost_rld'] );
 
 $xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode') );
 
-if ($plugin = Xoops_Module_Plugin::getPlugin('xooghost', 'notifications') && $xoops->isUser()) {
-    $xoops->tpl()->assign('xooghost_not', true );
+if ($xoops->isActiveModule('notifications')) {    if ($plugin = Xoops_Module_Plugin::getPlugin('xooghost', 'notifications') && $xoops->isUser()) {
+        $xoops->tpl()->assign('xooghost_not', true );
+    }
 }
 ?>
