@@ -35,7 +35,7 @@ class XooghostXootagsPlugin extends Xoops_Module_Plugin_Abstract implements Xoot
         $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
         $criteria->add( new Criteria('xooghost_id', '(' . implode(', ', $items) . ')', 'IN') ) ;
 
-        $pages = $ghost_handler->getObjects($criteria, true, false);
+        $pages = $ghost_handler->getObjects($criteria, false, false);
 
         $ret = array();
         $k=0;

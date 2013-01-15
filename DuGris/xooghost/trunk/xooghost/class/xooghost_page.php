@@ -165,7 +165,7 @@ class Xooghost_page extends XoopsObject
         return $ret;
     }
 
-    public function getRLD( &$ret )
+    public function getRLD( $ret )
     {
         if ( !in_array( $this->php_self, $this->exclude_page) ) {
             if ($this->config['xooghost_rld']['rld_mode'] == 'rate') {
@@ -173,6 +173,7 @@ class Xooghost_page extends XoopsObject
                 $ret['xooghost_yourvote'] = $this->rld_handler->getbyUser($this->getVar('xooghost_id'));
             }
         }
+        return $ret;
     }
 
     public function create_page() {
@@ -205,7 +206,7 @@ class Xooghost_page extends XoopsObject
                     $this->setVar( $k,  $value );
                 } else {
                     $value = $system->CleanVars($_POST, $k, $v, 'string');
-                    $this->setVar( $k,  $value );
+                    $this->setVar( $k,  stripslashes($value) );
                 }
             }
             if ( $k == 'xooghost_url' ) {
@@ -251,6 +252,7 @@ class Xooghost_page extends XoopsObject
 class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
 {
     private $exclude = array(
+        'backend.php',
         'footer.php',
         'header.php',
         'index.php',
@@ -388,7 +390,8 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
     public function renderAdminList($online = -1)
     {
         $criteria = new CriteriaCompo();
-        $criteria->setSort( 'xooghost_published' );
+        $criteria->setSort('xooghost_published');
+        $criteria->setOrder('DESC');
         if ($online >= 0) {
             $criteria->add( new Criteria('xooghost_online', $online) ) ;
         }
