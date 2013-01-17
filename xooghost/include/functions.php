@@ -19,29 +19,33 @@
 
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
-function getMetaDescription( $string )
+function XooGhost_getMetaDescription( $string )
 {    $xoops = xoops::getinstance();
+    $myts = MyTextSanitizer::getInstance();
+
+    if (is_array($string)) {
+        $string = implode(', ', $string);
+    }
     $string = $xoops->module->name() . ' : ' . $string ;
     $string .= '. ' . $xoops->getConfig('meta_description', 3);
 
-    $myts = MyTextSanitizer::getInstance();
     $string = $myts->undoHtmlSpecialChars( $string );
     $string = str_replace('[breakpage]', '', $string);
     // remove html tags
     $string = strip_tags( $string );
     return $string;}
 
-function getMetaKeywords( $string, $limit = 5)
+function XooGhost_getMetaKeywords( $string, $limit = 5)
 {    $xoops = xoops::getinstance();
-    $string = strtolower($string) . ', ' . strtolower($xoops->getConfig('meta_keywords', 3));
-
     $myts = MyTextSanitizer::getInstance();
+
+    if (is_array($string)) {        $string = implode(', ', $string);    }
+    $string = strtolower($string) . ', ' . strtolower($xoops->getConfig('meta_keywords', 3));
     $string = $myts->undoHtmlSpecialChars( $string );
     $string = str_replace('[breakpage]', '', $string);
-    // remove html tags
     $string = strip_tags( $string );
-
     $string = html_entity_decode( $string, ENT_QUOTES );
+
     $search_pattern=array("\t","\r\n","\r","\n",",",".","'",";",":",")","(",'"','?','!','{','}','[',']','<','>','/','+','_','\\','*','pagebreak','page');
     $replace_pattern=array(' ',' ',' ',' ',' ',' ',' ','','','','','','','','','','','','','','','','','','','','');
     $string = str_replace($search_pattern, $replace_pattern, $string);

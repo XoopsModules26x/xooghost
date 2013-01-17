@@ -61,8 +61,8 @@ if ( in_array($Xooghost_url, $exclude) ) {    $xoops->header('xooghost_index.ht
         $xoops->tpl()->assign('page', $content );
         $xoops->tpl()->assign('security', $xoops->security()->createToken() );
         $xoops->tpl()->assign('xoops_pagetitle' , $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
-        $xoops->theme()->addMeta($type = 'meta', 'description', $page->getMetaDescription() );
-        $xoops->theme()->addMeta($type = 'meta', 'keywords', $page->getMetaKeywords() );
+        $xoops->theme()->addMeta('meta', 'description', $page->getMetaDescription() );
+        $xoops->theme()->addMeta('meta', 'keywords', $page->getMetaKeywords() );
     } else {        $xoops->tpl()->assign('not_found', true);
     }
 }
