@@ -32,20 +32,15 @@ $pages_count = $ghost_handler->getCount($criteria);
 
 $xoops->tpl()->assign('pages', $pages);
 
-$i=0;
-$description = '';
-foreach ($pages as $k => $page ) {
-    $description .= $page['xooghost_title'];
-    $i++;
-    if ( $i < count($pages) ) {
-        $description .= ', ';
-    }
-}
-$xoops->theme()->addMeta($type = 'meta', 'description', getMetaDescription( $description ) );
-$xoops->theme()->addMeta($type = 'meta', 'keywords', getMetaKeywords( $description ) );
-
 // Page navigation
 $paginate = new Xoopaginate($pages_count, $ghost_config['xooghost_limit_main'], $start, 'start', '');
+
+// Metas
+foreach ($pages as $k => $page ) {
+    $description[] = $page['xooghost_title'];
+}
+$xoops->theme()->addMeta($type = 'meta', 'description', XooGhost_getMetaDescription( $description ) );
+$xoops->theme()->addMeta($type = 'meta', 'keywords', XooGhost_getMetaKeywords( $description ) );
 
 include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
 ?>
