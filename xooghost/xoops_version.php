@@ -33,10 +33,10 @@ $modversion['image']       = 'assets/images/logo.png';
 
 
 // about
-$modversion['release_date']        = '2012/10/01';
-$modversion['module_website_url']  = 'dugris.xoofoo.org';
-$modversion['module_website_name'] = 'XooFoo.org - Laurent JEN';
-$modversion['module_status']       = 'alpha';
+$modversion['release_date']        = '2015/10/01';
+$modversion['module_website_url']  = 'xoops.org';
+$modversion['module_website_name'] = 'XOOPS Project';
+$modversion['module_status']       = 'Alpha 1';
 $modversion['min_php']             = '5.5';
 $modversion['min_xoops']           = '2.6.0';
 $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
