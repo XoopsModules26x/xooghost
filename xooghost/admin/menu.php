@@ -19,36 +19,36 @@
 
 $module = Xoops::getInstance()->getHandlerModule()->getBydirname('xooghost');
 
-$i = 0;
+$i                      = 0;
 $adminmenu[$i]['title'] = _MI_XOO_GHOST_INDEX;
 $adminmenu[$i]['link']  = 'admin/index.php';
 $adminmenu[$i]['icon']  = 'home.png';
 
 if (Xoops::getInstance()->isadmin()) {
-    $i++;
+    ++$i;
     $adminmenu[$i]['title'] = _MI_XOO_GHOST_PREFERENCES;
     $adminmenu[$i]['link']  = 'admin/preferences.php';
     $adminmenu[$i]['icon']  = 'administration.png';
 
-    $i++;
+    ++$i;
     $adminmenu[$i]['title'] = _MI_XOO_GHOST_MODCONFIG;
     $adminmenu[$i]['link']  = '../system/admin.php?fct=preferences&op=showmod&mod=' . $module->getVar('mid');
     $adminmenu[$i]['icon']  = 'configs.png';
 }
 
-$i++;
+++$i;
 $adminmenu[$i]['title'] = _MI_XOO_GHOST_PAGES;
 $adminmenu[$i]['link']  = 'admin/pages.php';
 $adminmenu[$i]['icon']  = 'content.png';
 
-if (Xoops::getInstance()->isActiveModule('comments')) {    $i++;
+if (Xoops::getInstance()->isActiveModule('comments')) {
+    ++$i;
     $adminmenu[$i]['title'] = _MI_COMMENTS_NAME;
     $adminmenu[$i]['link']  = '../comments/admin/main.php?module=' . $module->getVar('mid');
     $adminmenu[$i]['icon']  = 'comments.png';
 }
 
-$i++;
+++$i;
 $adminmenu[$i]['title'] = _MI_XOO_GHOST_ABOUT;
 $adminmenu[$i]['link']  = 'admin/about.php';
 $adminmenu[$i]['icon']  = 'about.png';
-?>

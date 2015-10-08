@@ -1,0 +1,9 @@
+{
+    "name"       : "xoops/xooghost",
+    "license"    : "GPL-2.0+",
+    "type"       : "xoops-module",
+    "description": "XOOPS Ghost module",
+    "require"    : {
+        "xoops/module-installer-plugin": "~1.0"
+    }
+}

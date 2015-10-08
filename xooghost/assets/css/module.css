@@ -1,0 +1,70 @@
+@import url(item.css);
+@import url(table.css);
+@import url(like_dislike.css);
+@import url(rate.css);
+
+legend img {
+    float: right;
+}
+
+.xooghostMsg {
+    padding: 1em;
+    margin-bottom: 1em;
+    text-align: center;
+    background-color: #f1f1f1;
+    color: #049cd9;
+    border: 2px solid #049cd9;
+}
+
+blockquote {
+    display: block;
+    width: auto;
+    margin: 1em;
+    padding: .5em;
+    background-color: #f1f1f1;
+    color: #049cd9;
+    font-style: normal;
+    border-color: #049cd9;
+    border-style: solid;
+    border-width: 1px 1px 1px 6px;
+}
+
+.ul-xooghost {
+    list-style-type: none;
+    padding: 1em 0;
+}
+
+/*========  Icons ======== */
+[class^="xooghost-ico-"], [class*=" xooghost-ico-"] {
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    display: inline-block;
+    margin-right: 0.5em;
+    vertical-align: text-top;
+    line-height: 20px;
+    height: 20px;
+    width: 20px;
+}
+
+[class^="xooghost-image-"], [class*=" xooghost-image-"] {
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    display: block;
+    vertical-align: text-top;
+}
+
+/*========  Float ======== */
+.floatleft {
+    float: left;
+    margin: 0;
+    padding-left: 0;
+    border: 0;
+}
+
+.floatright {
+    float: right;
+    margin: 0;
+    padding-right: 0;
+    border: 0;
+}

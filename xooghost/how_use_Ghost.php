@@ -17,10 +17,9 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ .  '/header.php';
 
-//Votre code php si vous devez en intégrer
+//Votre code php si vous devez en intï¿½grer
 //Your php code if you must integrate
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
-?>
+include __DIR__ .  '/footer.php';

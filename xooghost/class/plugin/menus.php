@@ -17,9 +17,12 @@
  * @version         $Id$
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class XooghostMenusPlugin extends Xoops_Module_Plugin_Abstract implements MenusPluginInterface
+/**
+ * Class XooghostMenusPlugin
+ */
+class XooghostMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements MenusPluginInterface
 {
     /**
      * expects an array of array containing:
@@ -35,17 +38,18 @@ class XooghostMenusPlugin extends Xoops_Module_Plugin_Abstract implements MenusP
     public function subMenus()
     {
         $ret = array();
-        if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') == 'xooghost') {            $ghost_module = Xooghost::getInstance();
-            $ghost_config = $ghost_module->LoadConfig();
+        if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') == 'xooghost') {
+            $ghost_module  = Xooghost::getInstance();
+            $ghost_config  = $ghost_module->LoadConfig();
             $ghost_handler = $ghost_module->GhostHandler();
 
             $i = 0;
-            if ( $ghost_config['xooghost_main'] ) {
+            if ($ghost_config['xooghost_main']) {
                 $pages = $ghost_handler->getPublished();
                 foreach ($pages as $page) {
-                    $ret[$i]['name']  = $page['xooghost_title'];
-                    $ret[$i]['url']   = $page['xooghost_url'];
-                    $i++;
+                    $ret[$i]['name'] = $page['xooghost_title'];
+                    $ret[$i]['url']  = $page['xooghost_url'];
+                    ++$i;
                 }
             }
         }

@@ -1,0 +1,325 @@
+tables:
+    xooghost:
+        options: {  }
+        columns:
+            xooghost_id:
+                name: xooghost_id
+                type: integer
+                default: null
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: true
+                columnDefinition: null
+                comment: null
+            xooghost_url:
+                name: xooghost_url
+                type: string
+                default: null
+                notnull: true
+                length: 54
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+                collation: utf8_general_ci
+            xooghost_title:
+                name: xooghost_title
+                type: string
+                default: null
+                notnull: true
+                length: 255
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+                collation: utf8_general_ci
+            xooghost_uid:
+                name: xooghost_uid
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_content:
+                name: xooghost_content
+                type: text
+                default: null
+                notnull: true
+                length: 65535
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+                collation: utf8_general_ci
+            xooghost_description:
+                name: xooghost_description
+                type: text
+                default: null
+                notnull: true
+                length: 65535
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+                collation: utf8_general_ci
+            xooghost_keywords:
+                name: xooghost_keywords
+                type: text
+                default: null
+                notnull: true
+                length: 65535
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+                collation: utf8_general_ci
+            xooghost_image:
+                name: xooghost_image
+                type: string
+                default: blank.png
+                notnull: true
+                length: 100
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+                collation: utf8_general_ci
+            xooghost_published:
+                name: xooghost_published
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_online:
+                name: xooghost_online
+                type: boolean
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_hits:
+                name: xooghost_hits
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_rates:
+                name: xooghost_rates
+                type: float
+                default: '0.00'
+                notnull: true
+                length: null
+                precision: 5
+                scale: 2
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_like:
+                name: xooghost_like
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_dislike:
+                name: xooghost_dislike
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_comments:
+                name: xooghost_comments
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+        indexes:
+            PRIMARY:
+                name: PRIMARY
+                columns: [xooghost_id]
+                unique: true
+                primary: true
+    xooghost_rld:
+        options: {  }
+        columns:
+            xooghost_rld_id:
+                name: xooghost_rld_id
+                type: integer
+                default: null
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: true
+                columnDefinition: null
+                comment: null
+            xooghost_rld_page:
+                name: xooghost_rld_page
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_rld_uid:
+                name: xooghost_rld_uid
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_rld_time:
+                name: xooghost_rld_time
+                type: integer
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_rld_ip:
+                name: xooghost_rld_ip
+                type: text
+                default: null
+                notnull: true
+                length: 16777215
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+                collation: utf8_general_ci
+            xooghost_rld_rates:
+                name: xooghost_rld_rates
+                type: boolean
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_rld_like:
+                name: xooghost_rld_like
+                type: boolean
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+            xooghost_rld_dislike:
+                name: xooghost_rld_dislike
+                type: boolean
+                default: '0'
+                notnull: true
+                length: null
+                precision: 10
+                scale: 0
+                fixed: false
+                unsigned: false
+                autoincrement: false
+                columnDefinition: null
+                comment: null
+        indexes:
+            PRIMARY:
+                name: PRIMARY
+                columns: [xooghost_rld_id]
+                unique: true
+                primary: true

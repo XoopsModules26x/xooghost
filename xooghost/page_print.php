@@ -17,10 +17,10 @@
  * @version         $Id$
  */
 
-include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include dirname(dirname(__DIR__)) .  '/mainfile.php';
 
-$ghost_module = Xooghost::getInstance();
-$ghost_config = $ghost_module->LoadConfig();
+$ghost_module  = Xooghost::getInstance();
+$ghost_config  = $ghost_module->LoadConfig();
 $ghost_handler = $ghost_module->GhostHandler();
 
 XoopsLoad::load('system', 'system');
@@ -29,39 +29,41 @@ $system = System::getInstance();
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
-$page_id = $system->CleanVars($_REQUEST, 'page_id', 0, 'int');
-$page = $ghost_handler->get($page_id);
+$page_id = $system->cleanVars($_REQUEST, 'page_id', 0, 'int');
+$page    = $ghost_handler->get($page_id);
 
-$output = $system->CleanVars($_REQUEST, 'output', 'print', 'string');
+$output = $system->cleanVars($_REQUEST, 'output', 'print', 'string');
 
-if ( is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') ) {    $tpl = new XoopsTpl();
+if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online')) {
+    $tpl = new XoopsTpl();
 
-    $tpl->assign('page', $page->getValues() );
+    $tpl->assign('page', $page->getValues());
 
-    $tpl->assign('width', $ghost_config['xooghost_image_width'] );
-    $tpl->assign('height', $ghost_config['xooghost_image_height'] );
-    $tpl->assign('xooghost_qrcode', $ghost_config['xooghost_qrcode'] );
+    $tpl->assign('width', $ghost_config['xooghost_image_width']);
+    $tpl->assign('height', $ghost_config['xooghost_image_height']);
+    $tpl->assign('xooghost_qrcode', $ghost_config['xooghost_qrcode']);
 
-    $tpl->assign('print', true );
-    $tpl->assign('output', true );
+    $tpl->assign('print', true);
+    $tpl->assign('output', true);
     $tpl->assign('xoops_sitename', $xoops->getConfig('sitename'));
-    $tpl->assign('xoops_pagetitle', $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name') );
+    $tpl->assign('xoops_pagetitle', $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name'));
     $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
 
-    if ($xoops->isActiveModule('pdf') && $output == 'pdf') {/*
-        $content = $tpl->fetch('module:xooghost|xooghost_page_pdf.html');
-        $pdf = new Pdf('P', 'A4', _LANGCODE, true, _CHARSET, array(10, 10, 10, 10));
-        $pdf->setDefaultFont('Helvetica');
-        $pdf->writeHtml($content, false);
-        $pdf->Output();
-*/
+    if ($xoops->isActiveModule('pdf') && $output == 'pdf') {
+        /*
+                $content = $tpl->fetch('module:xooghost/xooghost_page_pdf.tpl');
+                $pdf = new Pdf('P', 'A4', _LANGCODE, true, _CHARSET, array(10, 10, 10, 10));
+                $pdf->setDefaultFont('Helvetica');
+                $pdf->writeHtml($content, false);
+                $pdf->Output();
+        */
     } else {
-        $tpl->display('module:xooghost|xooghost_page_print.html');
-    }} else {
+        $tpl->display('module:xooghost/xooghost_page_print.tpl');
+    }
+} else {
     $tpl = new XoopsTpl();
     $tpl->assign('xoops_sitename', $xoops->getConfig('sitename'));
     $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
     $tpl->assign('not_found', true);
-    $tpl->display('module:xooghost|xooghost_page_print.html');
+    $tpl->display('module:xooghost/xooghost_page_print.tpl');
 }
-?>

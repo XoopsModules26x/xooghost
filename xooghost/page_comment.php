@@ -17,16 +17,16 @@
  * @version         $Id$
  */
 
-include dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
-include dirname(__FILE__) . '/include/functions.php';
+include dirname(dirname(__DIR__)) .  '/mainfile.php';
+include __DIR__ . '/include/functions.php';
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
-$xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+$xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
 
-$ghost_module = Xooghost::getInstance();
-$ghost_config = $ghost_module->LoadConfig();
+$ghost_module  = Xooghost::getInstance();
+$ghost_config  = $ghost_module->LoadConfig();
 $ghost_handler = $ghost_module->GhostHandler();
 
 $page = $ghost_handler->get($xooghost_id);

@@ -17,23 +17,27 @@
  * @version         $Id$
  */
 
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
-
-class XooghostCommentsPlugin extends Xoops_Module_Plugin_Abstract implements CommentsPluginInterface
+/**
+ * Class XooghostCommentsPlugin
+ */
+class XooghostCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements CommentsPluginInterface
 {
     /**
      * @return string
      */
     public function itemName()
-    {        return 'ghost_id';
+    {
+        return 'ghost_id';
     }
 
     /**
      * @return string
      */
     public function pageName()
-    {        return 'page_comment.php';
+    {
+        return 'page_comment.php';
     }
 
     /**
@@ -69,8 +73,8 @@ class XooghostCommentsPlugin extends Xoops_Module_Plugin_Abstract implements Com
      */
     public function update($item_id, $total_num)
     {
-        $db = Xoops::getInstance()->db();
-        $sql = 'UPDATE ' . $db->prefix('xooghost') . ' SET xooghost_comments = ' . intval($total_num) . ' WHERE xooghost_id = ' . intval($item_id);
+        $db  = Xoops::getInstance()->db();
+        $sql = 'UPDATE ' . $db->prefix('xooghost') . ' SET xooghost_comments = ' . (int)($total_num) . ' WHERE xooghost_id = ' . (int)($item_id);
         $db->query($sql);
     }
 
@@ -88,17 +92,18 @@ class XooghostCommentsPlugin extends Xoops_Module_Plugin_Abstract implements Com
      * @return array
      */
     public function itemInfo($item_id)
-    {        $ret = array();
+    {
+        $ret = array();
 
-        $ghost_module = Xooghost::getInstance();
+        $ghost_module  = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
-        $page = $page = $ghost_handler->get($item_id);
+        $page          = $page = $ghost_handler->get($item_id);
 
         $ret['text']      = $page->getVar('xooghost_content');
         $ret['title']     = $page->getVar('xooghost_title');
         $ret['uid']       = $page->getVar('xooghost_uid');
         $ret['timestamp'] = $page->getVar('xooghost_published');
+
         return $ret;
     }
 }
-
