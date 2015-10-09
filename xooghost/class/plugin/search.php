@@ -65,7 +65,7 @@ class XooghostSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements
         }
 
         $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
+        $ghost_handler = $ghost_module->ghostHandler();
 
         $pages = $ghost_handler->getObjects($criteria, true, false);
 

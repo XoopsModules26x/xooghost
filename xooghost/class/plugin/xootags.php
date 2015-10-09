@@ -29,10 +29,10 @@ class XooghostXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implement
      *
      * @return array
      */
-    public function Xootags($items)
+    public function xootags($items)
     {
         $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
+        $ghost_handler = $ghost_module->ghostHandler();
 
         $criteria = new CriteriaCompo();
         $criteria->setSort('xooghost_published');

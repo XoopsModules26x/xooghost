@@ -21,7 +21,7 @@ define('_HELP_DESCRIPTION_TITLE', 'Description');
 define('_HELP_DEVELOPER_TITLE', 'Developer');
 
 define('_HELP_INSTALL_TITLE', 'Install');
-define('_HELP_INSTALL_CONTENT', "
+define('_HELP_INSTALL_CONTENT', '
 Extra, or non-core, modules are usually downloadable as compressed files (zip, tar). Always check if a text file with upload instructions is included in the downloaded package.
     <ol>
         <li> Unzip files in local computer.</li>
@@ -29,7 +29,7 @@ Extra, or non-core, modules are usually downloadable as compressed files (zip, t
         <li>After upload, go to your Modules Administration Page and check if the new module is included in the uninstalled modules table.</li>
         <li>Follow the steps described above for installing core modules from the Modules Administration page.</li>
     </ol>
-");
+');
 
 define('_HELP_UNINSTALL_TITLE', 'Uninstall');
 define('_HELP_UNINSTALL_CONTENT', '');

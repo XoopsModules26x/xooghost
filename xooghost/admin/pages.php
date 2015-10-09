@@ -39,7 +39,7 @@ switch ($op) {
 
         // uploads images
         $myts          = MyTextSanitizer::getInstance();
-        $upload_images = $ghost_handler->upload_images($page->getVar('xooghost_title'));
+        $upload_images = $ghost_handler->uploadImages($page->getVar('xooghost_title'));
 
         if (is_array($upload_images) && count($upload_images) != 0) {
             foreach ($upload_images as $k => $reponse) {

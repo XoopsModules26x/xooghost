@@ -1,5 +1,5 @@
-<script type="text/javascript" src="<{xoImgUrl media/jquery/ui/jquery.ui.js}>"></script>
-<link rel="stylesheet" href="<{xoImgUrl media/jquery/ui/base/ui.all.css}>" type="text/css" media="screen"/>
+<script type="text/javascript" src="<{xoImgUrl 'media/jquery/ui/jquery.ui.js'}>"></script>
+<link rel="stylesheet" href="<{xoImgUrl 'media/jquery/ui/base/ui.all.css'}>" type="text/css" media="screen"/>
 
 <{include file='module:xooghost/xooghost_css.tpl'}>
 

@@ -12,6 +12,6 @@ return $config = array(
     'xooghost_image_height' => 100,
     'xooghost_rld'          => array(
         'rld_mode'   => 'likedislike',
-        'rate_scale' => 10,
-    ),
+        'rate_scale' => 10
+    )
 );

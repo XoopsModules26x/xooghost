@@ -1,5 +1,5 @@
 <{if $xoopages}>
-    <link rel="stylesheet" href="<{xoImgUrl modules/xooghost/assets/css/xoopaginate.css}>" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="<{xoImgUrl 'modules/xooghost/assets/css/xoopaginate.css'}>" type="text/css" media="screen"/>
     <div id="pagination">
         <div class="floatleft prevnext">
             <{if $xoopaginate->getValue('first') != false}>

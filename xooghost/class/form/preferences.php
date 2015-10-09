@@ -82,9 +82,10 @@ class XooghostPreferencesForm extends Xoops\Form\ThemeForm
 
         // date format
         $main_mode = new Xoops\Form\Select(_XOO_CONFIG_DATE_FORMAT, 'xooghost_date_format', $xooghost_date_format, $size = 1);
-        $main_mode->addOption('_DATESTRING', XoopsLocale::_DATESTRING);
-        $main_mode->addOption('_MEDIUMDATESTRING', XoopsLocale::_MEDIUMDATESTRING);
-        $main_mode->addOption('_SHORTDATESTRING', XoopsLocale::_SHORTDATESTRING);
+        $main_mode->addOption('_DATESTRING', \XoopsLocale::getFormatLongDate());
+        $main_mode->addOption('_MEDIUMDATESTRING', \XoopsLocale::getFormatMediumDate());
+        $main_mode->addOption('_SHORTDATESTRING', \XoopsLocale::getFormatShortDate());
+
         $tab1->addElement($main_mode);
 
         $tabtray->addElement($tab1);

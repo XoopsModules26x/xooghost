@@ -151,7 +151,7 @@ class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function SetLike_Dislike($page_id, $like_dislike)
+    public function setLikeDislike($page_id, $like_dislike)
     {
         $xoops   = Xoops::getInstance();
         $uid     = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;

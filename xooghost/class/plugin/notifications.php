@@ -22,6 +22,7 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 /**
  * Class XooghostNotificationsPlugin
  */
+
 class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface
 {
     /**
@@ -61,6 +62,8 @@ class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imp
      */
     public function categories()
     {
+        $ghost_module  = Xooghost::getInstance();
+        $ghost_handler = $ghost_module->GhostHandler();
         $ret                      = array();
         $ret[1]['name']           = 'global';
         $ret[1]['title']          = _MI_XOO_GHOST_NOTIFICATION_GLOBAL;
@@ -70,7 +73,7 @@ class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imp
         $ret[2]['name']           = 'item';
         $ret[2]['title']          = _MI_XOO_GHOST_NOTIFICATION_ITEM;
         $ret[2]['description']    = _MI_XOO_GHOST_NOTIFICATION_ITEM_DSC;
-        $ret[2]['subscribe_from'] = Xooghost::getInstance()->GhostHandler()->getUrls();
+        $ret[2]['subscribe_from'] = $ghost_handler->getUrls(); //Xooghost::getInstance()->GhostHandler()->getUrls();
         $ret[2]['item_name']      = 'ghost_id';
         $ret[2]['allow_bookmark'] = 1;
 

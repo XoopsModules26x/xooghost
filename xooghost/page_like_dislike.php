@@ -34,7 +34,7 @@ if ($xoops->security()->check()) {
         $ghost_module  = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
 
-        $ret = $ghost_handler->SetLike_Dislike($page_id, $option);
+        $ret = $ghost_handler->setLikeDislike($page_id, $option);
         if (is_array($ret) && count($ret) > 1) {
             $ret['error'] = 0;
         } else {
@@ -42,4 +42,4 @@ if ($xoops->security()->check()) {
         }
     }
 }
-echo json_encode($ret)
+echo json_encode($ret);

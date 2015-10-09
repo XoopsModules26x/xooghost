@@ -32,7 +32,7 @@ class XooghostPreload extends PreloadItem
         $path = dirname(__DIR__);
         XoopsLoad::addMap(
             array(
-                'xooghost' => $path . '/class/helper.php',
+                'xooghost' => $path . '/class/helper.php'
             )
         );
     }

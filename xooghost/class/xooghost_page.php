@@ -71,7 +71,7 @@ class Xooghost_page extends XoopsObject
         $this->rld_handler = $ghost_module->RldHandler();
     }
 
-    private function Xooghost_page()
+    private function xooghost_page()
     {
         $this->__construct();
     }
@@ -171,7 +171,7 @@ class Xooghost_page extends XoopsObject
         $ret['xooghost_uid_name'] = XoopsUser::getUnameFromId($this->getVar('xooghost_uid'), true);
 
         if ($this->getVar('xooghost_image') != 'blank.gif') {
-            $ret['xooghost_image_link'] = XOOPS_UPLOAD_URL . '/xooghost/images/' . $this->getVar('xooghost_image');
+            $ret['xooghost_image_link'] = $xoops_upload_url . '/xooghost/images/' . $this->getVar('xooghost_image');
         } else {
             $ret['xooghost_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xooghost/assets/images/pages.png');
         }
@@ -231,7 +231,7 @@ class Xooghost_page extends XoopsObject
         return true;
     }
 
-    public function CleanVarsForDB()
+    public function cleanVarsForDB()
     {
         /*
             $request = Xoops_Request::getInstance();
@@ -266,7 +266,7 @@ class Xooghost_page extends XoopsObject
      *
      * @return string
      */
-    public function CleanURL($string)
+    public function cleanURL($string)
     {
         $string = basename($string, '.php');
 
@@ -390,7 +390,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function SetOnline($Xooghost_id)
+    public function setOnline($Xooghost_id)
     {
         if ($Xooghost_id != 0) {
             $page = $this->get($Xooghost_id);
@@ -412,7 +412,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function SetRead($pageObj)
+    public function setRead($pageObj)
     {
         $read = $pageObj->getVar('xooghost_hits') + 1;
         $pageObj->setVar('xooghost_hits', $read);
@@ -427,14 +427,14 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
      *
      * @return array|bool
      */
-    public function SetLike_Dislike($page_id, $like_dislike)
+    public function setLikeDislike($page_id, $like_dislike)
     {
         if ($page_id != 0) {
             $page = $this->get($page_id);
             if (is_object($page) && count($page) != 0) {
                 $xoops = Xoops::getInstance();
 
-                if ($ret = $this->rld_handler->SetLike_Dislike($page_id, $like_dislike)) {
+                if ($ret = $this->rld_handler->setLikeDislike($page_id, $like_dislike)) {
                     if ($like_dislike == 0) {
                         $xooghost_dislike = $page->getVar('xooghost_dislike') + 1;
                         $page->setVar('xooghost_dislike', $xooghost_dislike);
@@ -460,7 +460,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    public function SetRate($page_id, $rate)
+    public function setRate($page_id, $rate)
     {
         if ($page_id != 0) {
             $page = $this->get($page_id);
@@ -486,7 +486,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
     /**
      * @return string
      */
-    public function SelectPage()
+    public function selectPage()
     {
         $pages = $this->getPublished();
         $form  = new Xoops\Form\Select('', 'xooghost_url');
@@ -543,7 +543,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    public function upload_images($image_name)
+    public function uploadImages($image_name)
     {
         $xoops    = Xoops::getInstance();
         $autoload = XoopsLoad::loadConfig('xooghost');
@@ -577,7 +577,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
      *
      * @return string
      */
-    public function CleanImage($filename)
+    public function cleanImage($filename)
     {
         $path_parts = pathinfo($filename);
         $string     = $path_parts['filename'];
