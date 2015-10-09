@@ -17,37 +17,51 @@
  * @version         $Id$
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-class XooghostXoositemapPlugin extends Xoops_Module_Plugin_Abstract implements XoositemapPluginInterface
+/**
+ * Class XooghostXoositemapPlugin
+ */
+class XooghostXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract implements XoositemapPluginInterface
 {
+    /**
+     * @param $subcategories
+     *
+     * @return array
+     */
     public function Xoositemap($subcategories)
     {
-        $ghost_module = Xooghost::getInstance();
+        $ghost_module  = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
 
         $pages = $ghost_handler->getPublished('published', 'desc');
 
         $sitemap = array();
         foreach ($pages as $k => $page) {
-            $sitemap[$k]['id']       = $k;
-            $sitemap[$k]['title']    = $page['xooghost_title'];
-            $sitemap[$k]['url']      = $page['xooghost_link'];
-            $sitemap[$k]['uid']      = $page['xooghost_uid'];
-            $sitemap[$k]['uname']    = $page['xooghost_uid_name'];
-            $sitemap[$k]['image']    = $page['xooghost_image_link'];
-            $sitemap[$k]['time']     = $page['xooghost_time'];
+            $sitemap[$k]['id']    = $k;
+            $sitemap[$k]['title'] = $page['xooghost_title'];
+            $sitemap[$k]['url']   = $page['xooghost_link'];
+            $sitemap[$k]['uid']   = $page['xooghost_uid'];
+            $sitemap[$k]['uname'] = $page['xooghost_uid_name'];
+            $sitemap[$k]['image'] = $page['xooghost_image_link'];
+            $sitemap[$k]['time']  = $page['xooghost_time'];
         }
+
         return $sitemap;
     }
 
+    /**
+     * @param $subcategories
+     *
+     * @return array
+     */
     public function Xoositemap_xml($subcategories)
     {
-        $ghost_module = Xooghost::getInstance();
+        $ghost_module  = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
 
         $sitemap = array();
-        $time = 0;
+        $time    = 0;
 
         $pages = $ghost_handler->getPublished('published', 'desc');
         foreach ($pages as $k => $page) {

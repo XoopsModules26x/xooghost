@@ -17,26 +17,25 @@
  * @version         $Id$
  */
 
-define("_AM_XOO_GHOST_ACTION",          "Action" );
-define("_AM_XOO_GHOST_ADD",             "Add page");
-define("_AM_XOO_GHOST_EDIT",            "Edit page");
+define('_AM_XOO_GHOST_ACTION', 'Action');
+define('_AM_XOO_GHOST_ADD', 'Add page');
+define('_AM_XOO_GHOST_EDIT', 'Edit page');
 
-define("_AM_XOO_GHOST_SHOW",            "Show");
-define("_AM_XOO_GHOST_HIDE",            "Hide");
+define('_AM_XOO_GHOST_SHOW', 'Show');
+define('_AM_XOO_GHOST_HIDE', 'Hide');
 
-define("_AM_XOO_GHOST_CHOOSE",          "Choose a file");
+define('_AM_XOO_GHOST_CHOOSE', 'Choose a file');
 
-define("_AM_XOO_GHOST_SAVED",           "Data was saved");
+define('_AM_XOO_GHOST_SAVED', 'Data was saved');
 
-define("_AM_XOO_GHOST_PHPCODE",         "Your php code if you must integrate");
-define("_AM_XOO_GHOST_HTMLCODE",        "Your text and/or html code without html tags, head, body and title");
+define('_AM_XOO_GHOST_PHPCODE', 'Your php code if you must integrate');
+define('_AM_XOO_GHOST_HTMLCODE', 'Your text and/or html code without html tags, head, body and title');
 
-define("_AM_XOO_GHOST_DELETE_CFM",      "Are you sure to delete this page ?");
-define("_AM_XOO_GHOST_DELETED",         "The page has been deleted");
+define('_AM_XOO_GHOST_DELETE_CFM', 'Are you sure to delete this page ?');
+define('_AM_XOO_GHOST_DELETED', 'The page has been deleted');
 
 // form tabs
-define("_AM_XOO_TABFORM_MAIN",          "Index");
-define("_AM_XOO_TABFORM_METAS",         "Metas");
-define("_AM_XOO_TABFORM_OPTIONS",       "Options");
-define("_AM_XOO_TABFORM_TAGS",          "Tags");
-?>
+define('_AM_XOO_TABFORM_MAIN', 'Index');
+define('_AM_XOO_TABFORM_METAS', 'Metas');
+define('_AM_XOO_TABFORM_OPTIONS', 'Options');
+define('_AM_XOO_TABFORM_TAGS', 'Tags');

@@ -17,26 +17,27 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . '/header.php';
+include __DIR__ . '/header.php';
 
-switch ($op) {    case 'save':
-    if (!$xoops->security()->check()) {
-        $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));
-    }
+switch ($op) {
+    case 'save':
+        if (!$xoops->security()->check()) {
+            $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));
+        }
 
-    $xooghost_main      = $system->CleanVars($_POST, 'xooghost_main', 0, 'int');
-    $xooghost_welcome   = $system->CleanVars($_POST, 'xooghost_welcome', '', 'string');
-    $xooghost_main_mode = $system->CleanVars($_POST, 'xooghost_main_mode', 'list', 'string');
+        $xooghost_main      = Xoops\Core\Request::getInt('xooghost_main', 0, 'POST');
+        $xooghost_welcome   = Xoops\Core\Request::getString('xooghost_welcome', '', 'POST');
+        $xooghost_main_mode = Xoops\Core\Request::getString('xooghost_main_mode', 'list', 'POST');
 
-    // Write configuration file
-    $object = XooGhostPreferences::getInstance();
-    $object->writeConfig( $object->Prepare2Save() );
-    $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
-    break;
-    default:
-    $form = $ghost_module->getForm(null, 'preferences');
-    $form->display();
-    break;
+        // Write configuration file
+        $object = XooGhostPreferences::getInstance();
+        $object->writeConfig($object->Prepare2Save());
+        $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
+        break;
+
+    default:
+        $form = $ghost_module->getForm(null, 'preferences');
+        $form->display();
+        break;
 }
-include dirname(__FILE__) . '/footer.php';
-?>
+include __DIR__ . '/footer.php';

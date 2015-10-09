@@ -14,29 +14,28 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
+ * @version         $Id: main.php 1421 2013-01-10 00:39:45Z DuGris $
  */
 
-define("_XOO_GHOST_NOTFOUND",               "Page not found");
-define("_XOO_GHOST_CHOOSE",                 "Choose a page");
-define("_XOO_GHOST_READS",                  "Read(s)");
-define("_XOO_GHOST_COMMENTS",               "Comment(s)");
-define("_XOO_GHOST_NOTIFICATIONS",          "Notifications");
-define("_XOO_GHOST_PRINT",                  "Print");
-define("_XOO_GHOST_PDF",                    "Pdf");
+define('_XOO_GHOST_NOTFOUND', 'Page not found');
+define('_XOO_GHOST_CHOOSE', 'Choose a page');
+define('_XOO_GHOST_READS', 'Read(s)');
+define('_XOO_GHOST_COMMENTS', 'Comment(s)');
+define('_XOO_GHOST_NOTIFICATIONS', 'Notifications');
+define('_XOO_GHOST_PRINT', 'Print');
+define('_XOO_GHOST_PDF', 'Pdf');
 
-define("_XOO_GHOST_READMORE",               "Read more ...");
+define('_XOO_GHOST_READMORE', 'Read more ...');
 
 // Rates
-define("_XOO_GHOST_RATE_VOTES",             "Votes");
-define("_XOO_GHOST_RATE_COUNT",             "Number of votes: ");
-define("_XOO_GHOST_RATE_AVERAGE",           "Average: ");
-define("_XOO_GHOST_RATE_YOURVOTE",          "Your vote: ");
+define('_XOO_GHOST_RATE_VOTES', 'Votes');
+define('_XOO_GHOST_RATE_COUNT', 'Number of votes: ');
+define('_XOO_GHOST_RATE_AVERAGE', 'Average: ');
+define('_XOO_GHOST_RATE_YOURVOTE', 'Your vote: ');
 
 // Like / Dislike
-define("_XOO_GHOST_LIKE",                   "Like");
-define("_XOO_GHOST_DISLIKE",                "Dislike");
+define('_XOO_GHOST_LIKE', 'Like');
+define('_XOO_GHOST_DISLIKE', 'Dislike');
 
 // Others
-define("_XOO_GHOST_RSS_FEED",               "RSS feed");
-?>
+define('_XOO_GHOST_RSS_FEED', 'RSS feed');

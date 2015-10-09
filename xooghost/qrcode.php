@@ -17,19 +17,17 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
-$url = $system->CleanVars($_REQUEST, 'url', '', 'string');
-if ( $url != '' ) {
-    $qrcode = new Xoops_qrcode();
-    $qrcode->render( $url );
+include __DIR__ .  '/header.php';
+$url = $system->cleanVars($_REQUEST, 'url', '', 'string');
+if ($url != '') {
+    $xoops->service('qrcode')->getImgTag('http://www.xoops.org/', array('alt' => 'QR code', 'title' => 'Xoops.org'))->getValue();
 } else {
     $contents = '';
-    $size = getimagesize($xoops->url('/images/blank.gif'));
-    $handle = fopen($xoops->url('/images/blank.gif'), 'rb');
+    $size     = getimagesize($xoops->url('/images/blank.gif'));
+    $handle   = fopen($xoops->url('/images/blank.gif'), 'rb');
     while (!feof($handle)) {
         $contents .= fread($handle, 1024);
     }
     fclose($handle);
     echo $contents;
 }
-?>

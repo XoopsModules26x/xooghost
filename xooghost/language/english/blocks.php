@@ -17,25 +17,26 @@
  * @version         $Id$
  */
 
-define("_MB_XOO_GHOST_MODE",                       "Display mode: ");
-define("_MB_XOO_GHOST_MODE_LIST",                  "List");
-define("_MB_XOO_GHOST_MODE_TABLE",                 "Table");
-define("_MB_XOO_GHOST_MODE_SELECT",                "Select");
+define('_MB_XOO_GHOST_MODE', 'Display mode: ');
+define('_MB_XOO_GHOST_MODE_LIST', 'List');
+define('_MB_XOO_GHOST_MODE_TABLE', 'Table');
+define('_MB_XOO_GHOST_MODE_SELECT', 'Select');
 
-define("_MB_XOO_GHOST_SORT",                       "Sort by: ");
-define("_MB_XOO_GHOST_SORT_ID",                    "ID");
-define("_MB_XOO_GHOST_SORT_RECENTS",               "Recents");
-define("_MB_XOO_GHOST_SORT_HITS",                  "Hits");
-define("_MB_XOO_GHOST_SORT_RATES",                 "Rates");
-define("_MB_XOO_GHOST_SORT_LIKE",                  "Like");
-define("_MB_XOO_GHOST_SORT_DISLIKE",               "Dislike");
-define("_MB_XOO_GHOST_SORT_RANDOM",                "Random");
+define('_MB_XOO_GHOST_SORT', 'Sort by: ');
+define('_MB_XOO_GHOST_SORT_ID', 'ID');
+define('_MB_XOO_GHOST_SORT_RECENTS', 'Recents');
+define('_MB_XOO_GHOST_SORT_HITS', 'Hits');
+define('_MB_XOO_GHOST_SORT_RATES', 'Rates');
+define('_MB_XOO_GHOST_SORT_LIKE', 'Like');
+define('_MB_XOO_GHOST_SORT_DISLIKE', 'Dislike');
+define('_MB_XOO_GHOST_SORT_RANDOM', 'Random');
 
-define("_MB_XOO_GHOST_ORDER",                      "Order: ");
-define("_MB_XOO_GHOST_ORDER_ASC",                  "Ascending");
-define("_MB_XOO_GHOST_ORDER_DESC",                 "Descending");
+define('_MB_XOO_GHOST_ORDER', 'Order: ');
+define('_MB_XOO_GHOST_ORDER_ASC', 'Ascending');
+define('_MB_XOO_GHOST_ORDER_DESC', 'Descending');
 
-define("_MB_XOO_GHOST_LIMIT",                      "Limit per block: ");
+define('_MB_XOO_GHOST_LIMIT', 'Limit per block: ');
 
-if ( !defined("_XOO_GHOST_CHOOSE") ) {    define("_XOO_GHOST_CHOOSE",                    "Choose a page");}
-?>
+if (!defined('_XOO_GHOST_CHOOSE')) {
+    define('_XOO_GHOST_CHOOSE', 'Choose a page');
+}

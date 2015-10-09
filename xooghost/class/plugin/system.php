@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Xooghost module
  *
@@ -16,39 +17,57 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
-class XooghostSystemPlugin extends Xoops_Module_Plugin_Abstract implements SystemPluginInterface
+class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements SystemPluginInterface
 {
+    /**
+     * @param int $uid
+     *
+     * @return mixed
+     */
     public function userPosts($uid)
-    {        $ghost_module = Xooghost::getInstance();
+    {
+        $ghost_module  = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
 
         $criteria = new CriteriaCompo();
-        $criteria->add( new Criteria('xooghost_online', 1) ) ;
-        $criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
-        $criteria->add( new Criteria('xooghost_uid', $uid) );
+        $criteria->add(new Criteria('xooghost_online', 1));
+        $criteria->add(new Criteria('xooghost_published', time(), '<='));
+        $criteria->add(new Criteria('xooghost_uid', $uid));
 
         return $ghost_handler->getCount($criteria);
     }
 
+    /**
+     * @return bool
+     */
     public function waiting()
-    {        $ghost_module = Xooghost::getInstance();
+    {
+        $ghost_module  = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
-        $criteria = new CriteriaCompo(new Criteria('xooghost_online', 0));
-        if ($count = $ghost_handler->getCount($criteria)) {            $ret['count'] = $count;
-            $ret['name'] = Xoops::getInstance()->getHandlerModule()->getBydirname('xooghost')->getVar('name');
-            $ret['link'] = Xoops::getInstance()->url('modules/xooghost/admin/pages.php?online=0');
+        $criteria      = new CriteriaCompo(new Criteria('xooghost_online', 0));
+        if ($count = $ghost_handler->getCount($criteria)) {
+            $ret['count'] = $count;
+            $ret['name']  = Xoops::getInstance()->getHandlerModule()->getBydirname('xooghost')->getVar('name');
+            $ret['link']  = Xoops::getInstance()->url('modules/xooghost/admin/pages.php?online=0');
+
             return $ret;
         }
+
         return false;
     }
 
-    public function backend($limit=10)
-    {        $xoops = Xoops::getInstance();
-        $ghost_module = Xooghost::getInstance();
+    /**
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function backend($limit = 10)
+    {
+        $xoops         = Xoops::getInstance();
+        $ghost_module  = Xooghost::getInstance();
         $ghost_handler = $ghost_module->GhostHandler();
 
-        $ret = array();
+        $ret      = array();
         $messages = $ghost_handler->getPublished('published', 'desc', 0, $limit);
         foreach ($messages as $k => $message) {
             $ret[$k]['title']   = $message['xooghost_title'];
@@ -56,9 +75,13 @@ class XooghostSystemPlugin extends Xoops_Module_Plugin_Abstract implements Syste
             $ret[$k]['content'] = $message['xooghost_content'];
             $ret[$k]['date']    = $message['xooghost_time'];
         }
+
         return $ret;
     }
 
+    /**
+     * @return array
+     */
     public function userMenus()
     {
         return array();

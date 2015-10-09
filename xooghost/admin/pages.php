@@ -17,110 +17,122 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . '/header.php';
+include __DIR__ . '/header.php';
 
-switch ($op) {    case 'save':
-    if ( !$xoops->security()->check() ) {
-        $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
-    }
+switch ($op) {
+    case 'save':
+        if (!$xoops->security()->check()) {
+            $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
+        }
 
-    $xooghost_id = $system->CleanVars($_POST, 'xooghost_id', 0, 'int');
+        $xooghost_id = $system->cleanVars($_POST, 'xooghost_id', 0, 'int');
 
-    if( isset($xooghost_id) && $xooghost_id > 0 ){
-        $page = $ghost_handler->get($xooghost_id);
-        $isnew = false;
-    } else {
-        $page = $ghost_handler->create();
-        $isnew = true;
-    }
+        if (isset($xooghost_id) && $xooghost_id > 0) {
+            $page  = $ghost_handler->get($xooghost_id);
+            $isnew = false;
+        } else {
+            $page  = $ghost_handler->create();
+            $isnew = true;
+        }
 
-    $page->CleanVarsForDB();
+        $page->cleanVarsForDB();
 
-    // uploads images
-    $myts = MyTextSanitizer::getInstance();
-    $upload_images = $ghost_handler->upload_images( $page->getVar('xooghost_title') );
+        // uploads images
+        $myts          = MyTextSanitizer::getInstance();
+        $upload_images = $ghost_handler->uploadImages($page->getVar('xooghost_title'));
 
-    if ( is_array( $upload_images ) && count( $upload_images) != 0 ) {        foreach ($upload_images as $k => $reponse ) {            if ( $reponse['error'] == true ) {                $errors[] = $reponse['message'];
-            } else {                $page->setVar( $k, $reponse['filename'] );
+        if (is_array($upload_images) && count($upload_images) != 0) {
+            foreach ($upload_images as $k => $reponse) {
+                if ($reponse['error'] == true) {
+                    $errors[] = $reponse['message'];
+                } else {
+                    $page->setVar($k, $reponse['filename']);
+                }
             }
-        }
-    } else {        $page->setVar('xooghost_image', $myts->htmlspecialchars( $_POST['image_list'] ) );
-    }
-
-
-    if ($xooghost_id = $ghost_handler->insert($page)) {        $msg = _AM_XOO_GHOST_SAVED;
-        if ( isset($errors) && count($errors) != 0) {            $msg .= '<br />' . implode('<br />', $errors);;        }
-
-        // tags
-        if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {            $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-            $msg .= '<br />' . $xootags_handler->updateByItem('tags', $xooghost_id) ;
+        } else {
+            $page->setVar('xooghost_image', $myts->htmlspecialchars($_POST['image_list']));
         }
 
-        if ($isnew) {
-            $page->setPost(true);
+        if ($xooghost_id = $ghost_handler->insert($page)) {
+            $msg = _AM_XOO_GHOST_SAVED;
+            if (isset($errors) && count($errors) != 0) {
+                $msg .= '<br />' . implode('<br />', $errors);;
+            }
 
-            //notifications
-            $page->sendNotifications();
+            // tags
+            if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
+                $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                $msg .= '<br />' . $xootags_handler->updateByItem('tags', $xooghost_id);
+            }
+
+            if ($isnew) {
+                $page->setPost(true);
+
+                //notifications
+                $page->sendNotifications();
+            }
+            $xoops->redirect('pages.php', 5, $msg);
         }
-        $xoops->redirect('pages.php', 5, $msg);
-    }
-    break;
+        break;
 
     case 'add':
-    $page = $ghost_handler->create();
-    $form = $ghost_module->getForm($page, 'pages');
-    $form->display();
-    break;
+        $page = $ghost_handler->create();
+        $form = $ghost_module->getForm($page, 'pages');
+        $form->display();
+        break;
 
     case 'edit':
-    $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
-    $page = $ghost_handler->get($xooghost_id);
-    $form = $ghost_module->getForm($page, 'pages');
-    $form->display();
-    break;
+        $xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+        $page        = $ghost_handler->get($xooghost_id);
+        $form        = $ghost_module->getForm($page, 'pages');
+        $form->display();
+        break;
 
     case 'del':
-    $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
-    if( isset($xooghost_id) && $xooghost_id > 0 ){
-        if ($page = $ghost_handler->get($xooghost_id) ) {
-            $delete = $system->CleanVars( $_POST, 'ok', 0, 'int' );
-            if ($delete == 1) {
-                if ( !$xoops->security()->check() ) {
-                    $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
+        $xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+        if (isset($xooghost_id) && $xooghost_id > 0) {
+            if ($page = $ghost_handler->get($xooghost_id)) {
+                $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
+                if ($delete == 1) {
+                    if (!$xoops->security()->check()) {
+                        $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
+                    }
+                    // tags
+                    if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
+                        $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
+                        $xootags_handler->deleteByItem($page->getVar('xooghost_id'));
+                    }
+                    $page->setPost(false);
+                    $ghost_handler->delete($page);
+                    $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_DELETED);
+                } else {
+                    $xoops->confirm(
+                        array('ok' => 1, 'xooghost_id' => $xooghost_id, 'op' => 'del'),
+                        $_SERVER['REQUEST_URI'],
+                        sprintf(_AM_XOO_GHOST_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $page->getVar('xooghost_title'))
+                    );
                 }
-                // tags
-                if ( $xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS') ) {
-                    $xootags_handler = $xoops->getModuleHandler('xootags_tags', 'xootags');
-                    $xootags_handler->deleteByItem($page->getVar('xooghost_id')) ;
-                }
-                $page->setPost(false);
-                $ghost_handler->delete($page);
-                $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_DELETED);
             } else {
-                $xoops->confirm(array('ok' => 1, 'xooghost_id' => $xooghost_id, 'op' => 'del'), $_SERVER['REQUEST_URI'], sprintf(_AM_XOO_GHOST_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $page->getVar('xooghost_title')));
+                $xoops->redirect('pages.php', 5);
             }
         } else {
             $xoops->redirect('pages.php', 5);
         }
-    } else {
-        $xoops->redirect('pages.php', 5);
-    }
-    break;
+        break;
 
     case 'view':
     case 'hide':
-    $xooghost_id = $system->CleanVars($_REQUEST, 'xooghost_id', 0, 'int');
-    $ghost_handler->SetOnline($xooghost_id);
-    $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_SAVED);
-    break;
+        $xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+        $ghost_handler->SetOnline($xooghost_id);
+        $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_SAVED);
+        break;
 
     default:
-    $online = $system->CleanVars($_REQUEST, 'online', -1, 'int');
-    $admin_page->addItemButton(_AM_XOO_GHOST_ADD, 'pages.php?op=add', 'add');
-    $admin_page->renderButton();
+        $online = $system->cleanVars($_REQUEST, 'online', -1, 'int');
+        $admin_page->addItemButton(_AM_XOO_GHOST_ADD, 'pages.php?op=add', 'add');
+        $admin_page->renderButton();
 
-    $xoops->tpl()->assign('pages', $ghost_handler->renderAdminList($online) );
-    break;
+        $xoops->tpl()->assign('pages', $ghost_handler->renderAdminList($online));
+        break;
 }
-include dirname(__FILE__) . '/footer.php';
-?>
+include __DIR__ . '/footer.php';

@@ -17,45 +17,64 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-function XooGhost_getMetaDescription( $string )
-{    $xoops = xoops::getinstance();
-    $myts = MyTextSanitizer::getInstance();
+/**
+ * @param $string
+ *
+ * @return mixed|string
+ */
+function XooGhost_getMetaDescription($string)
+{
+    $xoops = Xoops::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
 
     if (is_array($string)) {
         $string = implode(', ', $string);
     }
-    $string = $xoops->module->name() . ' : ' . $string ;
+    $string = $xoops->module->name() . ' : ' . $string;
     $string .= '. ' . $xoops->getConfig('meta_description', 3);
 
-    $string = $myts->undoHtmlSpecialChars( $string );
+    $string = $myts->undoHtmlSpecialChars($string);
     $string = str_replace('[breakpage]', '', $string);
     // remove html tags
-    $string = strip_tags( $string );
-    return $string;}
+    $string = strip_tags($string);
 
-function XooGhost_getMetaKeywords( $string, $limit = 5)
-{    $xoops = xoops::getinstance();
-    $myts = MyTextSanitizer::getInstance();
+    return $string;
+}
 
-    if (is_array($string)) {        $string = implode(', ', $string);    }
+/**
+ * @param     $string
+ * @param int $limit
+ *
+ * @return string
+ */
+function XooGhost_getMetaKeywords($string, $limit = 5)
+{
+    $xoops = Xoops::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
+
+    if (is_array($string)) {
+        $string = implode(', ', $string);
+    }
     $string = strtolower($string) . ', ' . strtolower($xoops->getConfig('meta_keywords', 3));
-    $string = $myts->undoHtmlSpecialChars( $string );
+    $string = $myts->undoHtmlSpecialChars($string);
     $string = str_replace('[breakpage]', '', $string);
-    $string = strip_tags( $string );
-    $string = html_entity_decode( $string, ENT_QUOTES );
+    $string = strip_tags($string);
+    $string = html_entity_decode($string, ENT_QUOTES);
 
-    $search_pattern=array("\t","\r\n","\r","\n",",",".","'",";",":",")","(",'"','?','!','{','}','[',']','<','>','/','+','_','\\','*','pagebreak','page');
-    $replace_pattern=array(' ',' ',' ',' ',' ',' ',' ','','','','','','','','','','','','','','','','','','','','');
-    $string = str_replace($search_pattern, $replace_pattern, $string);
+    $search_pattern  = array("\t", "\r\n", "\r", "\n", ",", ".", "'", ";", ":", ")", "(", '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page');
+    $replace_pattern = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+    $string          = str_replace($search_pattern, $replace_pattern, $string);
 
-    $tmpkeywords = explode(' ',$string);
+    $tmpkeywords = explode(' ', $string);
 
     $tmpkeywords = array_unique($tmpkeywords);
-    foreach($tmpkeywords as $keyword) {        if ( strlen(trim($keyword)) >= $limit && !is_numeric($keyword) ) {            $keywords[] = htmlentities( trim( $keyword ) );
+    foreach ($tmpkeywords as $keyword) {
+        if (strlen(trim($keyword)) >= $limit && !is_numeric($keyword)) {
+            $keywords[] = htmlentities(trim($keyword));
         }
     }
+
     return implode(', ', $keywords);
 }
-?>

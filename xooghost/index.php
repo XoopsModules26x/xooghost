@@ -17,16 +17,16 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ .  '/header.php';
 
-$start = $system->CleanVars($_REQUEST, 'start', 0, 'int');
+$start = $system->cleanVars($_REQUEST, 'start', 0, 'int');
 
 $pages = $ghost_handler->getPublished('published', 'desc', $start, $ghost_config['xooghost_limit_main']);
 
 $criteria = new CriteriaCompo();
-$criteria->add( new Criteria('xooghost_online', 1) ) ;
-$criteria->add( new Criteria('xooghost_published', 0, '>') ) ;
-$criteria->add( new Criteria('xooghost_published', time(), '<=') ) ;
+$criteria->add(new Criteria('xooghost_online', 1));
+$criteria->add(new Criteria('xooghost_published', 0, '>'));
+$criteria->add(new Criteria('xooghost_published', time(), '<='));
 
 $pages_count = $ghost_handler->getCount($criteria);
 
@@ -36,11 +36,10 @@ $xoops->tpl()->assign('pages', $pages);
 $paginate = new Xoopaginate($pages_count, $ghost_config['xooghost_limit_main'], $start, 'start', '');
 
 // Metas
-foreach ($pages as $k => $page ) {
+foreach ($pages as $k => $page) {
     $description[] = $page['xooghost_title'];
 }
-$xoops->theme()->addMeta($type = 'meta', 'description', XooGhost_getMetaDescription( $description ) );
-$xoops->theme()->addMeta($type = 'meta', 'keywords', XooGhost_getMetaKeywords( $description ) );
+$xoops->theme()->addMeta($type = 'meta', 'description', XooGhost_getMetaDescription($description));
+$xoops->theme()->addMeta($type = 'meta', 'keywords', XooGhost_getMetaKeywords($description));
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
-?>
+include __DIR__ .  '/footer.php';

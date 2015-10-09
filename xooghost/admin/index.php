@@ -17,11 +17,11 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . '/header.php';
+include __DIR__ . '/header.php';
 
 $xoops->header();
 
-$admin_page = new XoopsModuleAdmin();
+$admin_page = new \Xoops\Module\Admin();
 
 // extension
 $admin_page->addConfigBoxLine(array('comments', 'warning'), 'extension');
@@ -32,5 +32,4 @@ $admin_page->addConfigBoxLine(array('notifications', 'warning'), 'module');
 
 $admin_page->displayIndex();
 
-include dirname(__FILE__) . '/footer.php';
-?>
+include __DIR__ . '/footer.php';
