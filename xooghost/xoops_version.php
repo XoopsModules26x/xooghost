@@ -58,7 +58,7 @@ $modversion['adminmenu']  = 'admin/menu.php';
 
 // Manage extension
 $modversion['extension']          = 0;
-$modversion['extension_module'][] = '';
+$modversion['extensionModule'][] = '';
 
 // Scripts to run upon installation or update
 $modversion['onInstall']   = 'install/install.php';

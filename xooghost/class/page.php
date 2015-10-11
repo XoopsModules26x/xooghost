@@ -22,9 +22,9 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * Class Xooghost_page
+ * Class XooghostPage
  */
-class Xooghost_page extends XoopsObject
+class XooghostPage extends XoopsObject
 {
     private $exclude_page
         = array(
@@ -43,8 +43,8 @@ class Xooghost_page extends XoopsObject
      */
     public function __construct()
     {
-        $xoops          = Xoops::getinstance();
-        $this->php_self = basename($xoops->getenv('PHP_SELF'), '.php');
+        $xoops          = Xoops::getInstance();
+        $this->php_self = basename($xoops->getEnv('PHP_SELF'), '.php');
 
         $this->initVar('xooghost_id', XOBJ_DTYPE_INT, 0, true, 11);
         $this->initVar('xooghost_url', XOBJ_DTYPE_TXTBOX, '', true, 54);
@@ -66,14 +66,9 @@ class Xooghost_page extends XoopsObject
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
 
         // Module
-        $ghost_module      = Xooghost::getInstance();
-        $this->config      = $ghost_module->LoadConfig();
-        $this->rld_handler = $ghost_module->RldHandler();
-    }
-
-    private function xooghost_page()
-    {
-        $this->__construct();
+        $ghostModule      = Xooghost::getInstance();
+        $this->config      = $ghostModule->loadConfig();
+        $this->rldHandler = $ghostModule->rldHandler();
     }
 
     /**
@@ -81,14 +76,14 @@ class Xooghost_page extends XoopsObject
      */
     public function setPost($addpost = true)
     {
-        $xoops          = Xoops::getinstance();
-        $member_handler = $xoops->getHandlerMember();
-        $poster         = $member_handler->getUser($this->getVar('xooghost_uid'));
+        $xoops          = Xoops::getInstance();
+        $memberHandler = $xoops->getHandlerMember();
+        $poster         = $memberHandler->getUser($this->getVar('xooghost_uid'));
         if ($poster instanceof XoopsUser) {
             if ($addpost) {
-                $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
+                $memberHandler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
             } else {
-                $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') - 1);
+                $memberHandler->updateUserByField($poster, 'posts', $poster->getVar('posts') - 1);
             }
         }
     }
@@ -166,14 +161,14 @@ class Xooghost_page extends XoopsObject
         $ret['xooghost_time']       = $this->getVar('xooghost_published');
         $ret['xooghost_published']  = date(constant($dateformat), $this->getVar('xooghost_published'));
 
-        $ret['xooghost_link'] = XOOPS_URL . '/modules/xooghost/' . $this->getVar('xooghost_url');
+        $ret['xooghost_link'] = \XoopsBaseConfig::get('url') . '/modules/xooghost/' . $this->getVar('xooghost_url');
 
         $ret['xooghost_uid_name'] = XoopsUser::getUnameFromId($this->getVar('xooghost_uid'), true);
 
         if ($this->getVar('xooghost_image') != 'blank.gif') {
             $ret['xooghost_image_link'] = $xoops_upload_url . '/xooghost/images/' . $this->getVar('xooghost_image');
         } else {
-            $ret['xooghost_image_link'] = XOOPS_URL . '/' . $xoops->theme()->resourcePath('/modules/xooghost/assets/images/pages.png');
+            $ret['xooghost_image_link'] = \XoopsBaseConfig::get('url') . '/' . $xoops->theme()->resourcePath('/modules/xooghost/assets/images/pages.png');
         }
 
         if (in_array($this->php_self, $this->exclude_page) && strpos($this->getVar('xooghost_content'), '[breakpage]') !== false) {
@@ -190,8 +185,8 @@ class Xooghost_page extends XoopsObject
             if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
                 $id = $this->getVar('xooghost_id');
                 if (!isset($tags[$this->getVar('xooghost_id')])) {
-                    $xootags_handler                    = $xoops->getModuleHandler('xootags_tags', 'xootags');
-                    $tags[$this->getVar('xooghost_id')] = $xootags_handler->getbyItem($this->getVar('xooghost_id'));
+                    $xootagsHandler                    = $xoops->getModuleHandler('tags', 'xootags');
+                    $tags[$this->getVar('xooghost_id')] = $xootagsHandler->getbyItem($this->getVar('xooghost_id'));
                 }
                 $ret['tags'] = $tags[$this->getVar('xooghost_id')];
             }
@@ -209,8 +204,8 @@ class Xooghost_page extends XoopsObject
     {
         if (!in_array($this->php_self, $this->exclude_page)) {
             if ($this->config['xooghost_rld']['rld_mode'] == 'rate') {
-                $ret['xooghost_vote']     = $this->rld_handler->getVotes($this->getVar('xooghost_id'));
-                $ret['xooghost_yourvote'] = $this->rld_handler->getbyUser($this->getVar('xooghost_id'));
+                $ret['xooghost_vote']     = $this->rldHandler->getVotes($this->getVar('xooghost_id'));
+                $ret['xooghost_yourvote'] = $this->rldHandler->getbyUser($this->getVar('xooghost_id'));
             }
         }
 
@@ -222,10 +217,10 @@ class Xooghost_page extends XoopsObject
      */
     public function create_page()
     {
-        if (!file_exists(XOOPS_ROOT_PATH . '/modules/xooghost/' . $this->getVar('xooghost_url'))) {
+        if (!file_exists(\XoopsBaseConfig::get('root-path')  . '/modules/xooghost/' . $this->getVar('xooghost_url'))) {
             $xoopstmp = Xoops::getInstance();
             $content  = $xoopstmp->tpl()->fetch('admin:xooghost/xooghost_model_page.tpl');
-            file_put_contents(XOOPS_ROOT_PATH . '/modules/xooghost/' . $this->getVar('xooghost_url'), $content);
+            file_put_contents(\XoopsBaseConfig::get('root-path')  . '/modules/xooghost/' . $this->getVar('xooghost_url'), $content);
         }
 
         return true;
@@ -289,22 +284,22 @@ class Xooghost_page extends XoopsObject
     {
         $xoops = Xoops::getInstance();
         if ($xoops->isActiveModule('notifications')) {
-            $notification_handler = Notifications::getInstance()->getNotificationHandler();
+            $notificationHandler = Notifications::getInstance()->getNotificationHandler();
             $tags                 = array();
             $tags['MODULE_NAME']  = $xoops->module->getVar('name');
             $tags['ITEM_NAME']    = $this->getVar('xooghost_title');
             $tags['ITEM_URL']     = $xoops->url('/modules/xooghost/' . $this->getVar('xooghost_url'));
             $tags['ITEM_BODY']    = $this->getVar('xooghost_content');
             $tags['DATESUB']      = $this->getVar('xooghost_published');
-            $notification_handler->triggerEvent('global', 0, 'newcontent', $tags);
+            $notificationHandler->triggerEvent('global', 0, 'newcontent', $tags);
         }
     }
 }
 
 /**
- * Class XooghostXooghost_pageHandler
+ * Class XooghostPageHandler
  */
-class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
+class XooghostPageHandler extends XoopsPersistableObjectHandler
 {
     private $exclude
         = array(
@@ -325,22 +320,22 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'xooghost', 'Xooghost_page', 'xooghost_id', 'xooghost_title');
+        parent::__construct($db, 'xooghost', 'XooghostPage', 'xooghost_id', 'xooghost_title');
 
         // Module
-        $ghost_module      = Xooghost::getInstance();
-        $this->config      = $ghost_module->LoadConfig();
-        $this->rld_handler = $ghost_module->RldHandler();
+        $ghostModule      = Xooghost::getInstance();
+        $this->config      = $ghostModule->loadConfig();
+        $this->rldHandler = $ghostModule->rldHandler();
     }
 
     /**
-     * @param $Xooghost_url
+     * @param $xooghostUrl
      *
      * @return mixed
      */
-    public function getByURL($Xooghost_url)
+    public function getByURL($xooghostUrl)
     {
-        $criteria = new Criteria('xooghost_url', $Xooghost_url);
+        $criteria = new Criteria('xooghost_url', $xooghostUrl);
         $page     = $this->getObjects($criteria, false, true);
 
         return $page[0];
@@ -434,7 +429,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
             if (is_object($page) && count($page) != 0) {
                 $xoops = Xoops::getInstance();
 
-                if ($ret = $this->rld_handler->setLikeDislike($page_id, $like_dislike)) {
+                if ($ret = $this->rldHandler->setLikeDislike($page_id, $like_dislike)) {
                     if ($like_dislike == 0) {
                         $xooghost_dislike = $page->getVar('xooghost_dislike') + 1;
                         $page->setVar('xooghost_dislike', $xooghost_dislike);
@@ -467,7 +462,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
             if (is_object($page) && count($page) != 0) {
                 $xoops = Xoops::getInstance();
 
-                if ($ret = $this->rld_handler->SetRate($page_id, $rate)) {
+                if ($ret = $this->rldHandler->SetRate($page_id, $rate)) {
                     if (is_array($ret) && count($ret) == 3) {
                         $page->setVar('xooghost_rates', $ret['average']);
                         $this->insert($page);
@@ -525,7 +520,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
      */
     public function insert(XoopsObject $object, $force = true)
     {
-        $xoops = Xoops::getinstance();
+        $xoops = Xoops::getInstance();
         if (parent::insert($object, $force)) {
             $object->create_page();
             if ($object->isNew()) {
@@ -608,7 +603,7 @@ class XooghostXooghost_pageHandler extends XoopsPersistableObjectHandler
             $exclude[] = $page['xooghost_url'];
         }
 
-        $dirname = XOOPS_ROOT_PATH . '/modules/xooghost';
+        $dirname = \XoopsBaseConfig::get('root-path')  . '/modules/xooghost';
 
         $filelist = array();
         if ($handle = opendir($dirname)) {

@@ -45,7 +45,7 @@ if ($xoops->isModule()) {
         $modules[]  = array(
             'time'    => $time,
             'dirname' => $res['dirname'],
-            'date'    => gmdate('Y-m-d\TH:i:s\Z', $time),
+            'date'    => gmdate('Y-m-d\TH:i:s\Z', $time)
         );
         if (count($res['items']) > 0) {
             foreach ($res['items'] as $item) {
@@ -53,7 +53,7 @@ if ($xoops->isModule()) {
                 $items[] = array(
                     'time' => $item['time'],
                     'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
-                    'link' => $item['url'],
+                    'link' => $item['url']
                 );
             }
         }
@@ -68,7 +68,7 @@ if ($xoops->isModule()) {
             $modules[]  = array(
                 'time'    => $time,
                 'dirname' => $res['dirname'],
-                'date'    => gmdate('Y-m-d\TH:i:s\Z', $time),
+                'date'    => gmdate('Y-m-d\TH:i:s\Z', $time)
             );
             if (count($res['items']) > 0) {
                 foreach ($res['items'] as $item) {
@@ -76,7 +76,7 @@ if ($xoops->isModule()) {
                     $items[] = array(
                         'time' => $item['time'],
                         'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
-                        'link' => $item['url'],
+                        'link' => $item['url']
                     );
                 }
             }

@@ -26,15 +26,15 @@ class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      */
     public function userPosts($uid)
     {
-        $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
+        $ghostModule  = Xooghost::getInstance();
+        $ghostHandler = $ghostModule->ghostHandler();
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xooghost_online', 1));
         $criteria->add(new Criteria('xooghost_published', time(), '<='));
         $criteria->add(new Criteria('xooghost_uid', $uid));
 
-        return $ghost_handler->getCount($criteria);
+        return $ghostHandler->getCount($criteria);
     }
 
     /**
@@ -42,12 +42,12 @@ class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      */
     public function waiting()
     {
-        $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
+        $ghostModule  = Xooghost::getInstance();
+        $ghostHandler = $ghostModule->ghostHandler();
         $criteria      = new CriteriaCompo(new Criteria('xooghost_online', 0));
-        if ($count = $ghost_handler->getCount($criteria)) {
+        if ($count = $ghostHandler->getCount($criteria)) {
             $ret['count'] = $count;
-            $ret['name']  = Xoops::getInstance()->getHandlerModule()->getBydirname('xooghost')->getVar('name');
+            $ret['name']  = Xoops::getInstance()->getHandlerModule()->getByDirname('xooghost')->getVar('name');
             $ret['link']  = Xoops::getInstance()->url('modules/xooghost/admin/pages.php?online=0');
 
             return $ret;
@@ -64,11 +64,11 @@ class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
     public function backend($limit = 10)
     {
         $xoops         = Xoops::getInstance();
-        $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
+        $ghostModule  = Xooghost::getInstance();
+        $ghostHandler = $ghostModule->ghostHandler();
 
         $ret      = array();
-        $messages = $ghost_handler->getPublished('published', 'desc', 0, $limit);
+        $messages = $ghostHandler->getPublished('published', 'desc', 0, $limit);
         foreach ($messages as $k => $message) {
             $ret[$k]['title']   = $message['xooghost_title'];
             $ret[$k]['link']    = $xoops->url('modules/xooghost/' . $message['xooghost_url']);

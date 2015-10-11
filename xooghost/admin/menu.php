@@ -17,14 +17,14 @@
  * @version         $Id$
  */
 
-$module = Xoops::getInstance()->getHandlerModule()->getBydirname('xooghost');
+$module = Xoops::getInstance()->getHandlerModule()->getByDirname('xooghost');
 
 $i                      = 0;
 $adminmenu[$i]['title'] = _MI_XOO_GHOST_INDEX;
 $adminmenu[$i]['link']  = 'admin/index.php';
 $adminmenu[$i]['icon']  = 'home.png';
 
-if (Xoops::getInstance()->isadmin()) {
+if (Xoops::getInstance()->isAdmin()) {
     ++$i;
     $adminmenu[$i]['title'] = _MI_XOO_GHOST_PREFERENCES;
     $adminmenu[$i]['link']  = 'admin/preferences.php';

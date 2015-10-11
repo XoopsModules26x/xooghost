@@ -37,7 +37,7 @@ XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
-if ($script_name != 'about') {
+if ($script_name !== 'about') {
     $xoops->header('xooghost_' . $script_name . '.tpl');
 } else {
     $xoops->header();
@@ -45,12 +45,12 @@ if ($script_name != 'about') {
 $xoops->theme()->addStylesheet('modules/xooghost/assets/css/moduladmin.css');
 
 $admin_page = new \Xoops\Module\Admin();
-if ($script_name != 'about' && $script_name != 'index') {
+if ($script_name !== 'about' && $script_name !== 'index') {
     $admin_page->renderNavigation(basename($_SERVER['SCRIPT_NAME']));
-} elseif ($script_name != 'index') {
+} elseif ($script_name !== 'index') {
     $admin_page->displayNavigation(basename($_SERVER['SCRIPT_NAME']));
 }
 
-$ghost_module  = Xooghost::getInstance();
-$ghost_config  = $ghost_module->LoadConfig();
-$ghost_handler = $ghost_module->GhostHandler();
+$ghost_Module  = Xooghost::getInstance();
+$ghostConfig  = $ghostModule->loadConfig();
+$ghostHandler = $ghostModule->ghostHandler();

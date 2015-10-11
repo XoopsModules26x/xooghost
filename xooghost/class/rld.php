@@ -22,9 +22,9 @@ use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 
 /**
- * Class Xooghost_rld
+ * Class XooghostRld
  */
-class Xooghost_rld extends XoopsObject
+class XooghostRld extends XoopsObject
 {
     // constructor
     /**
@@ -42,11 +42,9 @@ class Xooghost_rld extends XoopsObject
         $this->initVar('xooghost_rld_dislike', XOBJ_DTYPE_INT, 0, true, 1);
     }
 
-    private function Xooghost_rld()
-    {
-        $this->__construct();
-    }
-
+    /**
+     * @return mixed
+     */
     public static function getInstance()
     {
         static $instance;
@@ -58,11 +56,11 @@ class Xooghost_rld extends XoopsObject
         return $instance;
     }
 
-    public function CleanVarsForDB()
+    public function cleanVarsForDB()
     {
         $system = System::getInstance();
         foreach (parent::getValues() as $k => $v) {
-            if ($k != 'dohtml') {
+            if ($k !== 'dohtml') {
                 if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
                     $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
@@ -82,18 +80,21 @@ class Xooghost_rld extends XoopsObject
 }
 
 /**
- * Class XooghostXooghost_rldHandler
+ * Class XooghostRldHandler
  */
-class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
+class XooghostRldHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param null|\Xoops\Core\Database\Connection $db
      */
     public function __construct(Connection $db = null)
     {
-        parent::__construct($db, 'xooghost_rld', 'Xooghost_rld', 'xooghost_rld_id', 'xooghost_rld_page');
+        parent::__construct($db, 'xooghost_rld', 'XooghostRld', 'xooghost_rld_id', 'xooghost_rld_page');
     }
 
+    /**
+     * @return mixed
+     */
     public static function getInstance()
     {
         static $instance;
@@ -128,7 +129,7 @@ class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
     {
         $xoops = Xoops::getInstance();
         $uid   = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip    = $xoops->getenv('REMOTE_ADDR');
+        $ip    = $xoops->getEnv('REMOTE_ADDR');
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xooghost_rld_page', $page_id));
@@ -155,7 +156,7 @@ class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
     {
         $xoops   = Xoops::getInstance();
         $uid     = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip      = $xoops->getenv('REMOTE_ADDR');
+        $ip      = $xoops->getEnv('REMOTE_ADDR');
         $like    = ($like_dislike == 1) ? 1 : 0;
         $dislike = ($like_dislike == 0) ? 1 : 0;
 
@@ -190,11 +191,11 @@ class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
      *
      * @return array|bool
      */
-    public function SetRate($page_id, $vote)
+    public function setRate($page_id, $vote)
     {
         $xoops = Xoops::getInstance();
         $uid   = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip    = $xoops->getenv('REMOTE_ADDR');
+        $ip    = $xoops->getEnv('REMOTE_ADDR');
 
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xooghost_rld_page', $page_id));
@@ -237,7 +238,7 @@ class XooghostXooghost_rldHandler extends XoopsPersistableObjectHandler
         $rates  = 0;
         $voters = 0;
         foreach ($res as $k => $v) {
-            $rates = $rates + $v['xooghost_rld_rates'];
+            $rates += $v['xooghost_rld_rates'];
             ++$voters;
         }
 

@@ -19,7 +19,7 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-include_once XOOPS_ROOT_PATH . '/modules/xooghost/install/install.php';
+include_once __DIR__ . '/install.php';
 
 /**
  * @return bool

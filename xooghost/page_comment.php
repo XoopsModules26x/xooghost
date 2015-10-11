@@ -25,9 +25,9 @@ $system = System::getInstance();
 
 $xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
 
-$ghost_module  = Xooghost::getInstance();
-$ghost_config  = $ghost_module->LoadConfig();
-$ghost_handler = $ghost_module->GhostHandler();
+$ghostModule  = Xooghost::getInstance();
+$ghostConfig  = $ghostModule->loadConfig();
+$ghostHandler = $ghostModule->ghostHandler();
 
-$page = $ghost_handler->get($xooghost_id);
-$xoops->redirect($ghost_handler->get($xooghost_id)->getVar('xooghost_url') . '?' . $xoops->getenv('QUERY_STRING'));
+$page = $ghostHandler->get($xooghost_id);
+$xoops->redirect($ghostHandler->get($xooghost_id)->getVar('xooghost_url') . '?' . $xoops->getEnv('QUERY_STRING'));

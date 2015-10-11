@@ -53,7 +53,7 @@ function xoops_module_install_xooghost()
 function xooghost_mkdirs($pathname, $pathout = XOOPS_ROOT_PATH)
 {
     $xoops    = Xoops::getInstance();
-    $pathname = substr($pathname, strlen(XOOPS_ROOT_PATH));
+    $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path') ));
     $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
     $dest  = $pathout;

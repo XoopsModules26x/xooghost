@@ -31,10 +31,10 @@ if ($xoops->security()->check()) {
     if (!isset($_SESSION['xooghost_like' . $page_id]) || $_SESSION['xooghost_like' . $page_id] < $time) {
         $_SESSION['xooghost_like' . $page_id] = $time + 3600;
 
-        $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
+        $ghostModule  = Xooghost::getInstance();
+        $ghostHandler = $ghostModule->GhostHandler();
 
-        $ret = $ghost_handler->setLikeDislike($page_id, $option);
+        $ret = $ghostHandler->setLikeDislike($page_id, $option);
         if (is_array($ret) && count($ret) > 1) {
             $ret['error'] = 0;
         } else {

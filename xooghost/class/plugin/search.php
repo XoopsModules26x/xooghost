@@ -64,10 +64,10 @@ class XooghostSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements
             $criteria->add(new Criteria('xooghost_uid', $uid));
         }
 
-        $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->ghostHandler();
+        $ghostModule  = Xooghost::getInstance();
+        $ghostHandler = $ghostModule->ghostHandler();
 
-        $pages = $ghost_handler->getObjects($criteria, true, false);
+        $pages = $ghostHandler->getObjects($criteria, true, false);
 
         $k = 0;
         foreach ($pages as $page) {
