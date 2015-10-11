@@ -15,7 +15,7 @@ class XooGhostUtilities
      *
      * @return mixed|string
      */
-    public function XooGhost_getMetaDescription($string)
+    public function getMetaDescription($string)
     {
         $xoops = Xoops::getInstance();
         $myts  = MyTextSanitizer::getInstance();
@@ -40,7 +40,7 @@ class XooGhostUtilities
      *
      * @return string
      */
-    public function XooGhost_getMetaKeywords($string, $limit = 5)
+    public function getMetaKeywords($string, $limit = 5)
     {
         $xoops = Xoops::getInstance();
         $myts  = MyTextSanitizer::getInstance();
