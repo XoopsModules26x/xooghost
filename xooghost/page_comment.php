@@ -17,13 +17,15 @@
  * @version         $Id$
  */
 
-include dirname(dirname(__DIR__)) .  '/mainfile.php';
+use Xoops\Core\Request;
+
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/functions.php';
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
-$xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+$xooghost_id = Request::getInt('xooghost_id', 0);//$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
 
 $ghostModule  = Xooghost::getInstance();
 $ghostConfig  = $ghostModule->loadConfig();

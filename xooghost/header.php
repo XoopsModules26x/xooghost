@@ -17,7 +17,9 @@
  * @version         $Id$
  */
 
-include dirname(dirname(__DIR__)) .  '/mainfile.php';
+use Xoops\Core\Request;
+
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/class/utilities.php';
 
 XoopsLoad::load('system', 'system');
@@ -27,16 +29,15 @@ $ghostModule  = Xooghost::getInstance();
 $ghostConfig  = $ghostModule->loadConfig();
 $ghostHandler = $ghostModule->ghostHandler();
 
-$xooghostUrl = basename($_SERVER['SCRIPT_NAME']);
-$exclude      = array(
+$xooghostUrl = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'));
+$exclude     = array(
     'footer.php',
     'header.php',
     'index.php',
     'page_like_dislike.php',
     'page_rate.php',
     'qrcode.php',
-    'xoops_version.php',
-);
+    'xoops_version.php',);
 
 if (in_array($xooghostUrl, $exclude)) {
     $xoops->header('xooghost_index.tpl');

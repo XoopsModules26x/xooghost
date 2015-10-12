@@ -20,6 +20,7 @@
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
+use Xoops\Core\Request;
 
 /**
  * Class XooghostPage
@@ -122,7 +123,7 @@ class XooghostPage extends XoopsObject
         $string .= $this->getVar('xooghost_title');
 
         $string          = html_entity_decode($string, ENT_QUOTES);
-        $search_pattern  = array("\t", "\r\n", "\r", "\n", ",", ".", "'", ";", ":", ")", "(", '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page');
+        $search_pattern  = array("\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page');
         $replace_pattern = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
         $string          = str_replace($search_pattern, $replace_pattern, $string);
 
@@ -165,7 +166,7 @@ class XooghostPage extends XoopsObject
 
         $ret['xooghost_uid_name'] = XoopsUser::getUnameFromId($this->getVar('xooghost_uid'), true);
 
-        if ($this->getVar('xooghost_image') != 'blank.gif') {
+        if ($this->getVar('xooghost_image') !== 'blank.gif') {
             $ret['xooghost_image_link'] = $xoops_upload_url . '/xooghost/images/' . $this->getVar('xooghost_image');
         } else {
             $ret['xooghost_image_link'] = \XoopsBaseConfig::get('url') . '/' . $xoops->theme()->resourcePath('/modules/xooghost/assets/images/pages.png');
@@ -181,7 +182,7 @@ class XooghostPage extends XoopsObject
 
         // tags
         static $tags;
-        if (!in_array($this->php_self, $this->exclude_page) || $this->php_self == 'index' || $this->php_self == 'page_print') {
+        if (!in_array($this->php_self, $this->exclude_page) || $this->php_self === 'index' || $this->php_self === 'page_print') {
             if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
                 $id = $this->getVar('xooghost_id');
                 if (!isset($tags[$this->getVar('xooghost_id')])) {
@@ -203,7 +204,7 @@ class XooghostPage extends XoopsObject
     public function getRLD($ret)
     {
         if (!in_array($this->php_self, $this->exclude_page)) {
-            if ($this->config['xooghost_rld']['rld_mode'] == 'rate') {
+            if ($this->config['xooghost_rld']['rld_mode'] === 'rate') {
                 $ret['xooghost_vote']     = $this->rldHandler->getVotes($this->getVar('xooghost_id'));
                 $ret['xooghost_yourvote'] = $this->rldHandler->getbyUser($this->getVar('xooghost_id'));
             }
@@ -215,7 +216,7 @@ class XooghostPage extends XoopsObject
     /**
      * @return bool
      */
-    public function create_page()
+    public function createPage()
     {
         if (!file_exists(\XoopsBaseConfig::get('root-path')  . '/modules/xooghost/' . $this->getVar('xooghost_url'))) {
             $xoopstmp = Xoops::getInstance();
@@ -235,22 +236,24 @@ class XooghostPage extends XoopsObject
         */
         $system = System::getInstance();
         foreach (parent::getValues() as $k => $v) {
-            if ($k != 'dohtml') {
+            if ($k !== 'dohtml') {
                 if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
-                    $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+//                    $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+                    //TODO should we use here getString??
+                    $value = Request::getArray('date', date('Y-m-d'), 'POST')[$k] + Request::getArray('time', date('u'), 'POST')[$k];
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
-                    $value = $system->cleanVars($_POST, $k, $v, 'int');
+                    $value = Request::getInt($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'int');
                     $this->setVar($k, $value);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_ARRAY) {
-                    $value = $system->cleanVars($_POST, $k, $v, 'array');
+                    $value = Request::getArray($k, $v, 'POST'); // $system->cleanVars($_POST, $k, $v, 'array');
                     $this->setVar($k, $value);
                 } else {
-                    $value = $system->cleanVars($_POST, $k, $v, 'string');
+                    $value = Request::getString($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'string');
                     $this->setVar($k, stripslashes($value));
                 }
             }
-            if ($k == 'xooghost_url') {
+            if ($k === 'xooghost_url') {
                 $this->setVar($k, $this->cleanURL($this->getVar($k)));
             }
         }
@@ -312,7 +315,7 @@ class XooghostPageHandler extends XoopsPersistableObjectHandler
             'page_print.php',
             'page_rate.php',
             'qrcode.php',
-            'xoops_version.php',
+            'xoops_version.php'
         );
 
     /**
@@ -354,7 +357,7 @@ class XooghostPageHandler extends XoopsPersistableObjectHandler
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('xooghost_online', 1));
         $criteria->add(new Criteria('xooghost_published', time(), '<='));
-        if ($sort == 'random') {
+        if ($sort === 'random') {
             $criteria->setSort('rand()');
         } else {
             $criteria->setSort('xooghost_' . $sort);
@@ -462,7 +465,7 @@ class XooghostPageHandler extends XoopsPersistableObjectHandler
             if (is_object($page) && count($page) != 0) {
                 $xoops = Xoops::getInstance();
 
-                if ($ret = $this->rldHandler->SetRate($page_id, $rate)) {
+                if ($ret = $this->rldHandler->setRate($page_id, $rate)) {
                     if (is_array($ret) && count($ret) == 3) {
                         $page->setVar('xooghost_rates', $ret['average']);
                         $this->insert($page);
@@ -522,7 +525,7 @@ class XooghostPageHandler extends XoopsPersistableObjectHandler
     {
         $xoops = Xoops::getInstance();
         if (parent::insert($object, $force)) {
-            $object->create_page();
+            $object->createPage();
             if ($object->isNew()) {
                 return $xoops->db()->getInsertId();
             } else {
@@ -544,22 +547,22 @@ class XooghostPageHandler extends XoopsPersistableObjectHandler
         $autoload = XoopsLoad::loadConfig('xooghost');
 
         $uploader = new XoopsMediaUploader(
-            $xoops->path('uploads') . '/xooghost/images', $autoload['mimetypes'], $this->config['xooghost_image_size'], $this->config['xooghost_image_width'], $this->config['xooghost_image_height']
+            \XoopsBaseConfig::get('uploads-path') . '/xooghost/images', $autoload['mimetypes'], $this->config['xooghost_image_size'], $this->config['xooghost_image_width'], $this->config['xooghost_image_height']
         );
 
         $ret = array();
-        foreach ($_POST['xoops_upload_file'] as $k => $input_image) {
-            if ($_FILES[$input_image]['tmp_name'] != '' || is_readable($_FILES[$input_image]['tmp_name'])) {
-                $path_parts = pathinfo($_FILES[$input_image]['name']);
-                $uploader->setTargetFileName($this->CleanImage(strtolower($image_name . '.' . $path_parts['extension'])));
-                if ($uploader->fetchMedia($_POST['xoops_upload_file'][$k])) {
+        foreach (Request::getArray('xoops_upload_file', array(), 'POST') as $k => $input_image) {
+            if (Request::getArray($input_image, array(), 'FILES')['tmp_name'] != '' || is_readable(Request::getArray($input_image, array(), 'FILES')['tmp_name'])) {
+                $path_parts = pathinfo(Request::getArray($input_image, array(), 'FILES')['name']);
+                $uploader->setTargetFileName($this->cleanImage(strtolower($image_name . '.' . $path_parts['extension'])));
+                if ($uploader->fetchMedia(Request::getArray('xoops_upload_file', array(), 'POST')[$k])) {
                     if ($uploader->upload()) {
                         $ret[$input_image] = array('filename' => $uploader->getSavedFileName(), 'error' => false, 'message' => '');
                     } else {
-                        $ret[$input_image] = array('filename' => $_FILES[$input_image]['name'], 'error' => true, 'message' => $uploader->getErrors());
+                        $ret[$input_image] = array('filename' => Request::getArray($input_image, array(), 'FILES')['name'], 'error' => true, 'message' => $uploader->getErrors());
                     }
                 } else {
-                    $ret[$input_image] = array('filename' => $_FILES[$input_image]['name'], 'error' => true, 'message' => $uploader->getErrors());
+                    $ret[$input_image] = array('filename' => Request::getArray($input_image, array(), 'FILES')['name'], 'error' => true, 'message' => $uploader->getErrors());
                 }
             }
         }

@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
 /**
  * @return bool
  */
@@ -26,7 +24,7 @@ function xoops_module_install_xooghost()
 {
     $xoops     = Xoops::getInstance();
     $folders   = array();
-    $folders[] = $xoops->path('uploads') . '/xooghost/images';
+    $folders[] = \XoopsBaseConfig::get('uploads-path') . '/xooghost/images';
     $images    = array('index.html', 'blank.gif');
 
     foreach ($folders as $folder) {
@@ -34,7 +32,7 @@ function xoops_module_install_xooghost()
             return false;
         } else {
             foreach ($images as $image) {
-                if (!xooghost_copyfile($xoops->path('uploads'), $image, $folder)) {
+                if (!xooghost_copyfile(\XoopsBaseConfig::get('uploads-path'), $image, $folder)) {
                     return false;
                 }
             }
@@ -66,7 +64,7 @@ function xooghost_mkdirs($pathname, $pathout = XOOPS_ROOT_PATH)
                 if (!mkdir($dest, 0755)) {
                     return false;
                 } else {
-                    xooghost_copyfile($xoops->path('uploads'), 'index.html', $dest);
+                    xooghost_copyfile(\XoopsBaseConfig::get('uploads-path'), 'index.html', $dest);
                 }
             }
         }

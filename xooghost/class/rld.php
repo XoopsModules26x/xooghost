@@ -20,6 +20,7 @@
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Kernel\XoopsObject;
 use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
+use Xoops\Core\Request;
 
 /**
  * Class XooghostRld
@@ -62,16 +63,18 @@ class XooghostRld extends XoopsObject
         foreach (parent::getValues() as $k => $v) {
             if ($k !== 'dohtml') {
                 if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
-                    $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+//                    $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+                    //TODO should we use here getString??
+                    $value = Request::getArray('date', date('Y-m-d'), 'POST')[$k] + Request::getArray('time', date('u'), 'POST')[$k];
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
-                    $value = $system->cleanVars($_POST, $k, $v, 'int');
+                    $value = Request::getInt($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'int');
                     $this->setVar($k, $value);
                 } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_ARRAY) {
-                    $value = $system->cleanVars($_POST, $k, $v, 'array');
+                    $value = Request::getArray($k, $v, 'POST'); // $system->cleanVars($_POST, $k, $v, 'array');
                     $this->setVar($k, $value);
                 } else {
-                    $value = $system->cleanVars($_POST, $k, $v, 'string');
+                    $value = Request::getString($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'string');
                     $this->setVar($k, $value);
                 }
             }
@@ -84,11 +87,13 @@ class XooghostRld extends XoopsObject
  */
 class XooghostRldHandler extends XoopsPersistableObjectHandler
 {
+    private $db;
     /**
      * @param null|\Xoops\Core\Database\Connection $db
      */
     public function __construct(Connection $db = null)
     {
+        $this->db = $db;
         parent::__construct($db, 'xooghost_rld', 'XooghostRld', 'xooghost_rld_id', 'xooghost_rld_page');
     }
 

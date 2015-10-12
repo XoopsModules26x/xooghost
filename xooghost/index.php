@@ -17,9 +17,11 @@
  * @version         $Id$
  */
 
-include __DIR__ .  '/header.php';
+use Xoops\Core\Request;
 
-$start = $system->cleanVars($_REQUEST, 'start', 0, 'int');
+include __DIR__ . '/header.php';
+
+$start = Request::getInt('start', 0); //$system->cleanVars($_REQUEST, 'start', 0, 'int');
 
 $pages = $ghostHandler->getPublished('published', 'desc', $start, $ghostConfig['xooghost_limit_main']);
 
@@ -43,4 +45,4 @@ $utilities = new XooGhostUtilities();
 $xoops->theme()->addMeta($type = 'meta', 'description', $utilities->getMetaDescription($description));
 $xoops->theme()->addMeta($type = 'meta', 'keywords', $utilities->getMetaKeywords($description));
 
-include __DIR__ .  '/footer.php';
+include __DIR__ . '/footer.php';

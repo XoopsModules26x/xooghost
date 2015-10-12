@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
 switch ($op) {
@@ -25,7 +27,7 @@ switch ($op) {
             $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
         }
 
-        $xooghost_id = $system->cleanVars($_POST, 'xooghost_id', 0, 'int');
+        $xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_POST, 'xooghost_id', 0, 'int');
 
         if (isset($xooghost_id) && $xooghost_id > 0) {
             $page  = $ghostHandler->get($xooghost_id);
@@ -50,7 +52,7 @@ switch ($op) {
                 }
             }
         } else {
-            $page->setVar('xooghost_image', $myts->htmlSpecialChars($_POST['image_list']));
+            $page->setVar('xooghost_image', $myts->htmlSpecialChars(Request::getString('image_list', '', 'POST')));
         }
 
         if ($xooghost_id = $ghostHandler->insert($page)) {
@@ -82,17 +84,17 @@ switch ($op) {
         break;
 
     case 'edit':
-        $xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+        $xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
         $page        = $ghostHandler->get($xooghost_id);
         $form        = $ghostModule->getForm($page, 'pages');
         $form->display();
         break;
 
     case 'del':
-        $xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+        $xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
         if (isset($xooghost_id) && $xooghost_id > 0) {
             if ($page = $ghostHandler->get($xooghost_id)) {
-                $delete = $system->cleanVars($_POST, 'ok', 0, 'int');
+                $delete = Request::getInt('ok', 0); //$system->cleanVars($_POST, 'ok', 0, 'int');
                 if ($delete == 1) {
                     if (!$xoops->security()->check()) {
                         $xoops->redirect('pages.php', 5, implode(',', $xoops->security()->getErrors()));
@@ -106,11 +108,7 @@ switch ($op) {
                     $ghostHandler->delete($page);
                     $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_DELETED);
                 } else {
-                    $xoops->confirm(
-                        array('ok' => 1, 'xooghost_id' => $xooghost_id, 'op' => 'del'),
-                        $_SERVER['REQUEST_URI'],
-                        sprintf(_AM_XOO_GHOST_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $page->getVar('xooghost_title'))
-                    );
+                    $xoops->confirm(array('ok' => 1, 'xooghost_id' => $xooghost_id, 'op' => 'del'), Request::getString('REQUEST_URI', '', 'SERVER'), sprintf(_AM_XOO_GHOST_DELETE_CFM . "<br /><b><span style='color : Red'> %s </span></b><br /><br />", $page->getVar('xooghost_title')));
                 }
             } else {
                 $xoops->redirect('pages.php', 5);
@@ -122,13 +120,13 @@ switch ($op) {
 
     case 'view':
     case 'hide':
-        $xooghost_id = $system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+        $xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
         $ghostHandler->setOnline($xooghost_id);
         $xoops->redirect('pages.php', 5, _AM_XOO_GHOST_SAVED);
         break;
 
     default:
-        $online = $system->cleanVars($_REQUEST, 'online', -1, 'int');
+        $online = Request::getInt('online', -1); //$system->cleanVars($_REQUEST, 'online', -1, 'int');
         $admin_page->addItemButton(_AM_XOO_GHOST_ADD, 'pages.php?op=add', 'add');
         $admin_page->renderButton();
 

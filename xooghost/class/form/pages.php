@@ -91,14 +91,14 @@ class XooghostPagesForm extends Xoops\Form\ThemeForm
         $image_tray->addElement($image_box);
         $image_tray->addElement($warning_tray);
 
-        $image_array  = XoopsLists:: getImgListAsArray($xoops->path('uploads') . '/xooghost/images');
+        $image_array  = XoopsLists:: getImgListAsArray(\XoopsBaseConfig::get('uploads-path') . '/xooghost/images');
         $image_select = new Xoops\Form\Select('<br />', 'image_list', $this->xoopsObject->getVar('xooghost_image'));
         $image_select->addOptionArray($image_array);
-        $image_select->setExtra("onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xooghost/images/' . "\", \"\", \"" . $xoops->url('uploads') . "\")'");
+        $image_select->setExtra("onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xooghost/images/' . "\", \"\", \"" . \XoopsBaseConfig::get('uploads-url') . "\")'");
         $image_tray->addElement($image_select);
         $image_tray->addElement(
             new Xoops\Form\Label(
-                '', "<br /><img src='" . $xoops->url('uploads') . '/xooghost/images/' . $this->xoopsObject->getVar('xooghost_image') . "' name='select_image' id='select_image' alt='' />"
+                '', "<br /><img src='" . \XoopsBaseConfig::get('uploads-url') . '/xooghost/images/' . $this->xoopsObject->getVar('xooghost_image') . "' name='select_image' id='select_image' alt='' />"
             )
         );
         $tab1->addElement($image_tray);
@@ -134,7 +134,7 @@ class XooghostPagesForm extends Xoops\Form\ThemeForm
         if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
             $tags_tray       = new Xoops\Form\Tab(_AM_XOO_TABFORM_TAGS, 'tabid-tags');
             $TagFormHandler = $xoops->getModuleForm(0, 'tags', 'xootags');
-            $tagform         = $TagFormHandler->TagsForm('tags', $this->xoopsObject->getVar('xooghost_id'));
+            $tagform         = $TagFormHandler->tagsForm('tags', $this->xoopsObject->getVar('xooghost_id'));
             $tags_tray->addElement($tagform);
             $tabTray->addElement($tags_tray);
         }
@@ -182,14 +182,14 @@ class XooghostPagesForm extends Xoops\Form\ThemeForm
     {
         $ret = "<div class='" . $class . "'>";
         if ($title != '') {
-            $ret .= "<strong>" . $title . "</strong>";
+            $ret .= '<strong>' . $title . '</strong>';
         }
         if (is_array($msg) || is_object($msg)) {
             $ret .= implode('<br />', $msg);
         } else {
             $ret .= $msg;
         }
-        $ret .= "</div>";
+        $ret .= '</div>';
 
         return $ret;
     }

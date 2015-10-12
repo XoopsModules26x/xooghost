@@ -17,7 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Class XooghostNotificationsPlugin
@@ -37,14 +36,14 @@ class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imp
         $item    = array();
         $item_id = (int)$item_id;
 
-        if ($category == 'global') {
+        if ($category === 'global') {
             $item['name'] = '';
             $item['url']  = '';
 
             return $item;
         }
 
-        if ($category == 'item') {
+        if ($category === 'item') {
             $sql          = 'SELECT xooghost_title, xooghost_url FROM ' . $xoops->db()->prefix('xooghost') . ' WHERE xooghost_id = ' . $item_id;
             $result       = $xoops->db()->query($sql); // TODO: error check
             $result_array = $xoops->db()->fetchArray($result);
@@ -63,7 +62,7 @@ class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imp
     public function categories()
     {
         $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->GhostHandler();
+        $ghostHandler = $ghostModule->ghostHandler();
         $ret                      = array();
         $ret[1]['name']           = 'global';
         $ret[1]['title']          = _MI_XOO_GHOST_NOTIFICATION_GLOBAL;

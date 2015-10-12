@@ -16,7 +16,6 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id: xooghost.php 1394 2012-12-30 07:35:40Z DuGris $
  */
-//defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 class Xooghost extends Xoops\Module\Helper\HelperAbstract
 {

@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
 include_once __DIR__ . '/install.php';
 
 /**

@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XooghostXoositemapPlugin
  */
@@ -32,7 +30,7 @@ class XooghostXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract implem
     public function Xoositemap($subcategories)
     {
         $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->GhostHandler();
+        $ghostHandler = $ghostModule->ghostHandler();
 
         $pages = $ghostHandler->getPublished('published', 'desc');
 
@@ -58,7 +56,7 @@ class XooghostXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract implem
     public function Xoositemap_xml($subcategories)
     {
         $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->GhostHandler();
+        $ghostHandler = $ghostModule->ghostHandler();
 
         $sitemap = array();
         $time    = 0;

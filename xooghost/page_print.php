@@ -17,7 +17,9 @@
  * @version         $Id$
  */
 
-include dirname(dirname(__DIR__)) .  '/mainfile.php';
+use Xoops\Core\Request;
+
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $ghostModule  = Xooghost::getInstance();
 $ghostConfig  = $ghostModule->loadConfig();
@@ -29,10 +31,10 @@ $system = System::getInstance();
 $xoops = Xoops::getInstance();
 $xoops->disableErrorReporting();
 
-$page_id = $system->cleanVars($_REQUEST, 'page_id', 0, 'int');
+$page_id = Request::getInt('page_id', 0);//$system->cleanVars($_REQUEST, 'page_id', 0, 'int');
 $page    = $ghostHandler->get($page_id);
 
-$output = $system->cleanVars($_REQUEST, 'output', 'print', 'string');
+$output = Request::getString('output', 'print');//$system->cleanVars($_REQUEST, 'output', 'print', 'string');
 
 if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online')) {
     $tpl = new XoopsTpl();
@@ -49,7 +51,7 @@ if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online')) {
     $tpl->assign('xoops_pagetitle', $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name'));
     $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
 
-    if ($xoops->isActiveModule('pdf') && $output == 'pdf') {
+    if ($xoops->isActiveModule('pdf') && $output === 'pdf') {
         /*
                 $content = $tpl->fetch('module:xooghost/xooghost_page_pdf.tpl');
                 $pdf = new Pdf('P', 'A4', _LANGCODE, true, _CHARSET, array(10, 10, 10, 10));

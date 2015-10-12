@@ -36,7 +36,7 @@ class XooghostMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements 
     public function subMenus()
     {
         $ret = array();
-        if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') == 'xooghost') {
+        if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') === 'xooghost') {
             $ghostModule  = Xooghost::getInstance();
             $ghostConfig  = $ghostModule->loadConfig();
             $ghostHandler = $ghostModule->ghostHandler();

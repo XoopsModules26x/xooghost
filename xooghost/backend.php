@@ -21,9 +21,9 @@
  */
 
 if (file_exists('mainfile.php')) {
-    include __DIR__ .  '/mainfile.php';
+    include __DIR__ . '/mainfile.php';
 } else {
-    include '../../' .  '/mainfile.php';
+    include '../../' . '/mainfile.php';
 }
 
 $xoops = Xoops::getInstance();
@@ -70,8 +70,7 @@ if (!$tpl->is_cached('module:' . $dirname . '/system_rss.tpl')) {
                     'title'   => XoopsLocale::convert_encoding(htmlspecialchars($item['title'])),
                     'content' => XoopsLocale::convert_encoding(htmlspecialchars($item['content'])),
                     'link'    => $item['link'],
-                    'guid'    => $item['link']
-                );
+                    'guid'    => $item['link']);
             }
         }
     } else {
@@ -87,8 +86,7 @@ if (!$tpl->is_cached('module:' . $dirname . '/system_rss.tpl')) {
                         'title'   => XoopsLocale::convert_encoding(htmlspecialchars($item['title'])),
                         'content' => XoopsLocale::convert_encoding(htmlspecialchars($item['content'])),
                         'link'    => $item['link'],
-                        'guid'    => $item['link']
-                    );
+                        'guid'    => $item['link']);
                 }
             }
         }

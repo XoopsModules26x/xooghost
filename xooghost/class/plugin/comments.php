@@ -94,7 +94,7 @@ class XooghostCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
         $ret = array();
 
         $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->GhostHandler();
+        $ghostHandler = $ghostModule->ghostHandler();
         $page          = $page = $ghostHandler->get($item_id);
 
         $ret['text']      = $page->getVar('xooghost_content');
