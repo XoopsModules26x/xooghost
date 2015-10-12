@@ -18,7 +18,7 @@
  */
 
 if (file_exists('mainfile.php')) {
-    include __DIR__ .  '/mainfile.php';
+    include __DIR__ . '/mainfile.php';
 } else {
     include '../../mainfile.php';
 }
@@ -38,46 +38,42 @@ $tpl     = new XoopsTpl();
 
 if ($xoops->isModule()) {
     $plugin = \Xoops\Module\Plugin::getPlugin($dirname, 'xoositemap');
-    $res    = $plugin->Xoositemap_xml(true);
+    $res    = $plugin->xoositemap_xml(true);
     if (is_array($res)) {
         $time       = isset($res['time']) ? $res['time'] : time();
         $mod_time[] = array('time' => $time);
         $modules[]  = array(
             'time'    => $time,
             'dirname' => $res['dirname'],
-            'date'    => gmdate('Y-m-d\TH:i:s\Z', $time),
-        );
+            'date'    => gmdate('Y-m-d\TH:i:s\Z', $time));
         if (count($res['items']) > 0) {
             foreach ($res['items'] as $item) {
                 $times[] = array('time' => $item['time']);
                 $items[] = array(
                     'time' => $item['time'],
                     'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
-                    'link' => $item['url'],
-                );
+                    'link' => $item['url']);
             }
         }
     }
 } else {
     $plugins = \Xoops\Module\Plugin::getPlugins('xoositemap');
     foreach ($plugins as $plugin) {
-        $res = $plugin->Xoositemap_xml(true);
+        $res = $plugin->xoositemap_xml(true);
         if (is_array($res)) {
             $time       = isset($res['time']) ? $res['time'] : time();
             $mod_time[] = array('time' => $time);
             $modules[]  = array(
                 'time'    => $time,
                 'dirname' => $res['dirname'],
-                'date'    => gmdate('Y-m-d\TH:i:s\Z', $time),
-            );
+                'date'    => gmdate('Y-m-d\TH:i:s\Z', $time));
             if (count($res['items']) > 0) {
                 foreach ($res['items'] as $item) {
                     $times[] = array('time' => $item['time']);
                     $items[] = array(
                         'time' => $item['time'],
                         'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
-                        'link' => $item['url'],
-                    );
+                        'link' => $item['url']);
                 }
             }
         }

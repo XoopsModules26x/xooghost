@@ -16,7 +16,6 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id: xooghost.php 1394 2012-12-30 07:35:40Z DuGris $
  */
-//defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 class Xooghost extends Xoops\Module\Helper\HelperAbstract
 {
@@ -45,7 +44,7 @@ class Xooghost extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return mixed
      */
-    public function LoadConfig()
+    public function loadConfig()
     {
         XoopsLoad::load('xoopreferences', $this->_dirname);
 
@@ -55,16 +54,16 @@ class Xooghost extends Xoops\Module\Helper\HelperAbstract
     /**
      * @return \Xoops\Module\Helper\XoopsObjectHandler
      */
-    public function GhostHandler()
+    public function ghostHandler()
     {
-        return $this->getHandler('xooghost_page');
+        return $this->getHandler('Page');
     }
 
     /**
      * @return \Xoops\Module\Helper\XoopsObjectHandler
      */
-    public function RldHandler()
+    public function rldHandler()
     {
-        return $this->getHandler('xooghost_rld');
+        return $this->getHandler('Rld');
     }
 }

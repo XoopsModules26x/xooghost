@@ -17,13 +17,12 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
 /**
  * @param $string
  *
  * @return mixed|string
  */
+/*
 function XooGhost_getMetaDescription($string)
 {
     $xoops = Xoops::getInstance();
@@ -42,6 +41,7 @@ function XooGhost_getMetaDescription($string)
 
     return $string;
 }
+*/
 
 /**
  * @param     $string
@@ -49,11 +49,12 @@ function XooGhost_getMetaDescription($string)
  *
  * @return string
  */
+/*
 function XooGhost_getMetaKeywords($string, $limit = 5)
 {
     $xoops = Xoops::getInstance();
     $myts  = MyTextSanitizer::getInstance();
-
+    $keywords = array();
     if (is_array($string)) {
         $string = implode(', ', $string);
     }
@@ -63,7 +64,7 @@ function XooGhost_getMetaKeywords($string, $limit = 5)
     $string = strip_tags($string);
     $string = html_entity_decode($string, ENT_QUOTES);
 
-    $search_pattern  = array("\t", "\r\n", "\r", "\n", ",", ".", "'", ";", ":", ")", "(", '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page');
+    $search_pattern  = array("\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page');
     $replace_pattern = array(' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
     $string          = str_replace($search_pattern, $replace_pattern, $string);
 
@@ -78,3 +79,4 @@ function XooGhost_getMetaKeywords($string, $limit = 5)
 
     return implode(', ', $keywords);
 }
+*/

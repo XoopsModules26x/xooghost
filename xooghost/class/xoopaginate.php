@@ -17,12 +17,25 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
+
+use Xoops\Core\Request;
+
+/**
+ * Class XooPaginate
+ */
 class XooPaginate
 {
-    private $prev = false;
-    private $next = false;
-    private $first = false;
-    private $last = false;
+    private $prev;
+    private $next;
+    private $first;
+    private $last;
+
+    private $total;
+    private $perpage;
+    private $current;
+    private $extra;
+    private $url;
+    private $offset;
 
     /**
      * @param        $total_items
@@ -38,10 +51,10 @@ class XooPaginate
         $this->perpage = (int)($items_perpage);
         $this->current = (int)($current_start);
         $this->extra   = $extra_arg;
-        if ($extra_arg != '' && (substr($extra_arg, -5) != '&amp;' || substr($extra_arg, -1) != '&')) {
+        if ($extra_arg != '' && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
             $this->extra = '&amp;' . $extra_arg;
         }
-        $this->url    = $_SERVER['PHP_SELF'] . '?' . trim($start_name) . '=';
+        $this->url    = Request::getString('PHP_SELF','' ,'SERVER') . '?' . trim($start_name) . '=';
         $this->offset = (int)($offset);
 
         $this->render();

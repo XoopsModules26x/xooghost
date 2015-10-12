@@ -17,39 +17,40 @@
  * @version         $Id$
  */
 
-include dirname(dirname(__DIR__)) .  '/mainfile.php';
-include __DIR__ . '/include/functions.php';
+use Xoops\Core\Request;
+
+include dirname(dirname(__DIR__)) . '/mainfile.php';
+include __DIR__ . '/class/utilities.php';
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
-$ghost_module  = Xooghost::getInstance();
-$ghost_config  = $ghost_module->LoadConfig();
-$ghost_handler = $ghost_module->GhostHandler();
+$ghostModule  = Xooghost::getInstance();
+$ghostConfig  = $ghostModule->loadConfig();
+$ghostHandler = $ghostModule->ghostHandler();
 
-$Xooghost_url = basename($_SERVER['SCRIPT_NAME']);
-$exclude      = array(
+$xooghostUrl = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'));
+$exclude     = array(
     'footer.php',
     'header.php',
     'index.php',
     'page_like_dislike.php',
     'page_rate.php',
     'qrcode.php',
-    'xoops_version.php',
-);
+    'xoops_version.php',);
 
-if (in_array($Xooghost_url, $exclude)) {
+if (in_array($xooghostUrl, $exclude)) {
     $xoops->header('xooghost_index.tpl');
 } else {
     $xoops->header('xooghost_page.tpl');
-    $page = $ghost_handler->getByURL($Xooghost_url);
+    $page = $ghostHandler->getByURL($xooghostUrl);
     if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') && $page->getVar('xooghost_online')) {
         $_SESSION['xooghost_stat'] = true;
         $time                      = time();
         $Xooghost_id               = $page->getVar('xooghost_id');
         if (!isset($_SESSION['xooghost_view' . $Xooghost_id]) || $_SESSION['xooghost_view' . $Xooghost_id] < $time) {
             $_SESSION['xooghost_view' . $Xooghost_id] = $time + 3600;
-            $ghost_handler->SetRead($page);
+            $ghostHandler->SetRead($page);
         }
 
         // For comments module
@@ -74,11 +75,11 @@ $xoops->theme()->addStylesheet('modules/xooghost/assets/css/module.css');
 
 $xoops->tpl()->assign('moduletitle', $xoops->module->name());
 
-$xoops->tpl()->assign('template', $ghost_config['xooghost_main_mode']);
-$xoops->tpl()->assign('welcome', $ghost_config['xooghost_welcome']);
-$xoops->tpl()->assign('width', $ghost_config['xooghost_image_width']);
-$xoops->tpl()->assign('height', $ghost_config['xooghost_image_height']);
-$xoops->tpl()->assign('xooghost_rld', $ghost_config['xooghost_rld']);
+$xoops->tpl()->assign('template', $ghostConfig['xooghost_main_mode']);
+$xoops->tpl()->assign('welcome', $ghostConfig['xooghost_welcome']);
+$xoops->tpl()->assign('width', $ghostConfig['xooghost_image_width']);
+$xoops->tpl()->assign('height', $ghostConfig['xooghost_image_height']);
+$xoops->tpl()->assign('xooghost_rld', $ghostConfig['xooghost_rld']);
 
 $xoops->tpl()->assign('qrcode', $xoops->isActiveModule('qrcode'));
 

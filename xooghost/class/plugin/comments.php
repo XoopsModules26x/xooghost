@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XooghostCommentsPlugin
  */
@@ -95,9 +93,9 @@ class XooghostCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
     {
         $ret = array();
 
-        $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
-        $page          = $page = $ghost_handler->get($item_id);
+        $ghostModule  = Xooghost::getInstance();
+        $ghostHandler = $ghostModule->ghostHandler();
+        $page          = $page = $ghostHandler->get($item_id);
 
         $ret['text']      = $page->getVar('xooghost_content');
         $ret['title']     = $page->getVar('xooghost_title');

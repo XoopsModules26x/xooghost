@@ -17,8 +17,10 @@
  * @version         $Id$
  */
 
-include __DIR__ .  '/header.php';
-$url = $system->cleanVars($_REQUEST, 'url', '', 'string');
+use Xoops\Core\Request;
+
+include __DIR__ . '/header.php';
+$url = Request::getInt('xooghost_id', 0);//$system->cleanVars($_REQUEST, 'url', '', 'string');
 if ($url != '') {
     $xoops->service('qrcode')->getImgTag('http://www.xoops.org/', array('alt' => 'QR code', 'title' => 'Xoops.org'))->getValue();
 } else {

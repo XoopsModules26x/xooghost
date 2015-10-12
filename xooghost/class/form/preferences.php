@@ -17,14 +17,12 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
-
 /**
  * Class XooghostPreferencesForm
  */
 class XooghostPreferencesForm extends Xoops\Form\ThemeForm
 {
-    private $_colors
+    private $colors
         = array(
             'Aqua'    => '#00FFFF',
             'Black'   => '#000000',
@@ -41,23 +39,23 @@ class XooghostPreferencesForm extends Xoops\Form\ThemeForm
             'Silver'  => '#C0C0C0',
             'Teal'    => '#008080',
             'White'   => '#FFFFFF',
-            'Yellow'  => '#FFFF00',
+            'Yellow'  => '#FFFF00'
         );
 
-    private $_config = array();
+    private $config = array();
 
     /**
      * @internal param null $obj
      */
     public function __construct()
     {
-        $this->_config = XooGhostPreferences::getInstance()->loadConfig();
+        $this->config = XooGhostPreferences::getInstance()->loadConfig();
 
-        extract($this->_config);
+        extract($this->config);
         parent::__construct('', 'form_preferences', 'preferences.php', 'post', true);
         $this->setExtra('enctype="multipart/form-data"');
 
-        $tabtray = new Xoops\Form\TabTray('', 'uniqueid');
+        $tabTray = new Xoops\Form\TabTray('', 'uniqueid');
 
         /**
          * Main page
@@ -88,7 +86,7 @@ class XooghostPreferencesForm extends Xoops\Form\ThemeForm
 
         $tab1->addElement($main_mode);
 
-        $tabtray->addElement($tab1);
+        $tabTray->addElement($tab1);
 
         /**
          * Images
@@ -103,7 +101,7 @@ class XooghostPreferencesForm extends Xoops\Form\ThemeForm
         // xooghost_image_height
         $tab2->addElement(new Xoops\Form\Text(_XOO_GHOST_CONFIG_IMAGE_HEIGHT, 'xooghost_image_height', 1, 10, $xooghost_image_height));
 
-        $tabtray->addElement($tab2);
+        $tabTray->addElement($tab2);
 
         /**
          * Rate / Like - Dislike
@@ -123,29 +121,29 @@ class XooghostPreferencesForm extends Xoops\Form\ThemeForm
         }
         $rld->addElement($rate_scale);
 
-        $tabtray->addElement($rld);
+        $tabTray->addElement($rld);
 
-        $this->addElement($tabtray);
+        $this->addElement($tabTray);
 
         /**
          * Buttons
          */
-        $button_tray = new Xoops\Form\ElementTray('', '');
-        $button_tray->addElement(new Xoops\Form\Hidden('op', 'save'));
+        $buttonTray = new Xoops\Form\ElementTray('', '');
+        $buttonTray->addElement(new Xoops\Form\Hidden('op', 'save'));
 
-        $button = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');
-        $button->setClass('btn btn-success');
-        $button_tray->addElement($button);
+        $buttonSubmit = new Xoops\Form\Button('', 'submit', XoopsLocale::A_SUBMIT, 'submit');
+        $buttonSubmit->setClass('btn btn-success');
+        $buttonTray->addElement($buttonSubmit);
 
-        $button_2 = new Xoops\Form\Button('', 'reset', XoopsLocale::A_RESET, 'reset');
-        $button_2->setClass('btn btn-warning');
-        $button_tray->addElement($button_2);
+        $buttonReset = new Xoops\Form\Button('', 'reset', XoopsLocale::A_RESET, 'reset');
+        $buttonReset->setClass('btn btn-warning');
+        $buttonTray->addElement($buttonReset);
 
-        $button_3 = new Xoops\Form\Button('', 'cancel', XoopsLocale::A_CANCEL, 'button');
-        $button_3->setExtra("onclick='javascript:history.go(-1);'");
-        $button_3->setClass('btn btn-danger');
-        $button_tray->addElement($button_3);
+        $buttonCancel = new Xoops\Form\Button('', 'cancel', XoopsLocale::A_CANCEL, 'button');
+        $buttonCancel->setExtra("onclick='javascript:history.go(-1);'");
+        $buttonCancel->setClass('btn btn-danger');
+        $buttonTray->addElement($buttonCancel);
 
-        $this->addElement($button_tray);
+        $this->addElement($buttonTray);
     }
 }

@@ -31,7 +31,6 @@ $modversion['official']    = 1;
 $modversion['help']        = 'page=help';
 $modversion['image']       = 'assets/images/logo.png';
 
-
 // about
 $modversion['release_date']        = '2015/10/01';
 $modversion['module_website_url']  = 'xoops.org';
@@ -57,8 +56,8 @@ $modversion['adminindex'] = 'admin/index.php';
 $modversion['adminmenu']  = 'admin/menu.php';
 
 // Manage extension
-$modversion['extension']          = 0;
-$modversion['extension_module'][] = '';
+$modversion['extension']         = 0;
+$modversion['extensionModule'][] = '';
 
 // Scripts to run upon installation or update
 $modversion['onInstall']   = 'install/install.php';

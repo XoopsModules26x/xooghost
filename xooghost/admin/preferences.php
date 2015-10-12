@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 include __DIR__ . '/header.php';
 
 switch ($op) {
@@ -25,18 +27,18 @@ switch ($op) {
             $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));
         }
 
-        $xooghost_main      = Xoops\Core\Request::getInt('xooghost_main', 0, 'POST');
-        $xooghost_welcome   = Xoops\Core\Request::getString('xooghost_welcome', '', 'POST');
-        $xooghost_main_mode = Xoops\Core\Request::getString('xooghost_main_mode', 'list', 'POST');
+        $xooghost_main      = Request::getInt('xooghost_main', 0, 'POST');
+        $xooghost_welcome   = Request::getString('xooghost_welcome', '', 'POST');
+        $xooghost_main_mode = Request::getString('xooghost_main_mode', 'list', 'POST');
 
         // Write configuration file
         $object = XooGhostPreferences::getInstance();
-        $object->writeConfig($object->Prepare2Save());
+        $object->writeConfig($object->prepare2Save());
         $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
         break;
 
     default:
-        $form = $ghost_module->getForm(null, 'preferences');
+        $form = $ghostModule->getForm(null, 'preferences');
         $form->display();
         break;
 }

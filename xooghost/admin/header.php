@@ -17,6 +17,8 @@
  * @version         $Id$
  */
 
+use Xoops\Core\Request;
+
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $op = '';
@@ -31,13 +33,13 @@ if (isset($_GET)) {
     }
 }
 
-$script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
+$script_name = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'), '.php');
 
 XoopsLoad::load('system', 'system');
 $system = System::getInstance();
 
 $xoops = Xoops::getInstance();
-if ($script_name != 'about') {
+if ($script_name !== 'about') {
     $xoops->header('xooghost_' . $script_name . '.tpl');
 } else {
     $xoops->header();
@@ -45,12 +47,12 @@ if ($script_name != 'about') {
 $xoops->theme()->addStylesheet('modules/xooghost/assets/css/moduladmin.css');
 
 $admin_page = new \Xoops\Module\Admin();
-if ($script_name != 'about' && $script_name != 'index') {
-    $admin_page->renderNavigation(basename($_SERVER['SCRIPT_NAME']));
-} elseif ($script_name != 'index') {
-    $admin_page->displayNavigation(basename($_SERVER['SCRIPT_NAME']));
+if ($script_name !== 'about' && $script_name !== 'index') {
+    $admin_page->renderNavigation(basename(Request::getString('SCRIPT_NAME', '', 'SERVER')));
+} elseif ($script_name !== 'index') {
+    $admin_page->displayNavigation(basename(Request::getString('SCRIPT_NAME', '', 'SERVER')));
 }
 
-$ghost_module  = Xooghost::getInstance();
-$ghost_config  = $ghost_module->LoadConfig();
-$ghost_handler = $ghost_module->GhostHandler();
+$ghost_Module = Xooghost::getInstance();
+$ghostConfig  = $ghostModule->loadConfig();
+$ghostHandler = $ghostModule->ghostHandler();

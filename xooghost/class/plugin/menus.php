@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XooghostMenusPlugin
  */
@@ -38,14 +36,14 @@ class XooghostMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements 
     public function subMenus()
     {
         $ret = array();
-        if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') == 'xooghost') {
-            $ghost_module  = Xooghost::getInstance();
-            $ghost_config  = $ghost_module->LoadConfig();
-            $ghost_handler = $ghost_module->GhostHandler();
+        if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') === 'xooghost') {
+            $ghostModule  = Xooghost::getInstance();
+            $ghostConfig  = $ghostModule->loadConfig();
+            $ghostHandler = $ghostModule->ghostHandler();
 
             $i = 0;
-            if ($ghost_config['xooghost_main']) {
-                $pages = $ghost_handler->getPublished();
+            if ($ghostConfig['xooghost_main']) {
+                $pages = $ghostHandler->getPublished();
                 foreach ($pages as $page) {
                     $ret[$i]['name'] = $page['xooghost_title'];
                     $ret[$i]['url']  = $page['xooghost_url'];

@@ -17,8 +17,6 @@
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-
 /**
  * Class XooghostXoositemapPlugin
  */
@@ -31,10 +29,10 @@ class XooghostXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract implem
      */
     public function Xoositemap($subcategories)
     {
-        $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
+        $ghostModule  = Xooghost::getInstance();
+        $ghostHandler = $ghostModule->ghostHandler();
 
-        $pages = $ghost_handler->getPublished('published', 'desc');
+        $pages = $ghostHandler->getPublished('published', 'desc');
 
         $sitemap = array();
         foreach ($pages as $k => $page) {
@@ -57,13 +55,13 @@ class XooghostXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract implem
      */
     public function Xoositemap_xml($subcategories)
     {
-        $ghost_module  = Xooghost::getInstance();
-        $ghost_handler = $ghost_module->GhostHandler();
+        $ghostModule  = Xooghost::getInstance();
+        $ghostHandler = $ghostModule->ghostHandler();
 
         $sitemap = array();
         $time    = 0;
 
-        $pages = $ghost_handler->getPublished('published', 'desc');
+        $pages = $ghostHandler->getPublished('published', 'desc');
         foreach ($pages as $k => $page) {
             $sitemap[$k]['url']  = $page['xooghost_link'];
             $sitemap[$k]['time'] = $page['xooghost_time'];
