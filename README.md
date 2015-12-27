@@ -1,8 +1,10 @@
-# XOOPS CMS Module   ![XOOPS CMS](https://avatars2.githubusercontent.com/u/12771439?v=3&s=200)
-
-# xooghost
-Ghost module for Xoops 2.6.x
+![alt XOOPS CMS](http://xoops.org/images/logoXoops4GithubRepository.png)
+## xooghost: module for [XOOPS CMS 2.6.0](https://github.com/XOOPS/XoopsCore)
 
 [![Software License](https://img.shields.io/badge/license-GPL-brightgreen.svg?style=flat)](LICENSE) 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mambax7/xooghost/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mambax7/xooghost/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/mambax7/xooghost/badges/build.png?b=master)](https://scrutinizer-ci.com/g/mambax7/xooghost/build-status/master)
+
+Please visit us on http://xoops.org
+
+**The upcoming "next generation" version of XOOPS CMS is being crafted on GitHub at: https://github.com/XOOPS**
