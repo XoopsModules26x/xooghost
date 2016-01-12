@@ -14,7 +14,6 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
 
 include_once __DIR__ . '/install.php';

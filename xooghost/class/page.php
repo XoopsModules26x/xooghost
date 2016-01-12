@@ -14,7 +14,6 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
 
 use Xoops\Core\Database\Connection;

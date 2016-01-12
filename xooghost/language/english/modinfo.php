@@ -14,7 +14,6 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: modinfo.php 1387 2012-12-29 00:19:35Z DuGris $
  */
 
 define('_MI_XOO_GHOST_NAME', 'XooFoo - Ghost');

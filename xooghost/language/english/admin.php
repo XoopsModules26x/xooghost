@@ -14,7 +14,6 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
 
 define('_AM_XOO_GHOST_ACTION', 'Action');

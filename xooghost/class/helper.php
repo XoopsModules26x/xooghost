@@ -14,7 +14,6 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: xooghost.php 1394 2012-12-30 07:35:40Z DuGris $
  */
 
 class Xooghost extends Xoops\Module\Helper\HelperAbstract
