@@ -14,8 +14,8 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
-
 use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
@@ -24,23 +24,24 @@ $start = Request::getInt('start', 0); //$system->cleanVars($_REQUEST, 'start', 0
 
 $pages = $ghostHandler->getPublished('published', 'desc', $start, $ghostConfig['xooghost_limit_main']);
 
-$criteria = new CriteriaCompo();
-$criteria->add(new Criteria('xooghost_online', 1));
-$criteria->add(new Criteria('xooghost_published', 0, '>'));
-$criteria->add(new Criteria('xooghost_published', time(), '<='));
+$criteria = new \CriteriaCompo();
+$criteria->add(new \Criteria('xooghost_online', 1));
+$criteria->add(new \Criteria('xooghost_published', 0, '>'));
+$criteria->add(new \Criteria('xooghost_published', time(), '<='));
 
 $pages_count = $ghostHandler->getCount($criteria);
 
 $xoops->tpl()->assign('pages', $pages);
 
 // Page navigation
-$paginate = new Xoopaginate($pages_count, $ghostConfig['xooghost_limit_main'], $start, 'start', '');
+$paginate = new \XoopsModules\Xooghost\XooPaginate($pages_count, $ghostConfig['xooghost_limit_main'], $start, 'start', '');
 
 // Metas
+$description = [];
 foreach ($pages as $k => $page) {
     $description[] = $page['xooghost_title'];
 }
-$utilities = new XooGhostUtilities();
+$utilities = new \XoopsModules\Xooghost\Utility();
 $xoops->theme()->addMeta($type = 'meta', 'description', $utilities->getMetaDescription($description));
 $xoops->theme()->addMeta($type = 'meta', 'keywords', $utilities->getMetaKeywords($description));
 

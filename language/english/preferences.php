@@ -14,8 +14,8 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
-
 if (!defined('_XOO_CONFIG_SAVED')) {
     define('_XOO_CONFIG_SAVED', 'Configuration was saved');
 }
@@ -31,7 +31,7 @@ define('_XOO_CONFIG_MAIN_MODE_LIST', 'List');
 define('_XOO_CONFIG_MAIN_MODE_TABLE', 'Table');
 define('_XOO_CONFIG_MAIN_MODE_SELECT', 'Select');
 
-define('_XOO_CONFIG_LIMIT_MAIN', 'Number Pages on the main page<br />(0 = no limit)');
+define('_XOO_CONFIG_LIMIT_MAIN', 'Number Pages on the main page<br>(0 = no limit)');
 define('_XOO_CONFIG_DATE_FORMAT', 'Date&#39;s format');
 
 // RLD

@@ -14,8 +14,9 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 
-return array(
-    'mimetypes' => array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png')
-);
+return [
+    'mimetypes' => ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'],
+];

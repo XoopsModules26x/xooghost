@@ -14,20 +14,14 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: core.php 1387 2012-12-29 00:19:35Z DuGris $
+ * @version         $Id$
  */
-use Xoops\Core\PreloadItem;
+require_once __DIR__ . '/install.php';
 
 /**
- * Class XooghostPreload
+ * @return bool
  */
-class XooghostPreload extends PreloadItem
+function xoops_module_update_xooghost()
 {
-    /**
-     * @param $args
-     */
-    public static function eventCoreIncludeCommonEnd($args)
-    {
-        require_once __DIR__ . '/autoloader.php';
-    }
+    return xoops_module_install_xooghost();
 }

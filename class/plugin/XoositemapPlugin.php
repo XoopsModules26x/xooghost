@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -14,12 +17,13 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 
 /**
  * Class XooghostXoositemapPlugin
  */
-class XooghostXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract implements XoositemapPluginInterface
+class XoositemapPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \XoositemapPluginInterface
 {
     /**
      * @param $subcategories
@@ -28,20 +32,20 @@ class XooghostXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract implem
      */
     public function Xoositemap($subcategories)
     {
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $ghostHandler = $helper->ghostHandler();
 
         $pages = $ghostHandler->getPublished('published', 'desc');
 
-        $sitemap = array();
+        $sitemap = [];
         foreach ($pages as $k => $page) {
-            $sitemap[$k]['id']    = $k;
+            $sitemap[$k]['id'] = $k;
             $sitemap[$k]['title'] = $page['xooghost_title'];
-            $sitemap[$k]['url']   = $page['xooghost_link'];
-            $sitemap[$k]['uid']   = $page['xooghost_uid'];
+            $sitemap[$k]['url'] = $page['xooghost_link'];
+            $sitemap[$k]['uid'] = $page['xooghost_uid'];
             $sitemap[$k]['uname'] = $page['xooghost_uid_name'];
             $sitemap[$k]['image'] = $page['xooghost_image_link'];
-            $sitemap[$k]['time']  = $page['xooghost_time'];
+            $sitemap[$k]['time'] = $page['xooghost_time'];
         }
 
         return $sitemap;
@@ -54,21 +58,21 @@ class XooghostXoositemapPlugin extends Xoops\Module\Plugin\PluginAbstract implem
      */
     public function Xoositemap_xml($subcategories)
     {
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $ghostHandler = $helper->ghostHandler();
 
-        $sitemap = array();
-        $time    = 0;
+        $sitemap = [];
+        $time = 0;
 
         $pages = $ghostHandler->getPublished('published', 'desc');
         foreach ($pages as $k => $page) {
-            $sitemap[$k]['url']  = $page['xooghost_link'];
+            $sitemap[$k]['url'] = $page['xooghost_link'];
             $sitemap[$k]['time'] = $page['xooghost_time'];
             if ($time < $page['xooghost_time']) {
                 $time = $page['xooghost_time'];
             }
         }
 
-        return array('dirname' => Xooghost::getInstance()->getModule()->getVar('dirname'), 'time' => $time, 'items' => $sitemap);
+        return ['dirname' => \XoopsModules\Xooghost\Helper::getInstance()->getModule()->getVar('dirname'), 'time' => $time, 'items' => $sitemap];
     }
 }

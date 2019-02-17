@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -14,12 +17,13 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 
 /**
  * Class XooghostSearchPlugin
  */
-class XooghostSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements SearchPluginInterface
+class SearchPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \SearchPluginInterface
 {
     /**
      * @param $queries
@@ -33,46 +37,46 @@ class XooghostSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements
     public function search($queries, $andor, $limit, $start, $uid)
     {
         $searchstring = '';
-        $ret          = array();
+        $ret = [];
 
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
 
         $criteria->setLimit($limit);
         $criteria->setStart($start);
         $criteria->setSort('xooghost_published');
         $criteria->setOrder('DESC');
 
-        $criteria->add(new Criteria('xooghost_online', 1));
-        $criteria->add(new Criteria('xooghost_published', 0, '>'));
-        $criteria->add(new Criteria('xooghost_published', time(), '<='));
+        $criteria->add(new \Criteria('xooghost_online', 1));
+        $criteria->add(new \Criteria('xooghost_published', 0, '>'));
+        $criteria->add(new \Criteria('xooghost_published', time(), '<='));
 
         if (is_array($queries) && $count = count($queries)) {
             foreach ($queries as $k => $v) {
-                $criteria_content = new CriteriaCompo();
-                $criteria_content->add(new Criteria('xooghost_title', '%' . $v . '%', 'LIKE'), 'OR');
-                $criteria_content->add(new Criteria('xooghost_content', '%' . $v . '%', 'LIKE'), 'OR');
-                $criteria_content->add(new Criteria('xooghost_description', '%' . $v . '%', 'LIKE'), 'OR');
-                $criteria_content->add(new Criteria('xooghost_keywords', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content = new \CriteriaCompo();
+                $criteria_content->add(new \Criteria('xooghost_title', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content->add(new \Criteria('xooghost_content', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content->add(new \Criteria('xooghost_description', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content->add(new \Criteria('xooghost_keywords', '%' . $v . '%', 'LIKE'), 'OR');
                 $criteria->add($criteria_content, $andor);
             }
         }
 
-        if ($uid != 0) {
-            $criteria->add(new Criteria('xooghost_uid', $uid));
+        if (0 != $uid) {
+            $criteria->add(new \Criteria('xooghost_uid', $uid));
         }
 
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $ghostHandler = $helper->ghostHandler();
 
         $pages = $ghostHandler->getObjects($criteria, true, false);
 
         $k = 0;
         foreach ($pages as $page) {
-            $ret[$k]['image']   = 'assets/icons/logo_small.png';
-            $ret[$k]['link']    = $page['xooghost_url'];
-            $ret[$k]['title']   = $page['xooghost_title'];
-            $ret[$k]['time']    = $page['xooghost_time'];
-            $ret[$k]['uid']     = $page['xooghost_uid'];
+            $ret[$k]['image'] = 'assets/icons/logo_small.png';
+            $ret[$k]['link'] = $page['xooghost_url'];
+            $ret[$k]['title'] = $page['xooghost_title'];
+            $ret[$k]['time'] = $page['xooghost_time'];
+            $ret[$k]['uid'] = $page['xooghost_uid'];
             $ret[$k]['content'] = $page['xooghost_content'];
             ++$k;
         }

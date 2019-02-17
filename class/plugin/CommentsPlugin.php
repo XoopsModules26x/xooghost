@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -14,12 +17,13 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 
 /**
  * Class XooghostCommentsPlugin
  */
-class XooghostCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implements CommentsPluginInterface
+class CommentsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \CommentsPluginInterface
 {
     /**
      * @return string
@@ -42,7 +46,7 @@ class XooghostCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      */
     public function extraParams()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -51,11 +55,9 @@ class XooghostCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      * An CommentsComment object that has been approved will be passed as the first and only parameter.
      * This should be useful for example notifying the item submitter of a comment post.
      *
-     * @param CommentsComment $comment
-     *
-     * @return void
+     * @param \CommentsComment $comment
      */
-    public function approve(CommentsComment $comment)
+    public function approve(\CommentsComment $comment)
     {
         //Where are you looking at?
     }
@@ -65,12 +67,10 @@ class XooghostCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      *
      * @param int $item_id   The unique ID of an item
      * @param int $total_num The total number of active comments
-     *
-     * @return void
      */
     public function update($item_id, $total_num)
     {
-        $db  = Xoops::getInstance()->db();
+        $db = \Xoops::getInstance()->db();
         $sql = 'UPDATE ' . $db->prefix('xooghost') . ' SET xooghost_comments = ' . (int)($total_num) . ' WHERE xooghost_id = ' . (int)($item_id);
         $db->query($sql);
     }
@@ -90,15 +90,15 @@ class XooghostCommentsPlugin extends Xoops\Module\Plugin\PluginAbstract implemen
      */
     public function itemInfo($item_id)
     {
-        $ret = array();
+        $ret = [];
 
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
-        $page          = $page = $ghostHandler->get($item_id);
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $ghostHandler = $helper->ghostHandler();
+        $page = $page = $ghostHandler->get($item_id);
 
-        $ret['text']      = $page->getVar('xooghost_content');
-        $ret['title']     = $page->getVar('xooghost_title');
-        $ret['uid']       = $page->getVar('xooghost_uid');
+        $ret['text'] = $page->getVar('xooghost_content');
+        $ret['title'] = $page->getVar('xooghost_title');
+        $ret['uid'] = $page->getVar('xooghost_uid');
         $ret['timestamp'] = $page->getVar('xooghost_published');
 
         return $ret;

@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -14,12 +17,13 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 
 /**
  * Class XooghostXootagsPlugin
  */
-class XooghostXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implements XootagsPluginInterface
+class XootagsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \XootagsPluginInterface
 {
     /**
      * @param $items
@@ -28,28 +32,28 @@ class XooghostXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implement
      */
     public function xootags($items)
     {
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $ghostHandler = $helper->ghostHandler();
 
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort('xooghost_published');
         $criteria->setOrder('DESC');
 
-        $criteria->add(new Criteria('xooghost_online', 1));
-        $criteria->add(new Criteria('xooghost_published', 0, '>'));
-        $criteria->add(new Criteria('xooghost_published', time(), '<='));
-        $criteria->add(new Criteria('xooghost_id', '(' . implode(', ', $items) . ')', 'IN'));
+        $criteria->add(new \Criteria('xooghost_online', 1));
+        $criteria->add(new \Criteria('xooghost_published', 0, '>'));
+        $criteria->add(new \Criteria('xooghost_published', time(), '<='));
+        $criteria->add(new \Criteria('xooghost_id', '(' . implode(', ', $items) . ')', 'IN'));
 
         $pages = $ghostHandler->getObjects($criteria, false, false);
 
-        $ret = array();
-        $k   = 0;
+        $ret = [];
+        $k = 0;
         foreach ($pages as $page) {
-            $ret[$k]['itemid']  = $page['xooghost_id'];
-            $ret[$k]['link']    = $page['xooghost_url'];
-            $ret[$k]['title']   = $page['xooghost_title'];
-            $ret[$k]['time']    = $page['xooghost_time'];
-            $ret[$k]['uid']     = $page['xooghost_uid'];
+            $ret[$k]['itemid'] = $page['xooghost_id'];
+            $ret[$k]['link'] = $page['xooghost_url'];
+            $ret[$k]['title'] = $page['xooghost_title'];
+            $ret[$k]['time'] = $page['xooghost_time'];
+            $ret[$k]['uid'] = $page['xooghost_uid'];
             $ret[$k]['content'] = $page['xooghost_content'];
             ++$k;
         }

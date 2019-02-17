@@ -14,10 +14,10 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
-
 define('_XOO_GHOST_ID', 'ID');
-define('_XOO_GHOST_URL', 'Url');
+define('_XOO_GHOST_URL', 'URL');
 define('_XOO_GHOST_TITLE', 'Title');
 define('_XOO_GHOST_AUTHOR', 'Author');
 define('_XOO_GHOST_CONTENT', 'Your html content');
@@ -31,6 +31,6 @@ define('_XOO_GHOST_HITS', 'Hit');
 define('_XOO_GHOST_SHOW_HIDE', 'Show / Hide');
 
 // images
-define('_XOO_GHOST_CONFIG_IMAGE_SIZE', 'Maximum size of image files (K0)');
+define('_XOO_GHOST_CONFIG_IMAGE_SIZE', 'Maximum size of image files (KB)');
 define('_XOO_GHOST_CONFIG_IMAGE_WIDTH', 'Maximum width of images (px)');
 define('_XOO_GHOST_CONFIG_IMAGE_HEIGHT', 'Maximum height of images (px)');

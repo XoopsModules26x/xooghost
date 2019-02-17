@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -14,12 +17,13 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 
 /**
  * Class XooghostMenusPlugin
  */
-class XooghostMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements MenusPluginInterface
+class MenusPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \MenusPluginInterface
 {
     /**
      * expects an array of array containing:
@@ -34,18 +38,18 @@ class XooghostMenusPlugin extends Xoops\Module\Plugin\PluginAbstract implements 
      */
     public function subMenus()
     {
-        $ret = array();
-        if (Xoops::getInstance()->isModule() && Xoops::getInstance()->module->getVar('dirname') === 'xooghost') {
-            $ghostModule  = Xooghost::getInstance();
-            $ghostConfig  = $ghostModule->loadConfig();
-            $ghostHandler = $ghostModule->ghostHandler();
+        $ret = [];
+        if (\Xoops::getInstance()->isModule() && 'xooghost' === \Xoops::getInstance()->module->getVar('dirname')) {
+            $helper = \XoopsModules\Xooghost\Helper::getInstance();
+            $ghostConfig = $helper->loadConfig();
+            $ghostHandler = $helper->ghostHandler();
 
             $i = 0;
             if ($ghostConfig['xooghost_main']) {
                 $pages = $ghostHandler->getPublished();
                 foreach ($pages as $page) {
                     $ret[$i]['name'] = $page['xooghost_title'];
-                    $ret[$i]['url']  = $page['xooghost_url'];
+                    $ret[$i]['url'] = $page['xooghost_url'];
                     ++$i;
                 }
             }

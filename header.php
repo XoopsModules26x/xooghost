@@ -14,39 +14,38 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
-
 use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
-include __DIR__ . '/class/utilities.php';
 
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
+\XoopsLoad::load('system', 'system');
+$system = \System::getInstance();
 
-$ghostModule  = Xooghost::getInstance();
-$ghostConfig  = $ghostModule->loadConfig();
-$ghostHandler = $ghostModule->ghostHandler();
+$helper = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig = $helper->loadConfig();
+$ghostHandler = $helper->ghostHandler();
 
 $xooghostUrl = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'));
-$exclude     = array(
+$exclude = [
     'footer.php',
     'header.php',
     'index.php',
     'page_like_dislike.php',
     'page_rate.php',
     'qrcode.php',
-    'xoops_version.php',);
+    'xoops_version.php', ];
 
-if (in_array($xooghostUrl, $exclude)) {
+if (in_array($xooghostUrl, $exclude, true)) {
     $xoops->header('xooghost_index.tpl');
 } else {
     $xoops->header('xooghost_page.tpl');
     $page = $ghostHandler->getByURL($xooghostUrl);
-    if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') && $page->getVar('xooghost_online')) {
+    if (is_object($page) && 0 != count($page) && $page->getVar('xooghost_online') && $page->getVar('xooghost_online')) {
         $_SESSION['xooghost_stat'] = true;
-        $time                      = time();
-        $Xooghost_id               = $page->getVar('xooghost_id');
+        $time = time();
+        $Xooghost_id = $page->getVar('xooghost_id');
         if (!isset($_SESSION['xooghost_view' . $Xooghost_id]) || $_SESSION['xooghost_view' . $Xooghost_id] < $time) {
             $_SESSION['xooghost_view' . $Xooghost_id] = $time + 3600;
             $ghostHandler->SetRead($page);

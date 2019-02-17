@@ -14,8 +14,8 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
-
 define('_AM_XOO_GHOST_ACTION', 'Action');
 define('_AM_XOO_GHOST_ADD', 'Add page');
 define('_AM_XOO_GHOST_EDIT', 'Edit page');

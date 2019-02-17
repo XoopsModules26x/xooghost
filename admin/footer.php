@@ -14,6 +14,9 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
+
+//defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 $xoops->footer();

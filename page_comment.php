@@ -14,21 +14,21 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
-
 use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/functions.php';
 
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
+\XoopsLoad::load('system', 'system');
+$system = \System::getInstance();
 
-$xooghost_id = Request::getInt('xooghost_id', 0);//$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+$xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
 
-$ghostModule  = Xooghost::getInstance();
-$ghostConfig  = $ghostModule->loadConfig();
-$ghostHandler = $ghostModule->ghostHandler();
+$helper = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig = $helper->loadConfig();
+$ghostHandler = $helper->ghostHandler();
 
 $page = $ghostHandler->get($xooghost_id);
 $xoops->redirect($ghostHandler->get($xooghost_id)->getVar('xooghost_url') . '?' . $xoops->getEnv('QUERY_STRING'));

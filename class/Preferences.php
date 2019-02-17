@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost;
+
 /**
  * Xoopreferences : Preferences Manager
  *
@@ -14,30 +17,28 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 
 /**
- * Class XooGhostPreferences
+ * Class Preferences
  */
-class XooGhostPreferences
+class Preferences
 {
-    public $config = array();
-    public $basicConfig = array();
+    public $config = [];
+    public $basicConfig = [];
     public $configPath;
     public $configFile;
-    private $module_dirname = 'xooghost';
+    private $moduleDirName = 'xooghost';
 
-    /**
-     *
-     */
     public function __construct()
     {
-        $this->configFile = 'config.' . $this->module_dirname . '.php';
+        $this->configFile = 'config.' . $this->moduleDirName . '.php';
 
-        $this->configPath = \XoopsBaseConfig::get('var-path') . '/configs/' . $this->module_dirname . '/';
+        $this->configPath = \XoopsBaseConfig::get('var-path') . '/configs/' . $this->moduleDirName . '/';
 
         $this->basicConfig = $this->loadBasicConfig();
-        $this->config      = @$this->loadConfig();
+        $this->config = @$this->loadConfig();
 
         if (count($this->config) != count($this->basicConfig)) {
             $this->config = array_merge($this->basicConfig, $this->config);
@@ -45,16 +46,14 @@ class XooGhostPreferences
         }
     }
 
-//    public function XooGhostPreferences()
-//    {
-//        $this->__construct();
-//    }
-
+    /**
+     * @return mixed
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class = __CLASS__;
             $instance = new $class();
         }
 
@@ -70,7 +69,7 @@ class XooGhostPreferences
     }
 
     /**
-     * XooGhostPreferences::loadConfig()
+     * Preferences::loadConfig()
      *
      * @return array
      */
@@ -85,7 +84,7 @@ class XooGhostPreferences
     }
 
     /**
-     * XooGhostPreferences::loadBasicConfig()
+     * Preferences::loadBasicConfig()
      *
      * @return array
      */
@@ -99,36 +98,37 @@ class XooGhostPreferences
     }
 
     /**
-     * XooGhostPreferences::readConfig()
+     * Preferences::readConfig()
      *
      * @return array
      */
     public function readConfig()
     {
         $file_path = $this->configPath . $this->configFile;
-        XoopsLoad::load('XoopsFile');
-        $file = XoopsFile::getHandler('file', $file_path);
+        \XoopsLoad::load('XoopsFile');
+        $file = \XoopsFile::getHandler('file', $file_path);
 
         return eval(@$file->read());
     }
 
     /**
-     * XooGhostPreferences::writeConfig()
+     * Preferences::writeConfig()
      *
      * @param  array $config
      *
+     * @return bool|null
      * @internal param string $filename
-     * @return array
      */
     public function writeConfig($config)
     {
         if ($this->createPath($this->configPath)) {
             $file_path = $this->configPath . $this->configFile;
-            XoopsLoad::load('XoopsFile');
-            $file = XoopsFile::getHandler('file', $file_path);
+            \XoopsLoad::load('XoopsFile');
+            $file = \XoopsFile::getHandler('file', $file_path);
 
             return $file->write('return ' . var_export($config, true) . ';');
         }
+
         return null;
     }
 
@@ -140,22 +140,21 @@ class XooGhostPreferences
      */
     private function createPath($pathname, $pathout = XOOPS_ROOT_PATH)
     {
-        $xoops    = Xoops::getInstance();
-        $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path') ));
+        $xoops = \Xoops::getInstance();
+        $pathname = mb_substr($pathname, mb_strlen(\XoopsBaseConfig::get('root-path')));
         $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
-        $dest  = $pathout;
+        $dest = $pathout;
         $paths = explode('/', $pathname);
 
         foreach ($paths as $path) {
             if (!empty($path)) {
                 $dest = $dest . '/' . $path;
                 if (!is_dir($dest)) {
-                    if (!mkdir($dest, 0755)) {
+                    if (!mkdir($dest, 0755) && !is_dir($dest)) {
                         return false;
-                    } else {
-                        $this->writeIndex(\XoopsBaseConfig::get('uploads-path'), 'index.html', $dest);
                     }
+                    $this->writeIndex(\XoopsBaseConfig::get('uploads-path'), 'index.html', $dest);
                 }
             }
         }
@@ -198,12 +197,12 @@ class XooGhostPreferences
             $data = $_POST;
         }
 
-        $config = array();
+        $config = [];
         foreach (array_keys($data) as $k) {
             if (is_array($data[$k])) {
                 $config[$k] = $this->prepare2Save($data[$k], false);
             } else {
-                if (!$module || false !== strpos($k, $this->module_dirname . '_')) {
+                if (!$module || false !== mb_strpos($k, $this->moduleDirName . '_')) {
                     $config[$k] = $data[$k];
                 }
             }

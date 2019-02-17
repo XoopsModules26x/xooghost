@@ -14,8 +14,8 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
-
 use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
@@ -25,15 +25,15 @@ $xoops->disableErrorReporting();
 $ret['error'] = 1;
 
 if ($xoops->security()->check()) {
-    $page_id = Request::getInt('page_id', 0);//$system->cleanVars($_REQUEST, 'page_id', 0, 'int');
-    $option  = Request::getInt('option', 0);//$system->cleanVars($_REQUEST, 'option', 2, 'int');
+    $page_id = Request::getInt('page_id', 0); //$system->cleanVars($_REQUEST, 'page_id', 0, 'int');
+    $option = Request::getInt('option', 0); //$system->cleanVars($_REQUEST, 'option', 2, 'int');
 
     $time = time();
     if (!isset($_SESSION['xooghost_like' . $page_id]) || $_SESSION['xooghost_like' . $page_id] < $time) {
         $_SESSION['xooghost_like' . $page_id] = $time + 3600;
 
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->GhostHandler();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $ghostHandler = $helper->GhostHandler();
 
         $ret = $ghostHandler->setLikeDislike($page_id, $option);
         if (is_array($ret) && count($ret) > 1) {

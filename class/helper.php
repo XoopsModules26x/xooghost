@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost;
+
 /**
  * Xooghost module
  *
@@ -14,9 +17,9 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id: xooghost.php 1394 2012-12-30 07:35:40Z DuGris $
  */
-
-class Xooghost extends Xoops\Module\Helper\HelperAbstract
+class Helper extends \Xoops\Module\Helper\HelperAbstract
 {
     /**
      * Init the module
@@ -28,12 +31,10 @@ class Xooghost extends Xoops\Module\Helper\HelperAbstract
         $this->setDirname(basename(dirname(__DIR__)));
         $this->loadLanguage('common');
         $this->loadLanguage('preferences');
-
-        XoopsLoad::load('xoopaginate', $this->_dirname);
     }
 
     /**
-     * @return Xoops\Module\Helper\HelperAbstract
+     * @return \Xoops\Module\Helper\HelperAbstract
      */
     public static function getInstance()
     {
@@ -45,13 +46,11 @@ class Xooghost extends Xoops\Module\Helper\HelperAbstract
      */
     public function loadConfig()
     {
-        XoopsLoad::load('xoopreferences', $this->_dirname);
-
-        return XooGhostPreferences::getInstance()->getConfig();
+        return\XoopsModules\Xooghost\Preferences::getInstance()->getConfig();
     }
 
     /**
-     * @return \Xoops\Module\Helper\XoopsObjectHandler
+     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
      */
     public function ghostHandler()
     {
@@ -59,10 +58,28 @@ class Xooghost extends Xoops\Module\Helper\HelperAbstract
     }
 
     /**
-     * @return \Xoops\Module\Helper\XoopsObjectHandler
+     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
      */
     public function rldHandler()
     {
         return $this->getHandler('Rld');
+    }
+
+    /**
+     * Get an Object Handler
+     *
+     * @param string $name name of handler to load
+     *
+     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
+     */
+    public function getHandler($name)
+    {
+        $ret = false;
+        //        /** @var Connection $db */
+        $db = \XoopsDatabaseFactory::getConnection();
+        $class = '\\XoopsModules\\' . ucfirst(mb_strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
+        $ret = new $class($db);
+
+        return $ret;
     }
 }
