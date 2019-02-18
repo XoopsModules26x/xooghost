@@ -9,47 +9,46 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
-include __DIR__ . '/class/utilities.php';
 
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
+\XoopsLoad::load('system', 'system');
+$system = \System::getInstance();
 
-$ghostModule  = Xooghost::getInstance();
-$ghostConfig  = $ghostModule->loadConfig();
-$ghostHandler = $ghostModule->ghostHandler();
+$helper = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig = $helper->loadConfig();
+$pageHandler = $helper->getHandler('Page');
 
 $xooghostUrl = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'));
-$exclude     = array(
+$exclude = [
     'footer.php',
     'header.php',
     'index.php',
     'page_like_dislike.php',
     'page_rate.php',
     'qrcode.php',
-    'xoops_version.php',);
+    'xoops_version.php',
+];
 
-if (in_array($xooghostUrl, $exclude)) {
+if (in_array($xooghostUrl, $exclude, true)) {
     $xoops->header('xooghost_index.tpl');
 } else {
     $xoops->header('xooghost_page.tpl');
-    $page = $ghostHandler->getByURL($xooghostUrl);
-    if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online') && $page->getVar('xooghost_online')) {
+    $page = $pageHandler->getByURL($xooghostUrl);
+    if (is_object($page) && 0 != count($page) && $page->getVar('xooghost_online') && $page->getVar('xooghost_online')) {
         $_SESSION['xooghost_stat'] = true;
-        $time                      = time();
-        $Xooghost_id               = $page->getVar('xooghost_id');
+        $time = time();
+        $Xooghost_id = $page->getVar('xooghost_id');
         if (!isset($_SESSION['xooghost_view' . $Xooghost_id]) || $_SESSION['xooghost_view' . $Xooghost_id] < $time) {
             $_SESSION['xooghost_view' . $Xooghost_id] = $time + 3600;
-            $ghostHandler->SetRead($page);
+            $pageHandler->SetRead($page);
         }
 
         // For comments module

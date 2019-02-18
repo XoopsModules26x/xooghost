@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
@@ -19,9 +19,9 @@
 use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
-$url = Request::getInt('xooghost_id', 0);//$system->cleanVars($_REQUEST, 'url', '', 'string');
-if ($url != '') {
-    $xoops->service('qrcode')->getImgTag('http://www.xoops.org/', array('alt' => 'QR code', 'title' => 'Xoops.org'))->getValue();
+$url = Request::getInt('xooghost_id', 0); //$system->cleanVars($_REQUEST, 'url', '', 'string');
+if ('' != $url) {
+    $xoops->service('qrcode')->getImgTag('https://xoops.org/', ['alt' => 'QR code', 'title' => 'Xoops.org'])->getValue();
 } else {
     $contents = '';
     $size     = getimagesize($xoops->url('/images/blank.gif'));

@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<{xoImgUrl 'media/jquery/ui/jquery.ui.js'}>"></script>
-<link rel="stylesheet" href="<{xoImgUrl 'media/jquery/ui/base/ui.all.css'}>" type="text/css" media="screen"/>
+<link rel="stylesheet" href="<{xoImgUrl 'media/jquery/ui/base/ui.all.css'}>" type="text/css" media="screen">
 
 <{include file='module:xooghost/xooghost_css.tpl'}>
 
@@ -14,7 +14,7 @@
         <div class="itemHead">
             <{if $qrcode}>
                 <div class="itemQRcode">
-                    <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><img src="<{xoAppUrl modules/xooghost/qrcode.php}>?url=<{$page.xooghost_link}>" alt="<{$page.xooghost_link}>"></a>
+                    <a href="<{$page.xooghost_link}>" title="<{$page.xooghost_title}>"><img src="<{xoAppUrl 'modules/xooghost/qrcode.php'}>?url=<{$page.xooghost_link}>" alt="<{$page.xooghost_link}>"></a>
                 </div>
                 <div>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="itemInfo">
                     <div class="itemPoster">
                         <{$smarty.const._XOO_GHOST_AUTHOR}>:
-                        <a href="<{xoAppUrl userinfo.php}>?uid=<{$page.xooghost_uid}>" title="<{$page.xooghost_uid_name}>"><{$page.xooghost_uid_name}></a>
+                        <a href="<{xoAppUrl 'userinfo.php'}>?uid=<{$page.xooghost_uid}>" title="<{$page.xooghost_uid_name}>"><{$page.xooghost_uid_name}></a>
                     </div>
                     <div class="itemDate">
                         <{$smarty.const._XOO_GHOST_PUBLISHED}>: <span><{$page.xooghost_published}></span>

@@ -15,7 +15,12 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
+require_once __DIR__ . '/install.php';
 
-//defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
-$xoops->footer();
+/**
+ * @return bool
+ */
+function xoops_module_update_xooghost()
+{
+    return xoops_module_install_xooghost();
+}

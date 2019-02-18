@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
@@ -24,8 +24,8 @@
 /*
 function XooGhost_getMetaDescription($string)
 {
-    $xoops = Xoops::getInstance();
-    $myts  = MyTextSanitizer::getInstance();
+    $xoops = \Xoops::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
 
     if (is_array($string)) {
         $string = implode(', ', $string);
@@ -51,8 +51,8 @@ function XooGhost_getMetaDescription($string)
 /*
 function XooGhost_getMetaKeywords($string, $limit = 5)
 {
-    $xoops = Xoops::getInstance();
-    $myts  = MyTextSanitizer::getInstance();
+    $xoops = \Xoops::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
     $keywords = array();
     if (is_array($string)) {
         $string = implode(', ', $string);

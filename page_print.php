@@ -9,34 +9,33 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 
-$ghostModule  = Xooghost::getInstance();
-$ghostConfig  = $ghostModule->loadConfig();
-$ghostHandler = $ghostModule->ghostHandler();
+$helper = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig = $helper->loadConfig();
+$pageHandler = $helper->getHandler('Page');
 
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
+\XoopsLoad::load('system', 'system');
+$system = \System::getInstance();
 
-$xoops = Xoops::getInstance();
+$xoops = \Xoops::getInstance();
 $xoops->disableErrorReporting();
 
-$page_id = Request::getInt('page_id', 0);//$system->cleanVars($_REQUEST, 'page_id', 0, 'int');
-$page    = $ghostHandler->get($page_id);
+$page_id = Request::getInt('page_id', 0); //$system->cleanVars($_REQUEST, 'page_id', 0, 'int');
+$page = $pageHandler->get($page_id);
 
-$output = Request::getString('output', 'print');//$system->cleanVars($_REQUEST, 'output', 'print', 'string');
+$output = Request::getString('output', 'print'); //$system->cleanVars($_REQUEST, 'output', 'print', 'string');
 
-if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online')) {
-    $tpl = new XoopsTpl();
+if (is_object($page) && 0 != count($page) && $page->getVar('xooghost_online')) {
+    $tpl = new \XoopsTpl();
 
     $tpl->assign('page', $page->getValues());
 
@@ -50,7 +49,7 @@ if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online')) {
     $tpl->assign('xoops_pagetitle', $page->getVar('xooghost_title') . ' - ' . $xoops->module->getVar('name'));
     $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
 
-    if ($xoops->isActiveModule('pdf') && $output === 'pdf') {
+    if ($xoops->isActiveModule('pdf') && 'pdf' === $output) {
         /*
                 $content = $tpl->fetch('module:xooghost/xooghost_page_pdf.tpl');
                 $pdf = new Pdf('P', 'A4', _LANGCODE, true, _CHARSET, array(10, 10, 10, 10));
@@ -62,7 +61,7 @@ if (is_object($page) && count($page) != 0 && $page->getVar('xooghost_online')) {
         $tpl->display('module:xooghost/xooghost_page_print.tpl');
     }
 } else {
-    $tpl = new XoopsTpl();
+    $tpl = new \XoopsTpl();
     $tpl->assign('xoops_sitename', $xoops->getConfig('sitename'));
     $tpl->assign('xoops_slogan', htmlspecialchars($xoops->getConfig('slogan'), ENT_QUOTES));
     $tpl->assign('not_found', true);

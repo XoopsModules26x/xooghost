@@ -1,6 +1,6 @@
 <{if $moduletitle != ''}>
     <fieldset>
-        <legend><{$moduletitle}><a href="<{xoAppUrl modules/xooghost/backend.php}>" title="<{$smarty.const._XOO_GHOST_RSS_FEED}>"><img src="<{xoImgUrl 'modules/xooghost/assets/icons/32/rss.png'}>"/></a>
+        <legend><{$moduletitle}><a href="<{xoAppUrl 'modules/xooghost/backend.php'}>" title="<{$smarty.const._XOO_GHOST_RSS_FEED}>"><img src="<{xoImgUrl 'modules/xooghost/assets/icons/32/rss.png'}>"></a>
         </legend>
     </fieldset>
 <{/if}>
