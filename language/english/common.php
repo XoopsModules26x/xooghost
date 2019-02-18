@@ -14,6 +14,7 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 define('_XOO_GHOST_ID', 'ID');
 define('_XOO_GHOST_URL', 'URL');

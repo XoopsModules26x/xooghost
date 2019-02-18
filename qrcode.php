@@ -14,8 +14,8 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
-
 use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
@@ -24,8 +24,8 @@ if ('' != $url) {
     $xoops->service('qrcode')->getImgTag('https://xoops.org/', ['alt' => 'QR code', 'title' => 'Xoops.org'])->getValue();
 } else {
     $contents = '';
-    $size     = getimagesize($xoops->url('/images/blank.gif'));
-    $handle   = fopen($xoops->url('/images/blank.gif'), 'rb');
+    $size = getimagesize($xoops->url('/images/blank.gif'));
+    $handle = fopen($xoops->url('/images/blank.gif'), 'rb');
     while (!feof($handle)) {
         $contents .= fread($handle, 1024);
     }

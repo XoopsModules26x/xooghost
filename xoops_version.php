@@ -14,6 +14,7 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
+ * @version         $Id$
  */
 $modversion                  = [];
 $modversion['version']       = 1.01;
