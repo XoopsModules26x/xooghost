@@ -18,7 +18,6 @@ namespace XoopsModules\Xooghost;
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 /**
@@ -47,7 +46,7 @@ class Rld extends \XoopsObject
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class = __CLASS__;
             $instance = new $class();
         }
 

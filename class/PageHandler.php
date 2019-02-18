@@ -18,7 +18,6 @@ namespace XoopsModules\Xooghost;
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Database\Connection;
 use Xoops\Core\Request;
 
@@ -48,8 +47,8 @@ class PageHandler extends \XoopsPersistableObjectHandler
         parent::__construct($db, 'xooghost', Page::class, 'xooghost_id', 'xooghost_title');
 
         // Module
-        $helper           = \XoopsModules\Xooghost\Helper::getInstance();
-        $this->config     = $helper->loadConfig();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $this->config = $helper->loadConfig();
         $this->rldHandler = $helper->getHandler('Rld');
     }
 
@@ -61,7 +60,7 @@ class PageHandler extends \XoopsPersistableObjectHandler
     public function getByURL($xooghostUrl)
     {
         $criteria = new \Criteria('xooghost_url', $xooghostUrl);
-        $page     = $this->getObjects($criteria, false, true);
+        $page = $this->getObjects($criteria, false, true);
 
         return $page[0];
     }
@@ -96,7 +95,7 @@ class PageHandler extends \XoopsPersistableObjectHandler
      */
     public function getUrls()
     {
-        $ret   = [];
+        $ret = [];
         $pages = $this->getPublished();
         foreach ($pages as $page) {
             $ret[] = $page['xooghost_url'];
@@ -209,7 +208,7 @@ class PageHandler extends \XoopsPersistableObjectHandler
     public function selectPage()
     {
         $pages = $this->getPublished();
-        $form  = new \Xoops\Form\Select('', 'xooghost_url');
+        $form = new \Xoops\Form\Select('', 'xooghost_url');
         $form->setExtra("onChange='javascript:window.location.href=this.value'");
         $form->addOption('index.php', _XOO_GHOST_CHOOSE);
         foreach ($pages as $page) {
@@ -265,7 +264,7 @@ class PageHandler extends \XoopsPersistableObjectHandler
      */
     public function uploadImages($image_name)
     {
-        $xoops    = \Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
         $autoload = \XoopsLoad::loadConfig('xooghost');
 
         $uploader = new \XoopsMediaUploader(\XoopsBaseConfig::get('uploads-path') . '/xooghost/images', $autoload['mimetypes'], $this->config['xooghost_image_size'], $this->config['xooghost_image_width'], $this->config['xooghost_image_height']);
@@ -298,7 +297,7 @@ class PageHandler extends \XoopsPersistableObjectHandler
     public function cleanImage($filename)
     {
         $path_parts = pathinfo($filename);
-        $string     = $path_parts['filename'];
+        $string = $path_parts['filename'];
 
         $string = str_replace('_', md5('xooghost'), $string);
         $string = str_replace('-', md5('xooghost'), $string);
@@ -321,7 +320,7 @@ class PageHandler extends \XoopsPersistableObjectHandler
     public function getPhpListAsArray()
     {
         $exclude = $this->exclude;
-        $pages   = parent::getAll(null, ['xooghost_url'], false, true);
+        $pages = parent::getAll(null, ['xooghost_url'], false, true);
         foreach ($pages as $page) {
             $exclude[] = $page['xooghost_url'];
         }
@@ -332,7 +331,7 @@ class PageHandler extends \XoopsPersistableObjectHandler
         if ($handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
                 if ((preg_match('/(\.php)$/i', $file) && !is_dir($file) && !in_array($file, $exclude, true))) {
-                    $file            = basename($file);
+                    $file = basename($file);
                     $filelist[$file] = $file;
                 }
             }

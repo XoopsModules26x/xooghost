@@ -19,8 +19,6 @@ namespace XoopsModules\Xooghost\Form;
  * @author          Laurent JEN (Aka DuGris)
  */
 
-use XoopsModules\Xootags\Form;
-
 /**
  * Class PagesForm
  */
@@ -34,10 +32,10 @@ class PagesForm extends \Xoops\Form\ThemeForm
         $this->xoopsObject = $obj;
 
         /** @var \XoopsModules\Xooghost\Helper $helper */
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
-        $ghostConfig  = $helper->loadConfig();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $ghostConfig = $helper->loadConfig();
         $pageHandler = $helper->getHandler('Page');
-        $xoops        = \Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
 
         if ($this->xoopsObject->isNew()) {
             parent::__construct(_AM_XOO_GHOST_ADD, 'form_pages', 'pages.php', 'post', true);
@@ -89,14 +87,14 @@ class PagesForm extends \Xoops\Form\ThemeForm
         $upload_msg[] = _XOO_GHOST_CONFIG_IMAGE_HEIGHT . ' : ' . $ghostConfig['xooghost_image_height'];
 
         $warning_tray = new \Xoops\Form\ElementTray($this->message($upload_msg, ''));
-        $image_tray   = new \Xoops\Form\ElementTray(_XOO_GHOST_IMAGE, '');
+        $image_tray = new \Xoops\Form\ElementTray(_XOO_GHOST_IMAGE, '');
 
         $image_box = new \Xoops\Form\File('', 'xooghost_image', 5000000);
         $image_box->setExtra("size ='70%'");
         $image_tray->addElement($image_box);
         $image_tray->addElement($warning_tray);
 
-        $image_array  = \XoopsLists:: getImgListAsArray(\XoopsBaseConfig::get('uploads-path') . '/xooghost/images');
+        $image_array = \XoopsLists:: getImgListAsArray(\XoopsBaseConfig::get('uploads-path') . '/xooghost/images');
         $image_select = new \Xoops\Form\Select('<br>', 'image_list', $this->xoopsObject->getVar('xooghost_image'));
         $image_select->addOptionArray($image_array);
         $image_select->setExtra("onchange='showImgSelected(\"select_image\", \"image_list\", \"" . '/xooghost/images/' . '", "", "' . \XoopsBaseConfig::get('uploads-url') . "\")'");
@@ -121,7 +119,7 @@ class PagesForm extends \Xoops\Form\ThemeForm
          * Options
          */
         // Published date
-        $tab3      = new \Xoops\Form\Tab(_AM_XOO_TABFORM_OPTIONS, 'tabid-3');
+        $tab3 = new \Xoops\Form\Tab(_AM_XOO_TABFORM_OPTIONS, 'tabid-3');
         $published = (0 == $this->xoopsObject->getVar('xooghost_published')) ? time() : $this->xoopsObject->getVar('xooghost_published');
         $tab3->addElement(new \Xoops\Form\DateTimeSelect(_XOO_GHOST_PUBLISHED, 'xooghost_published', 15, $published, false));
 
@@ -138,7 +136,7 @@ class PagesForm extends \Xoops\Form\ThemeForm
             //            $tagform = $tagsFormHandler->tagForm('tags', $this->xoopsObject->getVar('xooghost_id'));
 
             $tagsForm = new \XoopsModules\Xootags\Form\TagsForm();
-            $tagform  = $tagsForm->tagForm('tags', $this->xoopsObject->getVar('xooghost_id'));
+            $tagform = $tagsForm->tagForm('tags', $this->xoopsObject->getVar('xooghost_id'));
 
             $tagsTray->addElement($tagform);
             $tabTray->addElement($tagsTray);

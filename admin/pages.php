@@ -15,7 +15,6 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 use XoopsModules\Xooghost\Form;
 
@@ -30,17 +29,17 @@ switch ($op) {
         $xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_POST, 'xooghost_id', 0, 'int');
 
         if (isset($xooghost_id) && $xooghost_id > 0) {
-            $page  = $pageHandler->get($xooghost_id);
+            $page = $pageHandler->get($xooghost_id);
             $isnew = false;
         } else {
-            $page  = $pageHandler->create();
+            $page = $pageHandler->create();
             $isnew = true;
         }
 
         $page->cleanVarsForDB();
 
         // uploads images
-        $myts          = \MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $upload_images = $pageHandler->uploadImages($page->getVar('xooghost_title'));
 
         if (is_array($upload_images) && 0 != count($upload_images)) {
@@ -64,7 +63,7 @@ switch ($op) {
             // tags
             if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
                 $xootagsHandler = \XoopsModules\Xootags\Helper::getInstance()->getHandler('Tags'); //$xoops->getModuleHandler('tags', 'xootags');
-                $msg            .= '<br>' . $xootagsHandler->updateByItem('tags', $xooghost_id);
+                $msg .= '<br>' . $xootagsHandler->updateByItem('tags', $xooghost_id);
             }
 
             if ($isnew) {
@@ -85,8 +84,8 @@ switch ($op) {
         break;
     case 'edit':
         $xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
-        $page        = $pageHandler->get($xooghost_id);
-        $form        = $helper->getForm($page, 'pages');
+        $page = $pageHandler->get($xooghost_id);
+        $form = $helper->getForm($page, 'pages');
         $form->display();
         break;
     case 'del':

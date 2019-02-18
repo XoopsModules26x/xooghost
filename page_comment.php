@@ -15,7 +15,6 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
@@ -26,8 +25,8 @@ $system = \System::getInstance();
 
 $xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
 
-$helper       = \XoopsModules\Xooghost\Helper::getInstance();
-$ghostConfig  = $helper->loadConfig();
+$helper = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig = $helper->loadConfig();
 $pageHandler = $helper->getHandler('Page');
 
 $page = $pageHandler->get($xooghost_id);

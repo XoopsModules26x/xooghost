@@ -31,7 +31,7 @@ class XootagsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Xoot
      */
     public function xootags($items)
     {
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
 
         $criteria = new \CriteriaCompo();
@@ -46,13 +46,13 @@ class XootagsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Xoot
         $pages = $pageHandler->getObjects($criteria, false, false);
 
         $ret = [];
-        $k   = 0;
+        $k = 0;
         foreach ($pages as $page) {
-            $ret[$k]['itemid']  = $page['xooghost_id'];
-            $ret[$k]['link']    = $page['xooghost_url'];
-            $ret[$k]['title']   = $page['xooghost_title'];
-            $ret[$k]['time']    = $page['xooghost_time'];
-            $ret[$k]['uid']     = $page['xooghost_uid'];
+            $ret[$k]['itemid'] = $page['xooghost_id'];
+            $ret[$k]['link'] = $page['xooghost_url'];
+            $ret[$k]['title'] = $page['xooghost_title'];
+            $ret[$k]['time'] = $page['xooghost_time'];
+            $ret[$k]['uid'] = $page['xooghost_uid'];
             $ret[$k]['content'] = $page['xooghost_content'];
             ++$k;
         }

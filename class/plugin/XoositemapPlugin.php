@@ -31,20 +31,20 @@ class XoositemapPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \X
      */
     public function Xoositemap($subcategories)
     {
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
 
         $pages = $pageHandler->getPublished('published', 'desc');
 
         $sitemap = [];
         foreach ($pages as $k => $page) {
-            $sitemap[$k]['id']    = $k;
+            $sitemap[$k]['id'] = $k;
             $sitemap[$k]['title'] = $page['xooghost_title'];
-            $sitemap[$k]['url']   = $page['xooghost_link'];
-            $sitemap[$k]['uid']   = $page['xooghost_uid'];
+            $sitemap[$k]['url'] = $page['xooghost_link'];
+            $sitemap[$k]['uid'] = $page['xooghost_uid'];
             $sitemap[$k]['uname'] = $page['xooghost_uid_name'];
             $sitemap[$k]['image'] = $page['xooghost_image_link'];
-            $sitemap[$k]['time']  = $page['xooghost_time'];
+            $sitemap[$k]['time'] = $page['xooghost_time'];
         }
 
         return $sitemap;
@@ -57,15 +57,15 @@ class XoositemapPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \X
      */
     public function Xoositemap_xml($subcategories)
     {
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
 
         $sitemap = [];
-        $time    = 0;
+        $time = 0;
 
         $pages = $pageHandler->getPublished('published', 'desc');
         foreach ($pages as $k => $page) {
-            $sitemap[$k]['url']  = $page['xooghost_link'];
+            $sitemap[$k]['url'] = $page['xooghost_link'];
             $sitemap[$k]['time'] = $page['xooghost_time'];
             if ($time < $page['xooghost_time']) {
                 $time = $page['xooghost_time'];

@@ -18,7 +18,6 @@ namespace XoopsModules\Xooghost;
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Kernel\Handlers\XoopsUser;
 use Xoops\Core\Request;
 
@@ -35,13 +34,13 @@ class Page extends \XoopsObject
         'page_comment',
         'pages',
     ];
-    private $php_self     = '';
+    private $php_self = '';
 
     // constructor
 
     public function __construct()
     {
-        $xoops          = \Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
         $this->php_self = basename($xoops->getEnv('PHP_SELF'), '.php');
 
         $this->initVar('xooghost_id', XOBJ_DTYPE_INT, 0, true, 11);
@@ -64,8 +63,8 @@ class Page extends \XoopsObject
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
 
         // Module
-        $helper           = \XoopsModules\Xooghost\Helper::getInstance();
-        $this->config     = $helper->loadConfig();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $this->config = $helper->loadConfig();
         $this->rldHandler = $helper->getHandler('Rld');
     }
 
@@ -74,9 +73,9 @@ class Page extends \XoopsObject
      */
     public function setPost($addpost = true)
     {
-        $xoops         = \Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
         $memberHandler = $xoops->getHandlerMember();
-        $poster        = $memberHandler->getUser($this->getVar('xooghost_uid'));
+        $poster = $memberHandler->getUser($this->getVar('xooghost_uid'));
         if ($poster instanceof XoopsUser) {
             if ($addpost) {
                 $memberHandler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
@@ -119,10 +118,10 @@ class Page extends \XoopsObject
         }
         $string .= $this->getVar('xooghost_title');
 
-        $string          = html_entity_decode($string, ENT_QUOTES);
-        $search_pattern  = ["\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page'];
+        $string = html_entity_decode($string, ENT_QUOTES);
+        $search_pattern = ["\t", "\r\n", "\r", "\n", ',', '.', "'", ';', ':', ')', '(', '"', '?', '!', '{', '}', '[', ']', '<', '>', '/', '+', '_', '\\', '*', 'pagebreak', 'page'];
         $replace_pattern = [' ', ' ', ' ', ' ', ' ', ' ', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
-        $string          = str_replace($search_pattern, $replace_pattern, $string);
+        $string = str_replace($search_pattern, $replace_pattern, $string);
 
         $tmpkeywords = explode(' ', $string);
         $tmpkeywords = array_count_values($tmpkeywords);
@@ -149,15 +148,15 @@ class Page extends \XoopsObject
     public function getValues($keys = null, $format = null, $maxDepth = null)
     {
         $xoops = \Xoops::getInstance();
-        $myts  = \MyTextSanitizer::getInstance();
-        $ret   = parent::getValues();
+        $myts = \MyTextSanitizer::getInstance();
+        $ret = parent::getValues();
 
-        $dateformat                 = $this->config['xooghost_date_format'];
-        $ret['xooghost_date_day']   = date('d', $this->getVar('xooghost_published'));
+        $dateformat = $this->config['xooghost_date_format'];
+        $ret['xooghost_date_day'] = date('d', $this->getVar('xooghost_published'));
         $ret['xooghost_date_month'] = date('m', $this->getVar('xooghost_published'));
-        $ret['xooghost_date_year']  = date('Y', $this->getVar('xooghost_published'));
-        $ret['xooghost_time']       = $this->getVar('xooghost_published');
-        $ret['xooghost_published']  = date(constant($dateformat), $this->getVar('xooghost_published'));
+        $ret['xooghost_date_year'] = date('Y', $this->getVar('xooghost_published'));
+        $ret['xooghost_time'] = $this->getVar('xooghost_published');
+        $ret['xooghost_published'] = date(constant($dateformat), $this->getVar('xooghost_published'));
 
         $ret['xooghost_link'] = \XoopsBaseConfig::get('url') . '/modules/xooghost/' . $this->getVar('xooghost_url');
 
@@ -171,7 +170,7 @@ class Page extends \XoopsObject
 
         if (in_array($this->php_self, $this->exclude_page, true) && false !== mb_strpos($this->getVar('xooghost_content'), '[breakpage]')) {
             $ret['xooghost_content'] = mb_substr($this->getVar('xooghost_content'), 0, mb_strpos($this->getVar('xooghost_content'), '[breakpage]'));
-            $ret['readmore']         = true;
+            $ret['readmore'] = true;
         } else {
             $ret['xooghost_content'] = str_replace('[breakpage]', '', $this->getVar('xooghost_content'));
         }
@@ -183,7 +182,7 @@ class Page extends \XoopsObject
             if ($xoops->registry()->offsetExists('XOOTAGS') && $xoops->registry()->get('XOOTAGS')) {
                 $id = $this->getVar('xooghost_id');
                 if (!isset($tags[$this->getVar('xooghost_id')])) {
-                    $xootagsHandler                     = \XoopsModules\Xootags\Helper::getInstance()->getHandler('Tags'); //$xoops->getModuleHandler('tags', 'xootags');
+                    $xootagsHandler = \XoopsModules\Xootags\Helper::getInstance()->getHandler('Tags'); //$xoops->getModuleHandler('tags', 'xootags');
                     $tags[$this->getVar('xooghost_id')] = $xootagsHandler->getbyItem($this->getVar('xooghost_id'));
                 }
                 $ret['tags'] = $tags[$this->getVar('xooghost_id')];
@@ -202,7 +201,7 @@ class Page extends \XoopsObject
     {
         if (!in_array($this->php_self, $this->exclude_page, true)) {
             if ('rate' === $this->config['xooghost_rld']['rld_mode']) {
-                $ret['xooghost_vote']     = $this->rldHandler->getVotes($this->getVar('xooghost_id'));
+                $ret['xooghost_vote'] = $this->rldHandler->getVotes($this->getVar('xooghost_id'));
                 $ret['xooghost_yourvote'] = $this->rldHandler->getbyUser($this->getVar('xooghost_id'));
             }
         }
@@ -217,7 +216,7 @@ class Page extends \XoopsObject
     {
         if (!file_exists(\XoopsBaseConfig::get('root-path') . '/modules/xooghost/' . $this->getVar('xooghost_url'))) {
             $xoopstmp = \Xoops::getInstance();
-            $content  = $xoopstmp->tpl()->fetch('admin:xooghost/xooghost_model_page.tpl');
+            $content = $xoopstmp->tpl()->fetch('admin:xooghost/xooghost_model_page.tpl');
             file_put_contents(\XoopsBaseConfig::get('root-path') . '/modules/xooghost/' . $this->getVar('xooghost_url'), $content);
         }
 
@@ -285,12 +284,12 @@ class Page extends \XoopsObject
         $xoops = \Xoops::getInstance();
         if ($xoops->isActiveModule('notifications')) {
             $notificationHandler = \Notifications::getInstance()->getHandlerNotification();
-            $tags                = [];
+            $tags = [];
             $tags['MODULE_NAME'] = $xoops->module->getVar('name');
-            $tags['ITEM_NAME']   = $this->getVar('xooghost_title');
-            $tags['ITEM_URL']    = $xoops->url('/modules/xooghost/' . $this->getVar('xooghost_url'));
-            $tags['ITEM_BODY']   = $this->getVar('xooghost_content');
-            $tags['DATESUB']     = $this->getVar('xooghost_published');
+            $tags['ITEM_NAME'] = $this->getVar('xooghost_title');
+            $tags['ITEM_URL'] = $xoops->url('/modules/xooghost/' . $this->getVar('xooghost_url'));
+            $tags['ITEM_BODY'] = $this->getVar('xooghost_content');
+            $tags['DATESUB'] = $this->getVar('xooghost_published');
             $notificationHandler->triggerEvent('global', 0, 'newcontent', $tags);
         }
     }

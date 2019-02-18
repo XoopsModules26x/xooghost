@@ -25,22 +25,22 @@ namespace XoopsModules\Xooghost\Form;
 class PreferencesForm extends \Xoops\Form\ThemeForm
 {
     private $colors = [
-        'Aqua'    => '#00FFFF',
-        'Black'   => '#000000',
-        'Blue'    => '#0000FF',
+        'Aqua' => '#00FFFF',
+        'Black' => '#000000',
+        'Blue' => '#0000FF',
         'Fuchsia' => '#FF00FF',
-        'Gray'    => '#808080',
-        'Green'   => '#008000',
-        'Lime'    => '#00FF00',
-        'Maroon'  => '#800000',
-        'Navy'    => '#000080',
-        'Olive'   => '#808000',
-        'Purple'  => '#800080',
-        'Red'     => '#FF0000',
-        'Silver'  => '#C0C0C0',
-        'Teal'    => '#008080',
-        'White'   => '#FFFFFF',
-        'Yellow'  => '#FFFF00',
+        'Gray' => '#808080',
+        'Green' => '#008000',
+        'Lime' => '#00FF00',
+        'Maroon' => '#800000',
+        'Navy' => '#000080',
+        'Olive' => '#808000',
+        'Purple' => '#800080',
+        'Red' => '#FF0000',
+        'Silver' => '#C0C0C0',
+        'Teal' => '#008080',
+        'White' => '#FFFFFF',
+        'Yellow' => '#FFFF00',
     ];
 
     private $config = [];
@@ -81,20 +81,20 @@ class PreferencesForm extends \Xoops\Form\ThemeForm
 
         // date format
         $main_mode = new \Xoops\Form\Select(_XOO_CONFIG_DATE_FORMAT, 'xooghost_date_format', $xooghost_date_format, $size = 1);
+
         try {
             $main_mode->addOption('_DATESTRING', \Xoops\Core\Locale\Time::formatDateTime(new \DateTime('now'), 'long'));
+        } catch (\Exception $e) {
         }
-        catch (\Exception $e) {
-        }
+
         try {
             $main_mode->addOption('_MEDIUMDATESTRING', \Xoops\Core\Locale\Time::formatDateTime(new \DateTime('now'), 'medium'));
+        } catch (\Exception $e) {
         }
-        catch (\Exception $e) {
-        }
+
         try {
             $main_mode->addOption('_SHORTDATESTRING', \Xoops\Core\Locale\Time::formatDateTime(new \DateTime('now'), 'short'));
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
         }
 
         $tab1->addElement($main_mode);

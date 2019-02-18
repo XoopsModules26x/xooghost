@@ -32,9 +32,9 @@ if (function_exists('mb_http_output')) {
 }
 header('Content-Type:text/xml; charset=utf-8');
 
-$dirname             = $xoops->isModule() ? $xoops->module->getVar('dirname') : 'system';
-$tpl                 = new \XoopsTpl();
-$tpl->caching        = 2;
+$dirname = $xoops->isModule() ? $xoops->module->getVar('dirname') : 'system';
+$tpl = new \XoopsTpl();
+$tpl->caching = 2;
 $tpl->cache_lifetime = 3600;
 if (!$tpl->is_cached('module:' . $dirname . '/system_rss.tpl')) {
     $tpl->assign('channel_title', (htmlspecialchars($xoops->getConfig('sitename'), ENT_QUOTES)));
@@ -59,16 +59,16 @@ if (!$tpl->is_cached('module:' . $dirname . '/system_rss.tpl')) {
     if ($xoops->isModule()) {
         /* @var SystemPluginInterface $plugin */
         $plugin = \Xoops\Module\Plugin::getPlugin($dirname, 'system');
-        $res    = $plugin->backend(10);
+        $res = $plugin->backend(10);
         if (is_array($res) && count($res) > 0) {
             foreach ($res as $item) {
-                $date[]  = ['date' => $item['date']];
+                $date[] = ['date' => $item['date']];
                 $items[] = [
-                    'date'    => \XoopsLocale::formatTimestamp($item['date'], 'rss'),
-                    'title'   => (htmlspecialchars($item['title'])),
+                    'date' => \XoopsLocale::formatTimestamp($item['date'], 'rss'),
+                    'title' => (htmlspecialchars($item['title'])),
                     'content' => (htmlspecialchars($item['content'])),
-                    'link'    => $item['link'],
-                    'guid'    => $item['link'],
+                    'link' => $item['link'],
+                    'guid' => $item['link'],
                 ];
             }
         }
@@ -79,13 +79,13 @@ if (!$tpl->is_cached('module:' . $dirname . '/system_rss.tpl')) {
             $res = $plugin->backend(10);
             if (is_array($res) && count($res) > 0) {
                 foreach ($res as $item) {
-                    $date[]  = ['date' => $item['date']];
+                    $date[] = ['date' => $item['date']];
                     $items[] = [
-                        'date'    => \XoopsLocale::formatTimestamp($item['date'], 'rss'),
-                        'title'   => (htmlspecialchars($item['title'])),
+                        'date' => \XoopsLocale::formatTimestamp($item['date'], 'rss'),
+                        'title' => (htmlspecialchars($item['title'])),
                         'content' => (htmlspecialchars($item['content'])),
-                        'link'    => $item['link'],
-                        'guid'    => $item['link'],
+                        'link' => $item['link'],
+                        'guid' => $item['link'],
                     ];
                 }
             }

@@ -27,7 +27,7 @@ class SystemPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Syste
      */
     public function userPosts($uid)
     {
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
 
         $criteria = new \CriteriaCompo();
@@ -43,13 +43,13 @@ class SystemPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Syste
      */
     public function waiting()
     {
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
-        $criteria     = new \CriteriaCompo(new \Criteria('xooghost_online', 0));
+        $criteria = new \CriteriaCompo(new \Criteria('xooghost_online', 0));
         if ($count = $pageHandler->getCount($criteria)) {
             $ret['count'] = $count;
-            $ret['name']  = \Xoops::getInstance()->getHandlerModule()->getByDirname('xooghost')->getVar('name');
-            $ret['link']  = \Xoops::getInstance()->url('modules/xooghost/admin/pages.php?online=0');
+            $ret['name'] = \Xoops::getInstance()->getHandlerModule()->getByDirname('xooghost')->getVar('name');
+            $ret['link'] = \Xoops::getInstance()->url('modules/xooghost/admin/pages.php?online=0');
 
             return $ret;
         }
@@ -64,17 +64,17 @@ class SystemPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Syste
      */
     public function backend($limit = 10)
     {
-        $xoops        = \Xoops::getInstance();
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $xoops = \Xoops::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
 
-        $ret      = [];
+        $ret = [];
         $messages = $pageHandler->getPublished('published', 'desc', 0, $limit);
         foreach ($messages as $k => $message) {
-            $ret[$k]['title']   = $message['xooghost_title'];
-            $ret[$k]['link']    = $xoops->url('modules/xooghost/' . $message['xooghost_url']);
+            $ret[$k]['title'] = $message['xooghost_title'];
+            $ret[$k]['link'] = $xoops->url('modules/xooghost/' . $message['xooghost_url']);
             $ret[$k]['content'] = $message['xooghost_content'];
-            $ret[$k]['date']    = $message['xooghost_time'];
+            $ret[$k]['date'] = $message['xooghost_time'];
         }
 
         return $ret;

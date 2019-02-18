@@ -59,9 +59,9 @@ class Helper extends \Xoops\Module\Helper\HelperAbstract
     {
         $ret = false;
         //        /** @var Connection $db */
-        $db    = \XoopsDatabaseFactory::getConnection();
+        $db = \XoopsDatabaseFactory::getConnection();
         $class = '\\XoopsModules\\' . ucfirst(mb_strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
-        $ret   = new $class($db);
+        $ret = new $class($db);
 
         return $ret;
     }

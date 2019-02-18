@@ -15,7 +15,6 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 use XoopsModules\Xooghost\Form;
 
@@ -27,8 +26,8 @@ switch ($op) {
             $xoops->redirect('preferences.php', 3, implode('<br>', $xoops->security()->getErrors()));
         }
 
-        $xooghost_main      = Request::getInt('xooghost_main', 0, 'POST');
-        $xooghost_welcome   = Request::getString('xooghost_welcome', '', 'POST');
+        $xooghost_main = Request::getInt('xooghost_main', 0, 'POST');
+        $xooghost_welcome = Request::getString('xooghost_welcome', '', 'POST');
         $xooghost_main_mode = Request::getString('xooghost_main_mode', 'list', 'POST');
 
         // Write configuration file

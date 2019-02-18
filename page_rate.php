@@ -15,7 +15,6 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 include __DIR__ . '/header.php';
@@ -26,13 +25,13 @@ $ret['error'] = 1;
 
 if ($xoops->security()->check()) {
     $page_id = Request::getInt('page_id', 0); //$system->cleanVars($_REQUEST, 'page_id', 0, 'int');
-    $option  = Request::getInt('option', 0); //$system->cleanVars($_REQUEST, 'option', 2, 'int');
+    $option = Request::getInt('option', 0); //$system->cleanVars($_REQUEST, 'option', 2, 'int');
 
     $time = time();
     if (!isset($_SESSION['xooghost_rates' . $page_id]) || $_SESSION['xooghost_rates' . $page_id] < $time) {
         $_SESSION['xooghost_rates' . $page_id] = $time + 3600;
 
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
 
         $ret = $pageHandler->SetRate($page_id, $option);

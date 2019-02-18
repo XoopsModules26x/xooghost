@@ -39,8 +39,8 @@ class MenusPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \MenusP
     {
         $ret = [];
         if (\Xoops::getInstance()->isModule() && 'xooghost' === \Xoops::getInstance()->module->getVar('dirname')) {
-            $helper       = \XoopsModules\Xooghost\Helper::getInstance();
-            $ghostConfig  = $helper->loadConfig();
+            $helper = \XoopsModules\Xooghost\Helper::getInstance();
+            $ghostConfig = $helper->loadConfig();
             $pageHandler = $helper->getHandler('Page');
 
             $i = 0;
@@ -48,7 +48,7 @@ class MenusPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \MenusP
                 $pages = $pageHandler->getPublished();
                 foreach ($pages as $page) {
                     $ret[$i]['name'] = $page['xooghost_title'];
-                    $ret[$i]['url']  = $page['xooghost_url'];
+                    $ret[$i]['url'] = $page['xooghost_url'];
                     ++$i;
                 }
             }

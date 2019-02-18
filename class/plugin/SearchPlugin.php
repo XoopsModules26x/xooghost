@@ -36,7 +36,7 @@ class SearchPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Searc
     public function search($queries, $andor, $limit, $start, $uid)
     {
         $searchstring = '';
-        $ret          = [];
+        $ret = [];
 
         $criteria = new \CriteriaCompo();
 
@@ -64,18 +64,18 @@ class SearchPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Searc
             $criteria->add(new \Criteria('xooghost_uid', $uid));
         }
 
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
 
         $pages = $pageHandler->getObjects($criteria, true, false);
 
         $k = 0;
         foreach ($pages as $page) {
-            $ret[$k]['image']   = 'assets/icons/logo_small.png';
-            $ret[$k]['link']    = $page['xooghost_url'];
-            $ret[$k]['title']   = $page['xooghost_title'];
-            $ret[$k]['time']    = $page['xooghost_time'];
-            $ret[$k]['uid']     = $page['xooghost_uid'];
+            $ret[$k]['image'] = 'assets/icons/logo_small.png';
+            $ret[$k]['link'] = $page['xooghost_url'];
+            $ret[$k]['title'] = $page['xooghost_title'];
+            $ret[$k]['time'] = $page['xooghost_time'];
+            $ret[$k]['uid'] = $page['xooghost_uid'];
             $ret[$k]['content'] = $page['xooghost_content'];
             ++$k;
         }

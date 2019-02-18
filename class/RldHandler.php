@@ -18,7 +18,6 @@ namespace XoopsModules\Xooghost;
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Database\Connection;
 
 /**
@@ -44,7 +43,7 @@ class RldHandler extends \XoopsPersistableObjectHandler
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class = __CLASS__;
             $instance = new $class($db);
         }
 
@@ -73,8 +72,8 @@ class RldHandler extends \XoopsPersistableObjectHandler
     public function getbyUser($page_id)
     {
         $xoops = \Xoops::getInstance();
-        $uid   = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip    = $xoops->getEnv('REMOTE_ADDR');
+        $uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
+        $ip = $xoops->getEnv('REMOTE_ADDR');
 
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('xooghost_rld_page', $page_id));
@@ -99,10 +98,10 @@ class RldHandler extends \XoopsPersistableObjectHandler
      */
     public function setLikeDislike($page_id, $like_dislike)
     {
-        $xoops   = \Xoops::getInstance();
-        $uid     = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip      = $xoops->getEnv('REMOTE_ADDR');
-        $like    = (1 == $like_dislike) ? 1 : 0;
+        $xoops = \Xoops::getInstance();
+        $uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
+        $ip = $xoops->getEnv('REMOTE_ADDR');
+        $like = (1 == $like_dislike) ? 1 : 0;
         $dislike = (0 == $like_dislike) ? 1 : 0;
 
         $criteria = new \CriteriaCompo();
@@ -139,8 +138,8 @@ class RldHandler extends \XoopsPersistableObjectHandler
     public function setRate($page_id, $vote)
     {
         $xoops = \Xoops::getInstance();
-        $uid   = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip    = $xoops->getEnv('REMOTE_ADDR');
+        $uid = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
+        $ip = $xoops->getEnv('REMOTE_ADDR');
 
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('xooghost_rld_page', $page_id));
@@ -179,8 +178,8 @@ class RldHandler extends \XoopsPersistableObjectHandler
         $criteria->add(new \Criteria('xooghost_rld_page', $page_id));
         $criteria->add(new \Criteria('xooghost_rld_rates', 0, '!='));
 
-        $res    = $this->getObjects($criteria, false, false);
-        $rates  = 0;
+        $res = $this->getObjects($criteria, false, false);
+        $rates = 0;
         $voters = 0;
         foreach ($res as $k => $v) {
             $rates += $v['xooghost_rld_rates'];

@@ -24,10 +24,10 @@ namespace XoopsModules\Xooghost;
  */
 class Preferences
 {
-    public  $config        = [];
-    public  $basicConfig   = [];
-    public  $configPath;
-    public  $configFile;
+    public $config = [];
+    public $basicConfig = [];
+    public $configPath;
+    public $configFile;
     private $moduleDirName = 'xooghost';
 
     public function __construct()
@@ -37,7 +37,7 @@ class Preferences
         $this->configPath = \XoopsBaseConfig::get('var-path') . '/configs/' . $this->moduleDirName . '/';
 
         $this->basicConfig = $this->loadBasicConfig();
-        $this->config      = @$this->loadConfig();
+        $this->config = @$this->loadConfig();
 
         if (count($this->config) != count($this->basicConfig)) {
             $this->config = array_merge($this->basicConfig, $this->config);
@@ -52,7 +52,7 @@ class Preferences
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
+            $class = __CLASS__;
             $instance = new $class();
         }
 
@@ -139,11 +139,11 @@ class Preferences
      */
     private function createPath($pathname, $pathout = XOOPS_ROOT_PATH)
     {
-        $xoops    = \Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
         $pathname = mb_substr($pathname, mb_strlen(\XoopsBaseConfig::get('root-path')));
         $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
-        $dest  = $pathout;
+        $dest = $pathout;
         $paths = explode('/', $pathname);
 
         foreach ($paths as $path) {

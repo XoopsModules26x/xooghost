@@ -69,7 +69,7 @@ class CommentsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Com
      */
     public function update($item_id, $total_num)
     {
-        $db  = \Xoops::getInstance()->db();
+        $db = \Xoops::getInstance()->db();
         $sql = 'UPDATE ' . $db->prefix('xooghost') . ' SET xooghost_comments = ' . (int)($total_num) . ' WHERE xooghost_id = ' . (int)($item_id);
         $db->query($sql);
     }
@@ -91,13 +91,13 @@ class CommentsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \Com
     {
         $ret = [];
 
-        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
         $pageHandler = $helper->getHandler('Page');
-        $page         = $page = $pageHandler->get($item_id);
+        $page = $page = $pageHandler->get($item_id);
 
-        $ret['text']      = $page->getVar('xooghost_content');
-        $ret['title']     = $page->getVar('xooghost_title');
-        $ret['uid']       = $page->getVar('xooghost_uid');
+        $ret['text'] = $page->getVar('xooghost_content');
+        $ret['title'] = $page->getVar('xooghost_title');
+        $ret['uid'] = $page->getVar('xooghost_uid');
         $ret['timestamp'] = $page->getVar('xooghost_published');
 
         return $ret;

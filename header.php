@@ -15,7 +15,6 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
@@ -23,12 +22,12 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 \XoopsLoad::load('system', 'system');
 $system = \System::getInstance();
 
-$helper       = \XoopsModules\Xooghost\Helper::getInstance();
-$ghostConfig  = $helper->loadConfig();
+$helper = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig = $helper->loadConfig();
 $pageHandler = $helper->getHandler('Page');
 
 $xooghostUrl = basename(Request::getString('SCRIPT_NAME', '', 'SERVER'));
-$exclude     = [
+$exclude = [
     'footer.php',
     'header.php',
     'index.php',
@@ -45,8 +44,8 @@ if (in_array($xooghostUrl, $exclude, true)) {
     $page = $pageHandler->getByURL($xooghostUrl);
     if (is_object($page) && 0 != count($page) && $page->getVar('xooghost_online') && $page->getVar('xooghost_online')) {
         $_SESSION['xooghost_stat'] = true;
-        $time                      = time();
-        $Xooghost_id               = $page->getVar('xooghost_id');
+        $time = time();
+        $Xooghost_id = $page->getVar('xooghost_id');
         if (!isset($_SESSION['xooghost_view' . $Xooghost_id]) || $_SESSION['xooghost_view' . $Xooghost_id] < $time) {
             $_SESSION['xooghost_view' . $Xooghost_id] = $time + 3600;
             $pageHandler->SetRead($page);

@@ -15,13 +15,12 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 
-$helper       = \XoopsModules\Xooghost\Helper::getInstance();
-$ghostConfig  = $helper->loadConfig();
+$helper = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig = $helper->loadConfig();
 $pageHandler = $helper->getHandler('Page');
 
 \XoopsLoad::load('system', 'system');
@@ -31,7 +30,7 @@ $xoops = \Xoops::getInstance();
 $xoops->disableErrorReporting();
 
 $page_id = Request::getInt('page_id', 0); //$system->cleanVars($_REQUEST, 'page_id', 0, 'int');
-$page    = $pageHandler->get($page_id);
+$page = $pageHandler->get($page_id);
 
 $output = Request::getString('output', 'print'); //$system->cleanVars($_REQUEST, 'output', 'print', 'string');
 

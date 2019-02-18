@@ -21,15 +21,15 @@
  */
 function xooghost_show($options)
 {
-    $helper       = \XoopsModules\Xooghost\Helper::getInstance();
-    $ghostConfig  = $helper->loadConfig();
+    $helper = \XoopsModules\Xooghost\Helper::getInstance();
+    $ghostConfig = $helper->loadConfig();
     $pageHandler = $helper->getHandler('Page');
 
     $helper->xoops()->theme()->addStylesheet('modules/xooghost/assets/css/module.css');
     $helper->xoops()->theme()->addStylesheet('modules/xooghost/assets/css/block.css');
 
     $block['template'] = $options[0];
-    $block['pages']    = $pageHandler->getPublished($options[1], $options[2], 0, $options[3]);
+    $block['pages'] = $pageHandler->getPublished($options[1], $options[2], 0, $options[3]);
 
     return $block;
 }
@@ -41,7 +41,7 @@ function xooghost_show($options)
  */
 function xooghost_edit($options)
 {
-    $helper      = \XoopsModules\Xooghost\Helper::getInstance();
+    $helper = \XoopsModules\Xooghost\Helper::getInstance();
     $ghostConfig = $helper->loadConfig();
 
     $block_form = new \XoopsBlockForm();

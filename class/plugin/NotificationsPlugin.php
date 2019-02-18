@@ -32,23 +32,23 @@ class NotificationsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements
      */
     public function item($category, $item_id)
     {
-        $xoops   = \Xoops::getInstance();
-        $item    = [];
+        $xoops = \Xoops::getInstance();
+        $item = [];
         $item_id = (int)$item_id;
 
         if ('global' === $category) {
             $item['name'] = '';
-            $item['url']  = '';
+            $item['url'] = '';
 
             return $item;
         }
 
         if ('item' === $category) {
-            $sql          = 'SELECT xooghost_title, xooghost_url FROM ' . $xoops->db()->prefix('xooghost') . ' WHERE xooghost_id = ' . $item_id;
-            $result       = $xoops->db()->query($sql); // TODO: error check
+            $sql = 'SELECT xooghost_title, xooghost_url FROM ' . $xoops->db()->prefix('xooghost') . ' WHERE xooghost_id = ' . $item_id;
+            $result = $xoops->db()->query($sql); // TODO: error check
             $result_array = $xoops->db()->fetchArray($result);
             $item['name'] = $result_array['xooghost_title'];
-            $item['url']  = $result_array['xooghost_url'];
+            $item['url'] = $result_array['xooghost_url'];
 
             return $item;
         }
@@ -61,19 +61,19 @@ class NotificationsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements
      */
     public function categories()
     {
-        $helper                   = \XoopsModules\Xooghost\Helper::getInstance();
-        $pageHandler             = $helper->getHandler('Page');
-        $ret                      = [];
-        $ret[1]['name']           = 'global';
-        $ret[1]['title']          = _MI_XOO_GHOST_NOTIFICATION_GLOBAL;
-        $ret[1]['description']    = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_DSC;
+        $helper = \XoopsModules\Xooghost\Helper::getInstance();
+        $pageHandler = $helper->getHandler('Page');
+        $ret = [];
+        $ret[1]['name'] = 'global';
+        $ret[1]['title'] = _MI_XOO_GHOST_NOTIFICATION_GLOBAL;
+        $ret[1]['description'] = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_DSC;
         $ret[1]['subscribe_from'] = ['index.php'];
 
-        $ret[2]['name']           = 'item';
-        $ret[2]['title']          = _MI_XOO_GHOST_NOTIFICATION_ITEM;
-        $ret[2]['description']    = _MI_XOO_GHOST_NOTIFICATION_ITEM_DSC;
+        $ret[2]['name'] = 'item';
+        $ret[2]['title'] = _MI_XOO_GHOST_NOTIFICATION_ITEM;
+        $ret[2]['description'] = _MI_XOO_GHOST_NOTIFICATION_ITEM_DSC;
         $ret[2]['subscribe_from'] = $pageHandler->getUrls();
-        $ret[2]['item_name']      = 'ghost_id';
+        $ret[2]['item_name'] = 'ghost_id';
         $ret[2]['allow_bookmark'] = 1;
 
         return $ret;
@@ -84,14 +84,14 @@ class NotificationsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements
      */
     public function events()
     {
-        $ret                     = [];
-        $ret[1]['name']          = 'newcontent';
-        $ret[1]['category']      = 'global';
-        $ret[1]['title']         = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT;
-        $ret[1]['caption']       = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT_CAP;
-        $ret[1]['description']   = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT_DSC;
+        $ret = [];
+        $ret[1]['name'] = 'newcontent';
+        $ret[1]['category'] = 'global';
+        $ret[1]['title'] = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT;
+        $ret[1]['caption'] = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT_CAP;
+        $ret[1]['description'] = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT_DSC;
         $ret[1]['mail_template'] = 'global_newcontent';
-        $ret[1]['mail_subject']  = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT_SBJ;
+        $ret[1]['mail_subject'] = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT_SBJ;
 
         return $ret;
     }

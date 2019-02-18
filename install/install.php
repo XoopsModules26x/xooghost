@@ -22,10 +22,10 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  */
 function xoops_module_install_xooghost()
 {
-    $xoops     = \Xoops::getInstance();
-    $folders   = [];
+    $xoops = \Xoops::getInstance();
+    $folders = [];
     $folders[] = $xoops->path('uploads') . '/xooghost/images';
-    $images    = ['index.html', 'blank.gif'];
+    $images = ['index.html', 'blank.gif'];
 
     foreach ($folders as $folder) {
         if (!xooghost_mkdirs($folder)) {
@@ -49,11 +49,11 @@ function xoops_module_install_xooghost()
  */
 function xooghost_mkdirs($pathname, $pathout = XOOPS_ROOT_PATH)
 {
-    $xoops    = \Xoops::getInstance();
+    $xoops = \Xoops::getInstance();
     $pathname = mb_substr($pathname, mb_strlen(XOOPS_ROOT_PATH));
     $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
-    $dest  = $pathout;
+    $dest = $pathout;
     $paths = explode('/', $pathname);
 
     foreach ($paths as $path) {

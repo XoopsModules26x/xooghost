@@ -15,7 +15,6 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 use Xoops\Core\Request;
 
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
@@ -53,6 +52,6 @@ if ('about' !== $script_name && 'index' !== $script_name) {
 }
 
 /** @var \XoopsModules\Xooghost\Helper $helper */
-$helper       = \XoopsModules\Xooghost\Helper::getInstance();
-$ghostConfig  = $helper->loadConfig();
+$helper = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig = $helper->loadConfig();
 $pageHandler = $helper->getHandler('Page');
