@@ -1,6 +1,6 @@
 <?php
 
-return $config = array(
+return $config = [
     'xooghost_main'         => 1,
     'xooghost_welcome'      => '',
     'xooghost_main_mode'    => 'blog',
@@ -9,8 +9,8 @@ return $config = array(
     'xooghost_image_size'   => 100000,
     'xooghost_image_width'  => 100,
     'xooghost_image_height' => 100,
-    'xooghost_rld'          => array(
+    'xooghost_rld'          => [
         'rld_mode'   => 'likedislike',
-        'rate_scale' => 10
-    )
-);
+        'rate_scale' => 10,
+    ],
+];

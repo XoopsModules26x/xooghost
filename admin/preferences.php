@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
@@ -17,13 +17,14 @@
  */
 
 use Xoops\Core\Request;
+use XoopsModules\Xooghost\Form;
 
 include __DIR__ . '/header.php';
 
 switch ($op) {
     case 'save':
         if (!$xoops->security()->check()) {
-            $xoops->redirect('preferences.php', 3, implode('<br />', $xoops->security()->getErrors()));
+            $xoops->redirect('preferences.php', 3, implode('<br>', $xoops->security()->getErrors()));
         }
 
         $xooghost_main      = Request::getInt('xooghost_main', 0, 'POST');
@@ -31,13 +32,13 @@ switch ($op) {
         $xooghost_main_mode = Request::getString('xooghost_main_mode', 'list', 'POST');
 
         // Write configuration file
-        $object = XooGhostPreferences::getInstance();
+        $object = \XoopsModules\Xooghost\Preferences::getInstance();
         $object->writeConfig($object->prepare2Save());
         $xoops->redirect('preferences.php', 3, _XOO_CONFIG_SAVED);
         break;
-
     default:
-        $form = $ghostModule->getForm(null, 'preferences');
+        //        $form = $helper->getForm(null, 'preferences');
+        $form = new Form\PreferencesForm();
         $form->display();
         break;
 }

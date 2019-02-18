@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -9,19 +12,17 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
 
-
 /**
  * Class XooghostNotificationsPlugin
  */
-
-class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract implements NotificationsPluginInterface
+class NotificationsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \NotificationsPluginInterface
 {
     /**
      * @param string $category
@@ -31,18 +32,18 @@ class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imp
      */
     public function item($category, $item_id)
     {
-        $xoops   = Xoops::getInstance();
-        $item    = array();
+        $xoops   = \Xoops::getInstance();
+        $item    = [];
         $item_id = (int)$item_id;
 
-        if ($category === 'global') {
+        if ('global' === $category) {
             $item['name'] = '';
             $item['url']  = '';
 
             return $item;
         }
 
-        if ($category === 'item') {
+        if ('item' === $category) {
             $sql          = 'SELECT xooghost_title, xooghost_url FROM ' . $xoops->db()->prefix('xooghost') . ' WHERE xooghost_id = ' . $item_id;
             $result       = $xoops->db()->query($sql); // TODO: error check
             $result_array = $xoops->db()->fetchArray($result);
@@ -60,18 +61,18 @@ class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imp
      */
     public function categories()
     {
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
-        $ret                      = array();
+        $helper                   = \XoopsModules\Xooghost\Helper::getInstance();
+        $pageHandler             = $helper->getHandler('Page');
+        $ret                      = [];
         $ret[1]['name']           = 'global';
         $ret[1]['title']          = _MI_XOO_GHOST_NOTIFICATION_GLOBAL;
         $ret[1]['description']    = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_DSC;
-        $ret[1]['subscribe_from'] = array('index.php');
+        $ret[1]['subscribe_from'] = ['index.php'];
 
         $ret[2]['name']           = 'item';
         $ret[2]['title']          = _MI_XOO_GHOST_NOTIFICATION_ITEM;
         $ret[2]['description']    = _MI_XOO_GHOST_NOTIFICATION_ITEM_DSC;
-        $ret[2]['subscribe_from'] = $ghostHandler->getUrls(); //Xooghost::getInstance()->GhostHandler()->getUrls();
+        $ret[2]['subscribe_from'] = $pageHandler->getUrls();
         $ret[2]['item_name']      = 'ghost_id';
         $ret[2]['allow_bookmark'] = 1;
 
@@ -83,7 +84,7 @@ class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imp
      */
     public function events()
     {
-        $ret                     = array();
+        $ret                     = [];
         $ret[1]['name']          = 'newcontent';
         $ret[1]['category']      = 'global';
         $ret[1]['title']         = _MI_XOO_GHOST_NOTIFICATION_GLOBAL_NEWCONTENT;
@@ -104,6 +105,6 @@ class XooghostNotificationsPlugin extends Xoops\Module\Plugin\PluginAbstract imp
      */
     public function tags($category, $item_id, $event)
     {
-        return array();
+        return [];
     }
 }

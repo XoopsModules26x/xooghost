@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -9,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
@@ -19,7 +22,7 @@
 /**
  * Class XooghostXootagsPlugin
  */
-class XooghostXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implements XootagsPluginInterface
+class XootagsPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \XootagsPluginInterface
 {
     /**
      * @param $items
@@ -28,21 +31,21 @@ class XooghostXootagsPlugin extends Xoops\Module\Plugin\PluginAbstract implement
      */
     public function xootags($items)
     {
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
+        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $pageHandler = $helper->getHandler('Page');
 
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
         $criteria->setSort('xooghost_published');
         $criteria->setOrder('DESC');
 
-        $criteria->add(new Criteria('xooghost_online', 1));
-        $criteria->add(new Criteria('xooghost_published', 0, '>'));
-        $criteria->add(new Criteria('xooghost_published', time(), '<='));
-        $criteria->add(new Criteria('xooghost_id', '(' . implode(', ', $items) . ')', 'IN'));
+        $criteria->add(new \Criteria('xooghost_online', 1));
+        $criteria->add(new \Criteria('xooghost_published', 0, '>'));
+        $criteria->add(new \Criteria('xooghost_published', time(), '<='));
+        $criteria->add(new \Criteria('xooghost_id', '(' . implode(', ', $items) . ')', 'IN'));
 
-        $pages = $ghostHandler->getObjects($criteria, false, false);
+        $pages = $pageHandler->getObjects($criteria, false, false);
 
-        $ret = array();
+        $ret = [];
         $k   = 0;
         foreach ($pages as $page) {
             $ret[$k]['itemid']  = $page['xooghost_id'];

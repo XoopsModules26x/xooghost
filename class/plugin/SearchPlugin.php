@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -9,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
@@ -19,7 +22,7 @@
 /**
  * Class XooghostSearchPlugin
  */
-class XooghostSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements SearchPluginInterface
+class SearchPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \SearchPluginInterface
 {
     /**
      * @param $queries
@@ -33,38 +36,38 @@ class XooghostSearchPlugin extends Xoops\Module\Plugin\PluginAbstract implements
     public function search($queries, $andor, $limit, $start, $uid)
     {
         $searchstring = '';
-        $ret          = array();
+        $ret          = [];
 
-        $criteria = new CriteriaCompo();
+        $criteria = new \CriteriaCompo();
 
         $criteria->setLimit($limit);
         $criteria->setStart($start);
         $criteria->setSort('xooghost_published');
         $criteria->setOrder('DESC');
 
-        $criteria->add(new Criteria('xooghost_online', 1));
-        $criteria->add(new Criteria('xooghost_published', 0, '>'));
-        $criteria->add(new Criteria('xooghost_published', time(), '<='));
+        $criteria->add(new \Criteria('xooghost_online', 1));
+        $criteria->add(new \Criteria('xooghost_published', 0, '>'));
+        $criteria->add(new \Criteria('xooghost_published', time(), '<='));
 
         if (is_array($queries) && $count = count($queries)) {
             foreach ($queries as $k => $v) {
-                $criteria_content = new CriteriaCompo();
-                $criteria_content->add(new Criteria('xooghost_title', '%' . $v . '%', 'LIKE'), 'OR');
-                $criteria_content->add(new Criteria('xooghost_content', '%' . $v . '%', 'LIKE'), 'OR');
-                $criteria_content->add(new Criteria('xooghost_description', '%' . $v . '%', 'LIKE'), 'OR');
-                $criteria_content->add(new Criteria('xooghost_keywords', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content = new \CriteriaCompo();
+                $criteria_content->add(new \Criteria('xooghost_title', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content->add(new \Criteria('xooghost_content', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content->add(new \Criteria('xooghost_description', '%' . $v . '%', 'LIKE'), 'OR');
+                $criteria_content->add(new \Criteria('xooghost_keywords', '%' . $v . '%', 'LIKE'), 'OR');
                 $criteria->add($criteria_content, $andor);
             }
         }
 
-        if ($uid != 0) {
-            $criteria->add(new Criteria('xooghost_uid', $uid));
+        if (0 != $uid) {
+            $criteria->add(new \Criteria('xooghost_uid', $uid));
         }
 
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
+        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $pageHandler = $helper->getHandler('Page');
 
-        $pages = $ghostHandler->getObjects($criteria, true, false);
+        $pages = $pageHandler->getObjects($criteria, true, false);
 
         $k = 0;
         foreach ($pages as $page) {

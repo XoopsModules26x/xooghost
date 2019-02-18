@@ -1,5 +1,7 @@
 <?php
 
+namespace XoopsModules\Xooghost\Plugin;
+
 /**
  * Xooghost module
  *
@@ -10,13 +12,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements SystemPluginInterface
+class SystemPlugin extends \Xoops\Module\Plugin\PluginAbstract implements \SystemPluginInterface
 {
     /**
      * @param int $uid
@@ -25,15 +27,15 @@ class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      */
     public function userPosts($uid)
     {
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
+        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $pageHandler = $helper->getHandler('Page');
 
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('xooghost_online', 1));
-        $criteria->add(new Criteria('xooghost_published', time(), '<='));
-        $criteria->add(new Criteria('xooghost_uid', $uid));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('xooghost_online', 1));
+        $criteria->add(new \Criteria('xooghost_published', time(), '<='));
+        $criteria->add(new \Criteria('xooghost_uid', $uid));
 
-        return $ghostHandler->getCount($criteria);
+        return $pageHandler->getCount($criteria);
     }
 
     /**
@@ -41,13 +43,13 @@ class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      */
     public function waiting()
     {
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
-        $criteria      = new CriteriaCompo(new Criteria('xooghost_online', 0));
-        if ($count = $ghostHandler->getCount($criteria)) {
+        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $pageHandler = $helper->getHandler('Page');
+        $criteria     = new \CriteriaCompo(new \Criteria('xooghost_online', 0));
+        if ($count = $pageHandler->getCount($criteria)) {
             $ret['count'] = $count;
-            $ret['name']  = Xoops::getInstance()->getHandlerModule()->getByDirname('xooghost')->getVar('name');
-            $ret['link']  = Xoops::getInstance()->url('modules/xooghost/admin/pages.php?online=0');
+            $ret['name']  = \Xoops::getInstance()->getHandlerModule()->getByDirname('xooghost')->getVar('name');
+            $ret['link']  = \Xoops::getInstance()->url('modules/xooghost/admin/pages.php?online=0');
 
             return $ret;
         }
@@ -62,12 +64,12 @@ class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      */
     public function backend($limit = 10)
     {
-        $xoops         = Xoops::getInstance();
-        $ghostModule  = Xooghost::getInstance();
-        $ghostHandler = $ghostModule->ghostHandler();
+        $xoops        = \Xoops::getInstance();
+        $helper       = \XoopsModules\Xooghost\Helper::getInstance();
+        $pageHandler = $helper->getHandler('Page');
 
-        $ret      = array();
-        $messages = $ghostHandler->getPublished('published', 'desc', 0, $limit);
+        $ret      = [];
+        $messages = $pageHandler->getPublished('published', 'desc', 0, $limit);
         foreach ($messages as $k => $message) {
             $ret[$k]['title']   = $message['xooghost_title'];
             $ret[$k]['link']    = $xoops->url('modules/xooghost/' . $message['xooghost_url']);
@@ -83,6 +85,6 @@ class XooghostSystemPlugin extends Xoops\Module\Plugin\PluginAbstract implements
      */
     public function userMenus()
     {
-        return array();
+        return [];
     }
 }

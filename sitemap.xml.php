@@ -9,19 +9,18 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xoositemap
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
-
 if (file_exists('mainfile.php')) {
     include __DIR__ . '/mainfile.php';
 } else {
-    include '../../mainfile.php';
+    require dirname(dirname(__DIR__)) . '/mainfile.php';
 }
-$xoops = Xoops::getInstance();
+$xoops = \Xoops::getInstance();
 $xoops->disableErrorReporting();
 
 if (function_exists('mb_http_output')) {
@@ -30,7 +29,7 @@ if (function_exists('mb_http_output')) {
 header('Content-Type:text/xml; charset=utf-8');
 
 $dirname = $xoops->isModule() ? $xoops->module->getVar('dirname') : 'system';
-$tpl     = new XoopsTpl();
+$tpl     = new \XoopsTpl();
 //$tpl->caching = 2;
 //$tpl->cache_lifetime = 3600;
 //if (!$tpl->is_cached('module:xoositemap/xoositemap_xml.tpl')) {
@@ -40,18 +39,20 @@ if ($xoops->isModule()) {
     $res    = $plugin->xoositemap_xml(true);
     if (is_array($res)) {
         $time       = isset($res['time']) ? $res['time'] : time();
-        $mod_time[] = array('time' => $time);
-        $modules[]  = array(
+        $mod_time[] = ['time' => $time];
+        $modules[]  = [
             'time'    => $time,
             'dirname' => $res['dirname'],
-            'date'    => gmdate('Y-m-d\TH:i:s\Z', $time));
+            'date'    => gmdate('Y-m-d\TH:i:s\Z', $time),
+        ];
         if (count($res['items']) > 0) {
             foreach ($res['items'] as $item) {
-                $times[] = array('time' => $item['time']);
-                $items[] = array(
+                $times[] = ['time' => $item['time']];
+                $items[] = [
                     'time' => $item['time'],
                     'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
-                    'link' => $item['url']);
+                    'link' => $item['url'],
+                ];
             }
         }
     }
@@ -61,18 +62,20 @@ if ($xoops->isModule()) {
         $res = $plugin->xoositemap_xml(true);
         if (is_array($res)) {
             $time       = isset($res['time']) ? $res['time'] : time();
-            $mod_time[] = array('time' => $time);
-            $modules[]  = array(
+            $mod_time[] = ['time' => $time];
+            $modules[]  = [
                 'time'    => $time,
                 'dirname' => $res['dirname'],
-                'date'    => gmdate('Y-m-d\TH:i:s\Z', $time));
+                'date'    => gmdate('Y-m-d\TH:i:s\Z', $time),
+            ];
             if (count($res['items']) > 0) {
                 foreach ($res['items'] as $item) {
-                    $times[] = array('time' => $item['time']);
-                    $items[] = array(
+                    $times[] = ['time' => $item['time']];
+                    $items[] = [
                         'time' => $item['time'],
                         'date' => gmdate('Y-m-d\TH:i:s\Z', $item['time']),
-                        'link' => $item['url']);
+                        'link' => $item['url'],
+                    ];
                 }
             }
         }

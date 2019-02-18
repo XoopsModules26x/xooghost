@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
@@ -21,14 +21,14 @@ use Xoops\Core\Request;
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 include __DIR__ . '/include/functions.php';
 
-XoopsLoad::load('system', 'system');
-$system = System::getInstance();
+\XoopsLoad::load('system', 'system');
+$system = \System::getInstance();
 
-$xooghost_id = Request::getInt('xooghost_id', 0);//$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
+$xooghost_id = Request::getInt('xooghost_id', 0); //$system->cleanVars($_REQUEST, 'xooghost_id', 0, 'int');
 
-$ghostModule  = Xooghost::getInstance();
-$ghostConfig  = $ghostModule->loadConfig();
-$ghostHandler = $ghostModule->ghostHandler();
+$helper       = \XoopsModules\Xooghost\Helper::getInstance();
+$ghostConfig  = $helper->loadConfig();
+$pageHandler = $helper->getHandler('Page');
 
-$page = $ghostHandler->get($xooghost_id);
-$xoops->redirect($ghostHandler->get($xooghost_id)->getVar('xooghost_url') . '?' . $xoops->getEnv('QUERY_STRING'));
+$page = $pageHandler->get($xooghost_id);
+$xoops->redirect($pageHandler->get($xooghost_id)->getVar('xooghost_url') . '?' . $xoops->getEnv('QUERY_STRING'));

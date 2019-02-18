@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xooghost;
+
 /**
  * Xooghost module
  *
@@ -9,27 +12,22 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  */
 
-use Xoops\Core\Database\Connection;
-use Xoops\Core\Kernel\XoopsObject;
-use Xoops\Core\Kernel\XoopsPersistableObjectHandler;
 use Xoops\Core\Request;
 
 /**
  * Class XooghostRld
  */
-class XooghostRld extends XoopsObject
+class Rld extends \XoopsObject
 {
     // constructor
-    /**
-     *
-     */
+
     public function __construct()
     {
         $this->initVar('xooghost_rld_id', XOBJ_DTYPE_INT, 0, true, 5);
@@ -58,18 +56,18 @@ class XooghostRld extends XoopsObject
 
     public function cleanVarsForDB()
     {
-        $system = System::getInstance();
+        $system = \System::getInstance();
         foreach (parent::getValues() as $k => $v) {
-            if ($k !== 'dohtml') {
-                if ($this->vars[$k]['data_type'] == XOBJ_DTYPE_STIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_MTIME || $this->vars[$k]['data_type'] == XOBJ_DTYPE_LTIME) {
-//                    $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
+            if ('dohtml' !== $k) {
+                if (XOBJ_DTYPE_STIME == $this->vars[$k]['data_type'] || XOBJ_DTYPE_MTIME == $this->vars[$k]['data_type'] || XOBJ_DTYPE_LTIME == $this->vars[$k]['data_type']) {
+                    //                    $value = $system->cleanVars($_POST[$k], 'date', date('Y-m-d'), 'date') + $system->cleanVars($_POST[$k], 'time', date('u'), 'int');
                     //TODO should we use here getString??
                     $value = Request::getArray('date', date('Y-m-d'), 'POST')[$k] + Request::getArray('time', date('u'), 'POST')[$k];
                     $this->setVar($k, isset($_POST[$k]) ? $value : $v);
-                } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
+                } elseif (XOBJ_DTYPE_INT == $this->vars[$k]['data_type']) {
                     $value = Request::getInt($k, $v, 'POST'); //$system->cleanVars($_POST, $k, $v, 'int');
                     $this->setVar($k, $value);
-                } elseif ($this->vars[$k]['data_type'] == XOBJ_DTYPE_ARRAY) {
+                } elseif (XOBJ_DTYPE_ARRAY == $this->vars[$k]['data_type']) {
                     $value = Request::getArray($k, $v, 'POST'); // $system->cleanVars($_POST, $k, $v, 'array');
                     $this->setVar($k, $value);
                 } else {
@@ -78,174 +76,5 @@ class XooghostRld extends XoopsObject
                 }
             }
         }
-    }
-}
-
-/**
- * Class XooghostRldHandler
- */
-class XooghostRldHandler extends XoopsPersistableObjectHandler
-{
-    private $db;
-    /**
-     * @param null|\Xoops\Core\Database\Connection $db
-     */
-    public function __construct(Connection $db = null)
-    {
-        $this->db = $db;
-        parent::__construct($db, 'xooghost_rld', 'XooghostRld', 'xooghost_rld_id', 'xooghost_rld_page');
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function getInstance()
-    {
-        static $instance;
-        if (!isset($instance)) {
-            $class    = __CLASS__;
-            $instance = new $class($db);
-        }
-
-        return $instance;
-    }
-
-    /**
-     * @param $page_id
-     *
-     * @return int
-     */
-    public function getVotes($page_id)
-    {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('xooghost_rld_page', $page_id));
-        $criteria->add(new Criteria('xooghost_rld_rates', 0, '!='));
-
-        return parent::getCount($criteria);
-    }
-
-    /**
-     * @param $page_id
-     *
-     * @return int
-     */
-    public function getbyUser($page_id)
-    {
-        $xoops = Xoops::getInstance();
-        $uid   = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip    = $xoops->getEnv('REMOTE_ADDR');
-
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('xooghost_rld_page', $page_id));
-
-        $criteria2 = new CriteriaCompo();
-        $criteria2->add(new Criteria('xooghost_rld_uid', $uid), 'OR');
-        $criteria2->add(new Criteria('xooghost_rld_ip', $ip), 'OR');
-        $criteria->add($criteria2, 'AND');
-        $tmp = $this->getObjects($criteria, false, false);
-        if (count($tmp) != 0) {
-            return $tmp[0]['xooghost_rld_rates'];
-        }
-
-        return 0;
-    }
-
-    /**
-     * @param $page_id
-     * @param $like_dislike
-     *
-     * @return bool
-     */
-    public function setLikeDislike($page_id, $like_dislike)
-    {
-        $xoops   = Xoops::getInstance();
-        $uid     = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip      = $xoops->getEnv('REMOTE_ADDR');
-        $like    = ($like_dislike == 1) ? 1 : 0;
-        $dislike = ($like_dislike == 0) ? 1 : 0;
-
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('xooghost_rld_page', $page_id));
-
-        $criteria2 = new CriteriaCompo();
-        $criteria2->add(new Criteria('xooghost_rld_uid', $uid), 'OR');
-        $criteria2->add(new Criteria('xooghost_rld_ip', $ip), 'OR');
-        $criteria->add($criteria2, 'AND');
-        $tmp = $this->getObjects($criteria, false, false);
-        if (count($tmp) == 0) {
-            $rldObject = $this->create();
-            $rldObject->setVar('xooghost_rld_page', $page_id);
-            $rldObject->setVar('xooghost_rld_uid', $uid);
-            $rldObject->setVar('xooghost_rld_time', time());
-            $rldObject->setVar('xooghost_rld_ip', $ip);
-            $rldObject->setVar('xooghost_rld_rates', 0);
-            $rldObject->setVar('xooghost_rld_like', $like);
-            $rldObject->setVar('xooghost_rld_dislike', $dislike);
-            if ($this->insert($rldObject)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param $page_id
-     * @param $vote
-     *
-     * @return array|bool
-     */
-    public function setRate($page_id, $vote)
-    {
-        $xoops = Xoops::getInstance();
-        $uid   = $xoops->isUser() ? $xoops->user->getVar('uid') : 0;
-        $ip    = $xoops->getEnv('REMOTE_ADDR');
-
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('xooghost_rld_page', $page_id));
-
-        $criteria2 = new CriteriaCompo();
-        $criteria2->add(new Criteria('xooghost_rld_uid', $uid), 'OR');
-        $criteria2->add(new Criteria('xooghost_rld_ip', $ip), 'OR');
-        $criteria->add($criteria2, 'AND');
-        $tmp = $this->getObjects($criteria, false, false);
-        if (count($tmp) == 0) {
-            $rldObject = $this->create();
-            $rldObject->setVar('xooghost_rld_page', $page_id);
-            $rldObject->setVar('xooghost_rld_uid', $uid);
-            $rldObject->setVar('xooghost_rld_time', time());
-            $rldObject->setVar('xooghost_rld_ip', $ip);
-            $rldObject->setVar('xooghost_rld_rates', $vote);
-            $rldObject->setVar('xooghost_rld_like', 0);
-            $rldObject->setVar('xooghost_rld_dislike', 0);
-            if ($tmp = $this->insert($rldObject)) {
-                return $this->getAverage($page_id, $vote);
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param $page_id
-     * @param $vote
-     *
-     * @return array
-     */
-    private function getAverage($page_id, $vote)
-    {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('xooghost_rld_page', $page_id));
-        $criteria->add(new Criteria('xooghost_rld_rates', 0, '!='));
-
-        $res    = $this->getObjects($criteria, false, false);
-        $rates  = 0;
-        $voters = 0;
-        foreach ($res as $k => $v) {
-            $rates += $v['xooghost_rld_rates'];
-            ++$voters;
-        }
-
-        return array('voters' => $voters, 'average' => ($rates / $voters), 'vote' => $vote);
     }
 }
