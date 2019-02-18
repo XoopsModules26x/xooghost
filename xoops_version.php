@@ -14,50 +14,49 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
-$modversion = [];
-$modversion['version'] = 1.01;
+$modversion                  = [];
+$modversion['version']       = 1.01;
 $modversion['module_status'] = 'Alpha 1';
-$modversion['release_date'] = '2019/02/15';
-$modversion['dirname'] = basename(__DIR__);
-$modversion['name'] = _MI_XOO_GHOST_NAME;
-$modversion['description'] = _MI_XOO_GHOST_DESC;
-$modversion['author'] = 'XooFoo - Laurent JEN';
-$modversion['nickname'] = 'aka DuGris';
-$modversion['credits'] = 'DuGris.XooFoo Project';
-$modversion['license'] = 'GNU GPL 2.0';
-$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
-$modversion['official'] = 1;
-$modversion['help'] = 'page=help';
-$modversion['image'] = 'assets/images/logo.png';
+$modversion['release_date']  = '2019/02/15';
+$modversion['dirname']       = basename(__DIR__);
+$modversion['name']          = _MI_XOO_GHOST_NAME;
+$modversion['description']   = _MI_XOO_GHOST_DESC;
+$modversion['author']        = 'XooFoo - Laurent JEN';
+$modversion['nickname']      = 'aka DuGris';
+$modversion['credits']       = 'DuGris.XooFoo Project';
+$modversion['license']       = 'GNU GPL 2.0';
+$modversion['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['official']      = 1;
+$modversion['help']          = 'page=help';
+$modversion['image']         = 'assets/images/logo.png';
 // about
-$modversion['module_website_url'] = 'xoops.org';
+$modversion['module_website_url']  = 'xoops.org';
 $modversion['module_website_name'] = 'XOOPS Project';
-$modversion['min_php'] = '5.6.0';
-$modversion['min_xoops'] = '2.6.0';
-$modversion['min_db'] = ['mysql' => '5.1'];
+$modversion['min_php']             = '5.6.0';
+$modversion['min_xoops']           = '2.6.0';
+$modversion['min_db']              = ['mysql' => '5.1'];
 // paypal
-$modversion['paypal'] = [];
-$modversion['paypal']['business'] = 'dugris93@gmail.com';
-$modversion['paypal']['item_name'] = _MI_XOO_GHOST_DESC;
-$modversion['paypal']['amount'] = 0;
+$modversion['paypal']                  = [];
+$modversion['paypal']['business']      = 'dugris93@gmail.com';
+$modversion['paypal']['item_name']     = _MI_XOO_GHOST_DESC;
+$modversion['paypal']['amount']        = 0;
 $modversion['paypal']['currency_code'] = 'EUR';
 // Admin menu
 $modversion['system_menu'] = 1;
 
 // Admin things
-$modversion['hasAdmin'] = 1;
+$modversion['hasAdmin']   = 1;
 $modversion['adminindex'] = 'admin/index.php';
-$modversion['adminmenu'] = 'admin/menu.php';
+$modversion['adminmenu']  = 'admin/menu.php';
 
 // Manage extension
-$modversion['extension'] = 0;
+$modversion['extension']         = 0;
 $modversion['extensionModule'][] = '';
 
 // Scripts to run upon installation or update
-$modversion['onInstall'] = 'include/oninstall.php';
-$modversion['onUpdate'] = 'include/onupdate.php';
+$modversion['onInstall']   = 'include/oninstall.php';
+$modversion['onUpdate']    = 'include/onupdate.php';
 $modversion['onUninstall'] = '';
 
 // JQuery
@@ -72,14 +71,14 @@ $modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 $modversion['schema'] = 'sql/schema.yml';
 
 // blocks
-$i = 0;
-$modversion['blocks'][$i]['file'] = 'xooghost_blocks.php';
-$modversion['blocks'][$i]['name'] = _MI_XOO_GHOST_BLOCK_NAME;
+$i                                       = 0;
+$modversion['blocks'][$i]['file']        = 'xooghost_blocks.php';
+$modversion['blocks'][$i]['name']        = _MI_XOO_GHOST_BLOCK_NAME;
 $modversion['blocks'][$i]['description'] = '';
-$modversion['blocks'][$i]['show_func'] = 'xooghost_show';
-$modversion['blocks'][$i]['edit_func'] = 'xooghost_edit';
-$modversion['blocks'][$i]['options'] = 'list|published|desc|10';
-$modversion['blocks'][$i]['template'] = 'xooghost_block.tpl';
+$modversion['blocks'][$i]['show_func']   = 'xooghost_show';
+$modversion['blocks'][$i]['edit_func']   = 'xooghost_edit';
+$modversion['blocks'][$i]['options']     = 'list|published|desc|10';
+$modversion['blocks'][$i]['template']    = 'xooghost_block.tpl';
 
 // Menu
 $modversion['hasMain'] = 1;

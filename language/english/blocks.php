@@ -14,7 +14,6 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
 define('_MB_XOO_GHOST_MODE', 'Display mode: ');
 define('_MB_XOO_GHOST_MODE_LIST', 'List');

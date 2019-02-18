@@ -14,11 +14,10 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
  */
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-require_once XOOPS_ROOT_PATH . '/modules/xooghost/install/install.php';
+include_once __DIR__ . '/install.php';
 
 /**
  * @return bool

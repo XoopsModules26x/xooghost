@@ -14,7 +14,6 @@
  * @package         Xooghost
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id: main.php 1421 2013-01-10 00:39:45Z DuGris $
  */
 define('_XOO_GHOST_NOTFOUND', 'Page not found');
 define('_XOO_GHOST_CHOOSE', 'Choose a page');
